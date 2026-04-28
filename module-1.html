@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 1 — Why Classical Computers Hit a Wall | Diarka Quantum</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Raleway:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --void: #00010a;
+  --deep: #020818;
+  --nebula: #060d2e;
+  --teal: #00d4ff;
+  --teal-dim: #0099bb;
+  --pulsar: #7b2fff;
+  --gold: #f0c060;
+  --nova: #ff6b35;
+  --stellar: #e8f4ff;
+  --starlight: #c8d8ff;
+  --muted: #4a6080;
+  --border: rgba(0,212,255,0.1);
+  --border-p: rgba(123,47,255,0.15);
+  --reading-width: 760px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--void); color: var(--stellar); font-family: 'Raleway', sans-serif; font-weight: 400; overflow-x: hidden; cursor: none; line-height: 1; }
+
+/* CURSOR */
+.cursor { width: 8px; height: 8px; background: var(--teal); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; box-shadow: 0 0 10px var(--teal); }
+.cursor-ring { width: 28px; height: 28px; border: 1px solid rgba(0,212,255,0.4); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; transition: transform 0.35s ease; }
+
+/* PROGRESS BAR */
+.progress-bar { position: fixed; top: 0; left: 0; height: 2px; background: linear-gradient(90deg, var(--pulsar), var(--teal)); z-index: 200; width: 0%; transition: width 0.1s; }
+
+/* CANVAS */
+#universe { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.5; }
+
+/* NAV */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 3rem; display: flex; align-items: center; justify-content: space-between; background: rgba(0,1,10,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+.nav-logo { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 0.85rem; letter-spacing: 0.12em; text-decoration: none; color: var(--stellar); display: flex; align-items: center; gap: 0.6rem; }
+.nav-logo span { color: var(--teal); }
+.nav-back { font-family: 'Orbitron', monospace; font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; display: flex; align-items: center; gap: 0.5rem; }
+.nav-back:hover { color: var(--teal); }
+.nav-module-label { font-family: 'Orbitron', monospace; font-size: 0.58rem; letter-spacing: 0.15em; color: var(--teal); text-transform: uppercase; }
+
+/* HERO */
+.module-hero { position: relative; z-index: 1; padding: 9rem 2rem 5rem; text-align: center; border-bottom: 1px solid var(--border); background: linear-gradient(180deg, rgba(6,13,46,0.4) 0%, transparent 100%); }
+.module-badge { display: inline-flex; align-items: center; gap: 0.6rem; background: rgba(0,212,255,0.08); border: 1px solid var(--border); color: var(--teal); font-family: 'Orbitron', monospace; font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; padding: 0.4rem 1rem; margin-bottom: 2rem; }
+.module-badge::before { content: '◈'; animation: pulse 2s infinite; }
+.module-number { font-family: 'Orbitron', monospace; font-weight: 900; font-size: clamp(4rem, 12vw, 9rem); line-height: 0.9; color: transparent; -webkit-text-stroke: 1px rgba(0,212,255,0.15); margin-bottom: 1rem; letter-spacing: -0.02em; }
+.module-title { font-family: 'Orbitron', monospace; font-weight: 900; font-size: clamp(1.6rem, 4vw, 3rem); line-height: 1.15; letter-spacing: 0.02em; max-width: 800px; margin: 0 auto 1.5rem; text-shadow: 0 0 40px rgba(0,212,255,0.2); }
+.module-title .hl { color: var(--teal); }
+.module-subtitle { font-family: 'Lora', serif; font-style: italic; font-size: 1.1rem; color: var(--starlight); max-width: 600px; margin: 0 auto 3rem; line-height: 1.6; font-weight: 400; }
+.module-meta { display: flex; align-items: center; justify-content: center; gap: 2.5rem; flex-wrap: wrap; }
+.meta-item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.72rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+.meta-item span { color: var(--teal); font-family: 'Orbitron', monospace; font-weight: 700; }
+
+/* CONTENT */
+.content-wrap { position: relative; z-index: 1; max-width: var(--reading-width); margin: 0 auto; padding: 5rem 2rem 3rem; }
+
+/* CHAPTER NAV */
+.chapter-nav { background: rgba(6,13,46,0.8); border: 1px solid var(--border); padding: 2rem; margin-bottom: 4rem; }
+.chapter-nav-title { font-family: 'Orbitron', monospace; font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--teal); margin-bottom: 1.2rem; }
+.chapter-list { display: flex; flex-direction: column; gap: 0.6rem; }
+.chapter-link { display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--starlight); font-size: 0.8rem; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.04); transition: color 0.2s; }
+.chapter-link:hover { color: var(--teal); }
+.chapter-link:last-child { border-bottom: none; }
+.ch-num { font-family: 'Orbitron', monospace; font-size: 0.55rem; color: var(--pulsar); letter-spacing: 0.1em; min-width: 28px; }
+
+/* CHAPTER */
+.chapter { margin-bottom: 5rem; scroll-margin-top: 80px; }
+.chapter-header { margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+.ch-tag { font-family: 'Orbitron', monospace; font-size: 0.55rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--pulsar); margin-bottom: 0.8rem; }
+.ch-title { font-family: 'Orbitron', monospace; font-weight: 900; font-size: clamp(1.2rem, 3vw, 1.8rem); line-height: 1.2; letter-spacing: 0.02em; color: var(--stellar); }
+.ch-title .hl { color: var(--teal); }
+
+/* PROSE */
+.prose { font-family: 'Lora', serif; font-size: 1.05rem; line-height: 1.85; color: var(--starlight); font-weight: 400; }
+.prose p { margin-bottom: 1.6rem; }
+.prose p:last-child { margin-bottom: 0; }
+.prose strong { color: var(--stellar); font-weight: 600; }
+.prose em { color: var(--teal); font-style: italic; }
+
+/* CALLOUT BOXES */
+.callout { margin: 2.5rem 0; padding: 2rem 2.2rem; position: relative; }
+.callout-insight { background: rgba(0,212,255,0.04); border-left: 3px solid var(--teal); border-right: 1px solid var(--border); }
+.callout-warning { background: rgba(255,107,53,0.04); border-left: 3px solid var(--nova); }
+.callout-concept { background: rgba(123,47,255,0.06); border-left: 3px solid var(--pulsar); }
+.callout-analogy { background: rgba(240,192,96,0.04); border-left: 3px solid var(--gold); }
+.callout-label { font-family: 'Orbitron', monospace; font-size: 0.52rem; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 0.8rem; }
+.callout-insight .callout-label { color: var(--teal); }
+.callout-warning .callout-label { color: var(--nova); }
+.callout-concept .callout-label { color: var(--pulsar); }
+.callout-analogy .callout-label { color: var(--gold); }
+.callout p { font-family: 'Lora', serif; font-size: 0.95rem; line-height: 1.75; color: var(--starlight); margin: 0; }
+.callout strong { color: var(--stellar); }
+
+/* KEY CONCEPT */
+.key-concept { margin: 2.5rem 0; background: rgba(6,13,46,0.9); border: 1px solid var(--border-p); padding: 2rem; position: relative; overflow: hidden; }
+.key-concept::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--pulsar), var(--teal)); }
+.kc-label { font-family: 'Orbitron', monospace; font-size: 0.52rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--pulsar); margin-bottom: 0.6rem; }
+.kc-title { font-family: 'Orbitron', monospace; font-weight: 700; font-size: 1rem; color: var(--stellar); margin-bottom: 0.8rem; }
+.kc-body { font-family: 'Lora', serif; font-size: 0.92rem; line-height: 1.75; color: var(--starlight); }
+
+/* STAT HIGHLIGHT */
+.stat-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); margin: 2.5rem 0; }
+.stat-cell { background: rgba(6,13,46,0.8); padding: 1.5rem; text-align: center; }
+.stat-val { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 1.6rem; color: var(--teal); text-shadow: 0 0 16px rgba(0,212,255,0.4); line-height: 1; margin-bottom: 0.4rem; }
+.stat-label { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); line-height: 1.4; }
+
+/* COMPARISON TABLE */
+.compare-table { width: 100%; border-collapse: collapse; margin: 2.5rem 0; font-size: 0.85rem; }
+.compare-table th { background: rgba(6,13,46,0.9); font-family: 'Orbitron', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 1rem 1.2rem; text-align: left; border-bottom: 2px solid var(--border); }
+.compare-table th:first-child { color: var(--muted); }
+.compare-table th:nth-child(2) { color: var(--teal); }
+.compare-table th:nth-child(3) { color: var(--pulsar); }
+.compare-table td { padding: 0.9rem 1.2rem; border-bottom: 1px solid var(--border); color: var(--starlight); font-family: 'Raleway', sans-serif; line-height: 1.5; }
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table tr:hover td { background: rgba(0,212,255,0.02); }
+.td-classical { color: var(--teal); }
+.td-quantum { color: var(--pulsar); }
+
+/* TIMELINE */
+.timeline { margin: 2.5rem 0; position: relative; padding-left: 2rem; }
+.timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: linear-gradient(180deg, var(--teal), var(--pulsar)); }
+.tl-item { margin-bottom: 2rem; position: relative; }
+.tl-dot { position: absolute; left: -2.4rem; top: 0.3rem; width: 10px; height: 10px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 8px var(--teal); }
+.tl-year { font-family: 'Orbitron', monospace; font-size: 0.62rem; letter-spacing: 0.15em; color: var(--teal); margin-bottom: 0.3rem; }
+.tl-title { font-family: 'Raleway', sans-serif; font-weight: 600; font-size: 0.88rem; color: var(--stellar); margin-bottom: 0.3rem; }
+.tl-desc { font-family: 'Lora', serif; font-size: 0.83rem; line-height: 1.65; color: var(--starlight); }
+
+/* QUIZ */
+.quiz-block { margin: 3rem 0; background: rgba(6,13,46,0.7); border: 1px solid var(--border); padding: 2.5rem; }
+.quiz-label { font-family: 'Orbitron', monospace; font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+.quiz-q { font-family: 'Lora', serif; font-size: 1rem; color: var(--stellar); margin-bottom: 1.5rem; line-height: 1.6; font-weight: 600; }
+.quiz-options { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1.5rem; }
+.quiz-option { background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 0.9rem 1.2rem; font-family: 'Raleway', sans-serif; font-size: 0.85rem; color: var(--starlight); cursor: none; transition: border-color 0.2s, background 0.2s; display: flex; align-items: center; gap: 0.8rem; }
+.quiz-option:hover { border-color: rgba(0,212,255,0.3); background: rgba(0,212,255,0.04); }
+.quiz-option.correct { border-color: var(--teal); background: rgba(0,212,255,0.08); color: var(--teal); }
+.quiz-option.wrong { border-color: var(--nova); background: rgba(255,107,53,0.06); color: var(--nova); }
+.quiz-opt-label { font-family: 'Orbitron', monospace; font-size: 0.6rem; color: var(--muted); min-width: 20px; }
+.quiz-answer { display: none; padding: 1rem 1.2rem; background: rgba(0,212,255,0.05); border-left: 3px solid var(--teal); font-family: 'Lora', serif; font-size: 0.88rem; line-height: 1.65; color: var(--starlight); }
+
+/* CHAPTER SUMMARY */
+.chapter-summary { background: rgba(6,13,46,0.6); border: 1px solid var(--border); padding: 2rem; margin-top: 3rem; }
+.summary-label { font-family: 'Orbitron', monospace; font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--teal); margin-bottom: 1rem; }
+.summary-points { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+.summary-points li { display: flex; gap: 0.8rem; align-items: flex-start; font-size: 0.83rem; line-height: 1.65; color: var(--starlight); }
+.summary-points li::before { content: '◈'; color: var(--teal); font-size: 0.6rem; flex-shrink: 0; margin-top: 0.25rem; }
+
+/* DIVIDER */
+.section-divider { display: flex; align-items: center; gap: 1.5rem; margin: 4rem 0; }
+.section-divider::before, .section-divider::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); }
+.section-divider span { font-family: 'Orbitron', monospace; font-size: 0.6rem; letter-spacing: 0.3em; color: var(--muted); text-transform: uppercase; white-space: nowrap; }
+
+/* GATE — WAITLIST */
+.gate-section { position: relative; z-index: 1; background: linear-gradient(180deg, var(--void) 0%, rgba(6,13,46,0.95) 100%); border-top: 1px solid var(--border); padding: 6rem 2rem; text-align: center; }
+.gate-inner { max-width: 600px; margin: 0 auto; }
+.gate-icon { font-size: 3rem; margin-bottom: 1.5rem; filter: drop-shadow(0 0 16px rgba(123,47,255,0.6)); }
+.gate-tag { font-family: 'Orbitron', monospace; font-size: 0.55rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--pulsar); margin-bottom: 1.2rem; }
+.gate-title { font-family: 'Orbitron', monospace; font-weight: 900; font-size: clamp(1.4rem, 3vw, 2.2rem); line-height: 1.2; margin-bottom: 1rem; }
+.gate-desc { font-family: 'Lora', serif; font-size: 0.95rem; line-height: 1.8; color: var(--starlight); margin-bottom: 2.5rem; }
+.modules-preview { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 3rem; text-align: left; }
+.mp-item { display: flex; align-items: center; gap: 1rem; padding: 0.8rem 1.2rem; background: rgba(123,47,255,0.06); border: 1px solid var(--border-p); }
+.mp-num { font-family: 'Orbitron', monospace; font-size: 0.6rem; color: var(--pulsar); min-width: 28px; }
+.mp-title { font-size: 0.8rem; color: var(--starlight); }
+.mp-lock { margin-left: auto; font-size: 0.7rem; color: var(--muted); }
+.mp-item.unlocked { border-color: rgba(0,212,255,0.2); background: rgba(0,212,255,0.04); }
+.mp-item.unlocked .mp-num { color: var(--teal); }
+.mp-item.unlocked .mp-title { color: var(--stellar); }
+.mp-item.unlocked .mp-lock { color: var(--teal); }
+.gate-form { display: flex; flex-direction: column; gap: 1rem; max-width: 420px; margin: 0 auto; }
+.gate-input { background: rgba(6,13,46,0.9); border: 1px solid var(--border-p); color: var(--stellar); padding: 1rem 1.2rem; font-family: 'Raleway', sans-serif; font-size: 0.88rem; outline: none; width: 100%; transition: border-color 0.2s; }
+.gate-input:focus { border-color: var(--pulsar); }
+.gate-btn { background: linear-gradient(135deg, var(--pulsar), var(--teal)); color: var(--void); border: none; padding: 1.1rem 2.5rem; font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: none; transition: all 0.3s; box-shadow: 0 0 24px rgba(123,47,255,0.4); clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%); }
+.gate-btn:hover { box-shadow: 0 0 40px rgba(123,47,255,0.6); transform: translateY(-2px); }
+.gate-note { font-size: 0.68rem; color: var(--muted); margin-top: 0.5rem; }
+#gate-success { display: none; padding: 2rem; border: 1px solid rgba(0,212,255,0.3); background: rgba(0,212,255,0.04); }
+#gate-success .gs-title { font-family: 'Orbitron', monospace; font-weight: 700; color: var(--teal); margin-bottom: 0.5rem; font-size: 0.9rem; }
+#gate-success p { font-family: 'Lora', serif; font-size: 0.88rem; color: var(--starlight); }
+
+/* FOOTER */
+footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; background: rgba(0,1,10,0.98); flex-wrap: wrap; gap: 1rem; }
+.footer-logo { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 0.85rem; color: var(--stellar); }
+.footer-logo span { color: var(--teal); }
+.footer-copy { font-size: 0.62rem; color: var(--muted); }
+
+/* ANIMATIONS */
+@keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.3} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none} }
+.reveal { opacity:0; transform:translateY(20px); transition:opacity 0.7s ease,transform 0.7s ease; }
+.reveal.visible { opacity:1; transform:none; }
+
+@media(max-width:768px){
+  nav{padding:1rem 1.5rem} .content-wrap{padding:4rem 1.2rem 2rem} .stat-row{grid-template-columns:1fr} .compare-table{font-size:0.75rem} .compare-table td,.compare-table th{padding:0.7rem 0.8rem} footer{flex-direction:column;padding:1.5rem}
+}
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+<div class="progress-bar" id="progress"></div>
+<canvas id="universe"></canvas>
+
+<!-- NAV -->
+<nav>
+  <a href="diarka-quantum.html" class="nav-logo">Diarka<span>Quantum</span></a>
+  <div class="nav-module-label">Module 01 of 07</div>
+  <a href="diarka-quantum.html#education" class="nav-back">← Back to Course</a>
+</nav>
+
+<!-- HERO -->
+<div class="module-hero">
+  <div class="module-badge">Free Module — Diarka Quantum Education</div>
+  <div class="module-number">01</div>
+  <h1 class="module-title">Why Classical Computers Hit a <span class="hl">Fundamental Wall</span></h1>
+  <p class="module-subtitle">The story of how the most powerful machines ever built ran into the laws of physics — and why that opened the door to something extraordinary.</p>
+  <div class="module-meta">
+    <div class="meta-item">⏱ Read time: <span>25 min</span></div>
+    <div class="meta-item">📖 Chapters: <span>5</span></div>
+    <div class="meta-item">🎯 Level: <span>Beginner</span></div>
+    <div class="meta-item">✅ Status: <span>Free</span></div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <!-- CHAPTER NAV -->
+  <div class="chapter-nav reveal">
+    <div class="chapter-nav-title">In This Module</div>
+    <div class="chapter-list">
+      <a href="#ch1" class="chapter-link"><span class="ch-num">01</span>The Machine That Conquered the World</a>
+      <a href="#ch2" class="chapter-link"><span class="ch-num">02</span>Moore's Law — The Promise and the Problem</a>
+      <a href="#ch3" class="chapter-link"><span class="ch-num">03</span>The Physics Wall — When Electrons Get Weird</a>
+      <a href="#ch4" class="chapter-link"><span class="ch-num">04</span>Problems Classical Computers Simply Cannot Solve</a>
+      <a href="#ch5" class="chapter-link"><span class="ch-num">05</span>The Door That Opens — Why This Matters Now</a>
+    </div>
+  </div>
+
+  <!-- CHAPTER 1 -->
+  <div class="chapter reveal" id="ch1">
+    <div class="chapter-header">
+      <div class="ch-tag">Chapter 01</div>
+      <h2 class="ch-title">The Machine That <span class="hl">Conquered the World</span></h2>
+    </div>
+    <div class="prose">
+      <p>Imagine you could give any question to the most powerful machine humanity has ever built and get an answer within seconds. Stock market predictions. Weather forecasts. Medical diagnoses. The classical computer — the device you're reading this on right now — has done more to reshape human civilisation than any invention since the printing press.</p>
+      <p>But here's the thing nobody tells you: <strong>the classical computer is fundamentally a counting machine.</strong> An extraordinarily fast, extraordinarily precise, extraordinarily miniaturised counting machine — but a counting machine nonetheless.</p>
+      <p>At its core, every classical computer — whether it's the supercomputer at a hedge fund processing millions of trades per second, or the chip in your phone — does exactly one thing. It processes <strong>bits</strong>. And a bit can only ever be one of two things: a <em>0</em> or a <em>1</em>. Off or on. False or true. Everything your computer has ever done — every email sent, every video streamed, every spreadsheet calculated — was ultimately a series of 0s and 1s being flipped at incomprehensible speed.</p>
+    </div>
+
+    <div class="callout callout-insight">
+      <div class="callout-label">⚡ Key Insight</div>
+      <p>A modern smartphone processor contains over <strong>15 billion transistors</strong> — each one a tiny switch that can be either on or off. The entire digital world runs on the logic of these switches, arranged in combinations of unimaginable complexity.</p>
+    </div>
+
+    <div class="prose">
+      <p>For seventy years, this architecture has been good enough — better than good enough. From the room-sized ENIAC of 1945, to the personal computers of the 1980s, to the cloud data centres of today, we've ridden a single incredible wave: make the transistors smaller, make them faster, pack more of them together. And it worked. Brilliantly.</p>
+      <p>The results speak for themselves. The Apollo 11 guidance computer had 4,100 transistors. Your laptop has over 50 billion. We went from being able to calculate a moon landing to being able to simulate entire economies, model protein folding, and generate human-like text — all on machines that share the same fundamental architecture as that 1945 vacuum tube behemoth.</p>
+      <p>But something changed. Quietly at first, then with increasing urgency, the engineers and physicists building these machines started running into a problem they couldn't engineer their way out of. A wall. Not a wall of human ingenuity — a wall built by the laws of physics themselves.</p>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-cell"><div class="stat-val">1945</div><div class="stat-label">ENIAC<br>18,000 vacuum tubes</div></div>
+      <div class="stat-cell"><div class="stat-val">2024</div><div class="stat-label">Apple M4<br>28 billion transistors</div></div>
+      <div class="stat-cell"><div class="stat-val">0.5nm</div><div class="stat-label">Modern transistor size<br>smaller than a virus</div></div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>Moore's Law</span></div>
+
+  <!-- CHAPTER 2 -->
+  <div class="chapter reveal" id="ch2">
+    <div class="chapter-header">
+      <div class="ch-tag">Chapter 02</div>
+      <h2 class="ch-title">Moore's Law — The Promise <span class="hl">and the Problem</span></h2>
+    </div>
+    <div class="prose">
+      <p>In 1965, a young engineer named Gordon Moore made an observation that would shape the next six decades of technology. He noticed that the number of transistors that could fit on a microchip was doubling roughly every two years — and that this doubling was happening at roughly the same cost. He predicted it would continue.</p>
+      <p>Moore's Law, as it came to be known, was not a law of physics. It was an observation. An engineering target. A self-fulfilling prophecy that the entire technology industry aligned itself around. And for fifty years, it held. Every two years, chips got roughly twice as powerful for the same price.</p>
+      <p>Think about what that means compounded over half a century. A doubling every two years, over fifty years, is 25 doublings. 2 to the power of 25 is over 33 million. Computing power grew by a factor of <strong>33 million</strong> while the cost stayed roughly constant. That is the engine behind every technological miracle of the modern era.</p>
+    </div>
+
+    <div class="callout callout-analogy">
+      <div class="callout-label">🌌 Universe Analogy</div>
+      <p>If cars had followed Moore's Law the same way computers did since 1971, a car today would travel at <strong>300,000 miles per second</strong> — the speed of light — and cost about <strong>£0.00001</strong>. That's how dramatic exponential growth over fifty years really is.</p>
+    </div>
+
+    <div class="prose">
+      <p>But here's the problem nobody wanted to say out loud: <strong>you cannot make a transistor smaller than an atom.</strong></p>
+      <p>And we are getting very, very close to that limit.</p>
+      <p>Modern transistors are now measured in nanometres. A nanometre is one billionth of a metre. The latest chips use transistors as small as 2 nanometres. A strand of human DNA is 2.5 nanometres wide. A silicon atom is 0.22 nanometres. We are building switches that are only ten or fifteen atoms across.</p>
+      <p>At that scale, the comfortable, predictable rules of classical physics — the rules that let engineers design reliable switches that are either on or off — start to break down. And in their place, the deeply strange rules of <strong>quantum mechanics</strong> take over.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">1971</div>
+        <div class="tl-title">Intel 4004 — 10,000nm transistors</div>
+        <div class="tl-desc">The first commercial microprocessor. 2,300 transistors, each 10 micrometres wide — 10,000 nanometres. Roughly the width of a red blood cell.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2000</div>
+        <div class="tl-title">Intel Pentium 4 — 180nm transistors</div>
+        <div class="tl-desc">42 million transistors. Still operating firmly in the classical physics regime. Moore's Law working exactly as predicted.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2015</div>
+        <div class="tl-title">Approaching quantum territory — 14nm</div>
+        <div class="tl-desc">Engineers begin encountering quantum tunnelling effects. Electrons start behaving unpredictably. Classical design rules start to fail.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2024</div>
+        <div class="tl-title">Apple M4 — 3nm. TSMC roadmap: 2nm</div>
+        <div class="tl-desc">Transistors are now only 10-15 silicon atoms wide. The physics wall is no longer theoretical — it is here.</div>
+      </div>
+    </div>
+
+    <div class="key-concept">
+      <div class="kc-label">Key Concept</div>
+      <div class="kc-title">The End of Moore's Law</div>
+      <div class="kc-body">Moore's Law is not ending because engineers aren't clever enough. It's ending because they've reached the boundary where classical physics stops working. Below approximately 2nm, quantum effects dominate and transistors no longer behave like reliable on/off switches. The physical limit of silicon-based classical computing is within sight.</div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>The Physics Wall</span></div>
+
+  <!-- CHAPTER 3 -->
+  <div class="chapter reveal" id="ch3">
+    <div class="chapter-header">
+      <div class="ch-tag">Chapter 03</div>
+      <h2 class="ch-title">The Physics Wall — When <span class="hl">Electrons Get Weird</span></h2>
+    </div>
+    <div class="prose">
+      <p>To understand why miniaturisation hits a wall, you need to understand one of the strangest phenomena in all of physics: <strong>quantum tunnelling</strong>.</p>
+      <p>In your everyday classical world, if you throw a ball at a wall, it bounces back. It cannot pass through the wall — that would violate every intuition you have about how objects behave. But at the scale of atoms and subatomic particles, this intuition completely fails. Electrons — the particles that carry electrical current in your computer's transistors — do not behave like tiny billiard balls. They behave like waves.</p>
+      <p>And waves can do something balls cannot: they can <em>tunnel through barriers</em>.</p>
+    </div>
+
+    <div class="callout callout-concept">
+      <div class="callout-label">⚛ Quantum Concept — Tunnelling</div>
+      <p><strong>Quantum tunnelling</strong> is the phenomenon where a particle passes through a barrier that it classically shouldn't have enough energy to overcome. It's as if the electron "borrows" existence on the other side of the wall. At nanometre scales, this happens constantly — and it's catastrophic for transistors designed to be either reliably on or reliably off.</p>
+    </div>
+
+    <div class="prose">
+      <p>When your transistor is supposed to be switched off — a 0 — electrons should not be flowing. But when the barrier between the "off" state and the conducting channel is only a few atoms wide, electrons start tunnelling through it anyway. The transistor that should be a clean 0 starts leaking current. It becomes ambiguous — not quite 0, not quite 1.</p>
+      <p>In a chip with 28 billion transistors, even tiny error rates become catastrophic. And there's a second problem equally brutal: <strong>heat</strong>.</p>
+      <p>Every transistor that switches state dissipates energy as heat. Pack 28 billion transistors into a chip the size of your fingernail and switch them billions of times per second, and you generate extraordinary amounts of heat in an extraordinarily small space. This is why your phone gets warm. This is why data centres consume as much electricity as small cities. And it's why simply adding more transistors to a chip eventually becomes self-defeating — you generate more heat than your cooling systems can handle.</p>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="callout-label">⚠ The Heat Problem</div>
+      <p>The world's data centres currently consume approximately <strong>200–250 terawatt-hours of electricity per year</strong> — roughly 1% of global electricity consumption. As AI workloads grow, this figure is projected to more than double by 2030. Classical computing's energy problem is not just an engineering challenge — it's becoming an environmental and economic crisis.</p>
+    </div>
+
+    <div class="prose">
+      <p>So to summarise where we are: classical computers have been doubling in power every two years for fifty years. That progress is now physically constrained by the quantum behaviour of electrons at nanometre scales. We cannot simply make transistors smaller indefinitely. And we cannot simply make chips bigger indefinitely without catastrophic heat generation.</p>
+      <p>The architecture that built the modern world — the bit, the transistor, the binary switch — has run into a wall it cannot break through.</p>
+      <p>But here is where the story turns. Because the very quantum effects that are breaking classical computers — tunnelling, superposition, entanglement — are not just problems to be avoided. They are <strong>computational resources</strong>. What if, instead of fighting quantum mechanics, we could harness it?</p>
+    </div>
+
+    <div class="compare-table-wrap" style="overflow-x:auto; margin: 2.5rem 0;">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Classical Bit</th>
+            <th>Quantum Qubit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Basic unit</td><td class="td-classical">0 or 1 — binary</td><td class="td-quantum">Superposition of 0 and 1</td></tr>
+          <tr><td>State while computing</td><td class="td-classical">Always definite</td><td class="td-quantum">Probabilistic until measured</td></tr>
+          <tr><td>Parallelism</td><td class="td-classical">One path at a time</td><td class="td-quantum">Many paths simultaneously</td></tr>
+          <tr><td>Information density</td><td class="td-classical">1 bit per transistor</td><td class="td-quantum">Exponential with qubit count</td></tr>
+          <tr><td>Error sensitivity</td><td class="td-classical">Robust</td><td class="td-quantum">Highly sensitive — needs correction</td></tr>
+          <tr><td>Operating temperature</td><td class="td-classical">Room temperature</td><td class="td-quantum">Near absolute zero (most platforms)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>Unsolvable Problems</span></div>
+
+  <!-- CHAPTER 4 -->
+  <div class="chapter reveal" id="ch4">
+    <div class="chapter-header">
+      <div class="ch-tag">Chapter 04</div>
+      <h2 class="ch-title">Problems Classical Computers <span class="hl">Simply Cannot Solve</span></h2>
+    </div>
+    <div class="prose">
+      <p>The physics wall is one problem. But there's a deeper issue that even a perfect classical computer — one that somehow ignored the laws of physics and kept shrinking forever — could never solve. Certain classes of problems are not just hard for classical computers. They are <strong>fundamentally intractable</strong>.</p>
+      <p>To understand why, consider a problem called the Travelling Salesman Problem. A salesman needs to visit 10 cities and return home, using the shortest possible route. How many possible routes are there? 10 factorial — that's 10 × 9 × 8 × 7 × 6 × 5 × 4 × 3 × 2 × 1 = <strong>3,628,800 routes</strong>. A classical computer handles that easily.</p>
+      <p>Now scale it up. 20 cities? Over 2.4 quintillion routes. 50 cities? More routes than there are atoms in the observable universe. A classical computer checking one billion routes per second would take longer than the age of the universe to find the optimal answer.</p>
+    </div>
+
+    <div class="callout callout-insight">
+      <div class="callout-label">⚡ Why This Matters in the Real World</div>
+      <p>The Travelling Salesman Problem isn't just an academic puzzle. It's the mathematical structure underlying <strong>logistics routing</strong> (Amazon, FedEx, DHL), <strong>protein folding</strong> (drug discovery), <strong>financial portfolio optimisation</strong>, <strong>supply chain management</strong>, and <strong>neural network training</strong>. The world's most important computational problems are structurally similar to this one.</p>
+    </div>
+
+    <div class="prose">
+      <p>This class of problem — where the number of possible solutions grows exponentially with the size of the problem — is called <strong>NP-hard</strong>. Classical computers cannot solve NP-hard problems optimally at scale. They approximate, heuristically guess, and find "good enough" solutions. But "good enough" in drug discovery might mean missing the cure. "Good enough" in financial modelling might mean mismanaging billions.</p>
+      <p>There are three categories of problem where classical computing fundamentally struggles, and where quantum computing offers a genuine different approach:</p>
+    </div>
+
+    <div class="key-concept">
+      <div class="kc-label">Problem Class 1</div>
+      <div class="kc-title">Optimisation Problems</div>
+      <div class="kc-body">Finding the best solution from an astronomically large number of possibilities. Logistics, portfolio management, drug molecule design, supply chain routing. Classical computers brute-force approximate. Quantum algorithms like QAOA explore the solution space fundamentally differently.</div>
+    </div>
+
+    <div class="key-concept" style="margin-top:1.5rem">
+      <div class="kc-label">Problem Class 2</div>
+      <div class="kc-title">Simulation of Quantum Systems</div>
+      <div class="kc-body">Simulating how molecules, chemicals, and materials behave at the quantum level. Drug discovery, materials science, battery design, fertiliser chemistry. A classical computer cannot accurately simulate even a moderately complex molecule — there are too many quantum interactions to track. A quantum computer simulates quantum systems naturally, because it IS a quantum system.</div>
+    </div>
+
+    <div class="key-concept" style="margin-top:1.5rem">
+      <div class="kc-label">Problem Class 3</div>
+      <div class="kc-title">Cryptographic Problems</div>
+      <div class="kc-body">The security of almost all modern internet encryption — RSA, elliptic curve cryptography — relies on the fact that factoring very large numbers into primes is computationally hard for classical computers. Shor's quantum algorithm can factor large numbers exponentially faster. A sufficiently powerful quantum computer will be able to break current encryption standards — which is why post-quantum cryptography preparation is urgent today.</div>
+    </div>
+
+    <div class="prose">
+      <p>Notice something important about these three problem classes. They're not niche academic curiosities. <strong>They are the core computational challenges of medicine, finance, materials science, logistics, and national security.</strong> The classical computer's inability to solve them is not a minor inconvenience — it's a fundamental limitation with trillion-dollar consequences.</p>
+    </div>
+
+    <div class="quiz-block">
+      <div class="quiz-label">🎯 Quick Check — Test Your Understanding</div>
+      <div class="quiz-q">Which of the following is the primary reason why classical computers cannot efficiently solve large-scale optimisation problems?</div>
+      <div class="quiz-options" id="q1-opts">
+        <div class="quiz-option" onclick="answerQ('q1','A','B')"><span class="quiz-opt-label">A</span>They don't have enough memory to store the data</div>
+        <div class="quiz-option" onclick="answerQ('q1','B','B')"><span class="quiz-opt-label">B</span>The number of possible solutions grows exponentially, making exhaustive search impossible</div>
+        <div class="quiz-option" onclick="answerQ('q1','C','B')"><span class="quiz-opt-label">C</span>Classical computers are too slow at arithmetic</div>
+        <div class="quiz-option" onclick="answerQ('q1','D','B')"><span class="quiz-opt-label">D</span>They can only process one program at a time</div>
+      </div>
+      <div class="quiz-answer" id="q1-ans">✅ <strong>Correct — B.</strong> The core problem is combinatorial explosion. As problem size grows, the number of possible solutions grows exponentially — faster than any classical computer can search, regardless of speed or memory. This is the fundamental intractability of NP-hard problems.</div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>The Quantum Door</span></div>
+
+  <!-- CHAPTER 5 -->
+  <div class="chapter reveal" id="ch5">
+    <div class="chapter-header">
+      <div class="ch-tag">Chapter 05</div>
+      <h2 class="ch-title">The Door That Opens — <span class="hl">Why This Matters Now</span></h2>
+    </div>
+    <div class="prose">
+      <p>We've established that classical computers are hitting a physical wall in miniaturisation, and that certain important classes of problems are fundamentally beyond their reach. But why does this matter <em>now</em>? Quantum computers have been theorised since the 1980s. Why is 2024 different?</p>
+      <p>Three things have converged to make this moment genuinely different from the theoretical promises of previous decades.</p>
+      <p><strong>First: the hardware has crossed a threshold.</strong> IBM has publicly demonstrated processors with over 1,000 qubits. Google has demonstrated quantum advantage on specific tasks. QuEra has demonstrated 48 logical qubits using neutral atom technology. These are not theoretical results — they are physical machines, running today, accessible via the cloud. The question is no longer "will quantum computers be built?" — they have been built. The question now is "when will they be good enough to solve commercially valuable problems at scale?"</p>
+    </div>
+
+    <div class="callout callout-insight">
+      <div class="callout-label">⚡ Right Now — You Can Access a Real Quantum Computer</div>
+      <p>IBM Quantum offers free cloud access to real quantum processors via their website. You can write quantum programs in Qiskit — IBM's open-source Python framework — and run them on actual quantum hardware today. This is not simulation. These are real quantum machines processing real qubits.</p>
+    </div>
+
+    <div class="prose">
+      <p><strong>Second: the investment has become extraordinary.</strong> Governments and corporations are not treating quantum computing as a speculative bet — they're treating it as a national security and economic competitiveness issue. The UK government has committed £2.5 billion to quantum technologies through its National Quantum Strategy. The US, China, the EU, and Japan have all launched multi-billion-dollar quantum initiatives. McKinsey estimates quantum computing could generate <strong>$1.3 trillion in value</strong> by 2035 across pharmaceuticals, chemicals, finance, and logistics.</p>
+      <p><strong>Third, and most urgently: the post-quantum cryptography threat is already active.</strong> This is the one that most people miss — and it's happening right now, not in ten years.</p>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="callout-label">⚠ The Harvest Now, Decrypt Later Threat</div>
+      <p>Nation-state adversaries are <strong>right now</strong> collecting encrypted internet traffic — financial records, government communications, medical data — and storing it. They cannot decrypt it today. But when sufficiently powerful quantum computers arrive, they will decrypt everything they collected. <strong>Data encrypted today can be compromised by quantum computers built in the future.</strong> NIST finalised new post-quantum cryptography standards in 2024 for exactly this reason. The threat window is open now, not when quantum computers mature.</p>
+    </div>
+
+    <div class="prose">
+      <p>This is why understanding quantum computing is not a five-year problem for your organisation. It's a problem that starts today — specifically around cryptographic infrastructure. And it's why organisations that build quantum literacy and quantum readiness now will be in a fundamentally different position to those that wait.</p>
+      <p>The classical computer conquered the world by turning the on/off logic of binary switches into the engine of the information age. Quantum computing does something far stranger and far more powerful — it harnesses the fundamental probabilistic nature of reality itself as a computational resource. It doesn't just calculate faster. It calculates <em>differently</em>.</p>
+      <p>In Module 2, we go deep into exactly how. We'll explore what a qubit actually is, what superposition and entanglement really mean (beyond the buzzwords), and how these quantum properties can be harnessed to do things that no classical computer ever could.</p>
+      <p>The wall that classical computers hit is not the end of the story. It's the beginning of a new one.</p>
+    </div>
+
+    <div class="chapter-summary">
+      <div class="summary-label">Module 1 — Key Takeaways</div>
+      <ul class="summary-points">
+        <li>Classical computers process binary bits — 0s and 1s — and have followed Moore's Law (doubling in power every ~2 years) for 50 years.</li>
+        <li>Transistors are now so small (2–3nm) that quantum effects like electron tunnelling cause them to behave unpredictably — the physics wall is real and present.</li>
+        <li>Certain problem classes — optimisation, quantum simulation, and cryptography — are fundamentally intractable for classical computers regardless of speed.</li>
+        <li>Real quantum computers exist today and are accessible via the cloud — IBM, Google, QuEra, and others have working systems.</li>
+        <li>The post-quantum cryptography threat (harvest now, decrypt later) is active today — not a future concern.</li>
+        <li>Quantum computing doesn't just compute faster — it computes fundamentally differently, using quantum mechanical properties as computational resources.</li>
+      </ul>
+    </div>
+  </div>
+
+</div><!-- end content-wrap -->
+
+<!-- GATE SECTION -->
+<div class="gate-section">
+  <div class="gate-inner">
+    <div class="gate-icon">⚛️</div>
+    <div class="gate-tag">Continue Your Journey</div>
+    <h2 class="gate-title">You've Completed Module 1</h2>
+    <p class="gate-desc">Join the waitlist to access Modules 2–7 when they launch — and get notified the moment each module goes live. Module 2 covers what qubits, superposition, and entanglement actually are — beyond the buzzwords.</p>
+
+    <div class="modules-preview">
+      <div class="mp-item unlocked"><span class="mp-num">01</span><span class="mp-title">Why Classical Computers Hit a Fundamental Wall</span><span class="mp-lock">✅ Free</span></div>
+      <div class="mp-item"><span class="mp-num">02</span><span class="mp-title">Qubits, Superposition & Entanglement Explained</span><span class="mp-lock">🔒</span></div>
+      <div class="mp-item"><span class="mp-num">03</span><span class="mp-title">Quantum Hardware Landscape Today</span><span class="mp-lock">🔒</span></div>
+      <div class="mp-item"><span class="mp-num">04</span><span class="mp-title">Quantum Algorithms & Where Advantage is Real</span><span class="mp-lock">🔒</span></div>
+      <div class="mp-item"><span class="mp-num">05</span><span class="mp-title">AI-Quantum Convergence & QML</span><span class="mp-lock">🔒</span></div>
+      <div class="mp-item"><span class="mp-num">06</span><span class="mp-title">Post-Quantum Cryptography & NIST Standards</span><span class="mp-lock">🔒</span></div>
+      <div class="mp-item"><span class="mp-num">07</span><span class="mp-title">Quantum Strategy for Organisations</span><span class="mp-lock">🔒</span></div>
+    </div>
+
+    <div id="gate-success">
+      <div class="gs-title">🚀 You're on the list!</div>
+      <p>We'll notify you at your email address the moment Module 2 launches. Welcome to the Diarka Quantum community.</p>
+    </div>
+
+    <form class="gate-form" id="gate-form" onsubmit="handleGate(event)">
+      <input type="text" name="name" class="gate-input" placeholder="Your name" required>
+      <input type="email" name="email" class="gate-input" placeholder="Your email address" required>
+      <input type="text" name="_gotcha" style="display:none">
+      <button type="submit" class="gate-btn" id="gate-btn">Join the Waitlist — Free</button>
+      <div class="gate-note">No spam. No selling your data. Just a notification when the next module is ready.</div>
+    </form>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Diarka<span>Quantum</span> Limited</div>
+  <div class="footer-copy">© 2025 Diarka Quantum Limited · Module 1 of 7</div>
+</footer>
+
+<script>
+// CURSOR
+const cursor=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{ mx=e.clientX; my=e.clientY; cursor.style.transform=`translate(${mx-4}px,${my-4}px)`; });
+(function loop(){ rx+=(mx-rx)*0.1; ry+=(my-ry)*0.1; ring.style.transform=`translate(${rx-14}px,${ry-14}px)`; requestAnimationFrame(loop); })();
+
+// PROGRESS BAR
+const pb=document.getElementById('progress');
+window.addEventListener('scroll',()=>{ const h=document.documentElement.scrollHeight-window.innerHeight; pb.style.width=(window.scrollY/h*100)+'%'; });
+
+// UNIVERSE CANVAS
+const canvas=document.getElementById('universe'),ctx=canvas.getContext('2d');
+let W,H;
+function resize(){ W=canvas.width=window.innerWidth; H=canvas.height=window.innerHeight; }
+resize(); window.addEventListener('resize',resize);
+const stars=Array.from({length:200},()=>({x:Math.random(),y:Math.random(),r:Math.random()*1.2+0.2,alpha:Math.random()*0.6+0.1,tw:Math.random()*Math.PI*2,sp:Math.random()*0.015+0.003}));
+const nebulae=Array.from({length:4},()=>({x:Math.random(),y:Math.random(),r:Math.random()*180+80,col:Math.random()>0.5?'0,212,255':'123,47,255',alpha:Math.random()*0.04+0.01}));
+function drawUniverse(){
+  ctx.clearRect(0,0,W,H);
+  nebulae.forEach(n=>{ const g=ctx.createRadialGradient(n.x*W,n.y*H,0,n.x*W,n.y*H,n.r); g.addColorStop(0,`rgba(${n.col},${n.alpha})`); g.addColorStop(1,'transparent'); ctx.fillStyle=g; ctx.beginPath(); ctx.arc(n.x*W,n.y*H,n.r,0,Math.PI*2); ctx.fill(); });
+  stars.forEach(s=>{ s.tw+=s.sp; const a=s.alpha*(0.6+0.4*Math.sin(s.tw)); ctx.beginPath(); ctx.arc(s.x*W,s.y*H,s.r,0,Math.PI*2); ctx.fillStyle=`rgba(200,220,255,${a})`; ctx.fill(); });
+  requestAnimationFrame(drawUniverse);
+}
+drawUniverse();
+
+// REVEAL
+const obs=new IntersectionObserver(es=>es.forEach((e,i)=>{ if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'),i*80); obs.unobserve(e.target); } }),{threshold:0.07});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+
+// QUIZ
+function answerQ(qid,chosen,correct){
+  const opts=document.querySelectorAll('#'+qid+'-opts .quiz-option');
+  const ans=document.getElementById(qid+'-ans');
+  opts.forEach((o,i)=>{
+    const labels=['A','B','C','D'];
+    o.style.pointerEvents='none';
+    if(labels[i]===correct) o.classList.add('correct');
+    else if(labels[i]===chosen && chosen!==correct) o.classList.add('wrong');
+  });
+  ans.style.display='block';
+}
+
+// GATE FORM
+async function handleGate(e){
+  e.preventDefault();
+  const form=document.getElementById('gate-form'),btn=document.getElementById('gate-btn'),suc=document.getElementById('gate-success');
+  btn.textContent='Joining...'; btn.disabled=true; btn.style.opacity='0.7';
+  try {
+    const res=await fetch('https://formspree.io/f/YOUR_FORM_ID',{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}});
+    if(res.ok){ form.style.display='none'; suc.style.display='block'; }
+    else throw new Error();
+  } catch { btn.textContent='Join the Waitlist — Free'; btn.disabled=false; btn.style.opacity='1'; alert('Something went wrong. Please try again or email us at nageshj@diarkaquantum.co.uk'); }
+}
+</script>
+</body>
+</html>
