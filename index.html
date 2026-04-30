@@ -27,58 +27,58 @@ html { scroll-behavior: smooth; }
 body { background: var(--void); color: var(--stellar); font-family: 'Raleway', sans-serif; font-weight: 400; overflow-x: hidden; cursor: none; }
 
 /* CURSOR */
-.cursor { width: 8px; height: 8px; background: var(--nebula-teal); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; box-shadow: 0 0 10px var(--nebula-teal[...]
-.cursor-ring { width: 32px; height: 32px; border: 1px solid rgba(0,212,255,0.5); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; transition: transform 0.[...]
+.cursor { width: 8px; height: 8px; background: var(--nebula-teal); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; box-shadow: 0 0 10px var(--nebula-teal); }
+.cursor-ring { width: 32px; height: 32px; border: 1px solid rgba(0,212,255,0.5); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; transition: transform 0.1s ease-out; }
 #universe { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
 
 /* NAV */
-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.2rem 3rem; display: flex; align-items: center; justify-content: space-between; background: linear-gradient(to bottom, rgb[...]
-.nav-logo { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 1rem; letter-spacing: 0.12em; text-decoration: none; color: var(--stellar); display: flex; align-items: center; gap: 0.[...]
-.nav-logo .logo-icon { width: 32px; height: 32px; border: 1px solid var(--nebula-teal); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; box-shad[...]
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.2rem 3rem; display: flex; align-items: center; justify-content: space-between; background: linear-gradient(to bottom, rgba(0,1,10,0.9), rgba(0,1,10,0.7)); }
+.nav-logo { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 1rem; letter-spacing: 0.12em; text-decoration: none; color: var(--stellar); display: flex; align-items: center; gap: 0.6rem; }
+.nav-logo .logo-icon { width: 32px; height: 32px; border: 1px solid var(--nebula-teal); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; box-shadow: 0 0 12px rgba(0,212,255,0.3); }
 .nav-logo span { color: var(--nebula-teal); }
 .nav-links { display: flex; gap: 0.1rem; list-style: none; }
-.nav-links a { color: var(--starlight); text-decoration: none; font-size: 0.63rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.5rem 0.7rem; transition: color 0.2s, background 0.2[...]
+.nav-links a { color: var(--starlight); text-decoration: none; font-size: 0.63rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.5rem 0.7rem; transition: color 0.2s, background 0.2s; }
 .nav-links a:hover { color: var(--nebula-teal); background: rgba(0,212,255,0.05); }
-.nav-cta { background: transparent; border: 1px solid var(--nebula-teal); color: var(--nebula-teal); padding: 0.5rem 1.2rem; font-family: 'Orbitron', monospace; font-size: 0.58rem; letter-spacing:[...]
+.nav-cta { background: transparent; border: 1px solid var(--nebula-teal); color: var(--nebula-teal); padding: 0.5rem 1.2rem; font-family: 'Orbitron', monospace; font-size: 0.58rem; letter-spacing: 0.1em; cursor: pointer; transition: all 0.3s; }
 .nav-cta:hover { background: var(--nebula-teal); color: var(--void); box-shadow: 0 0 24px rgba(0,212,255,0.4); }
 
 /* HERO */
-.hero { position: relative; z-index: 1; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 8rem 2rem 4rem; overflo[...]
-.black-hole { position: absolute; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, #000 0%, #000 20%, transparent 65%); box-shadow: 0 0 80px 30px rgba(123,47,25[...]
-.accretion-disk { position: absolute; width: 650px; height: 130px; border-radius: 50%; box-shadow: 0 0 50px rgba(255,107,53,0.25), 0 0 100px rgba(123,47,255,0.2), 0 0 150px rgba(0,212,255,0.1); to[...]
-.hero-eyebrow { font-family: 'Orbitron', monospace; font-size: 0.6rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--nebula-teal); margin-bottom: 2rem; opacity: 0; animation: fade[...]
-.hero-title { font-family: 'Orbitron', monospace; font-weight: 900; font-size: clamp(2.2rem, 6vw, 5.5rem); line-height: 1.05; letter-spacing: 0.05em; opacity: 0; animation: fadeUp 0.9s 0.5s forwar[...]
+.hero { position: relative; z-index: 1; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 8rem 2rem 4rem; overflow: hidden; }
+.black-hole { position: absolute; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, #000 0%, #000 20%, transparent 65%); box-shadow: 0 0 80px 30px rgba(123,47,255,0.2); animation: blackhole-pulse 4s ease-in-out infinite; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+.accretion-disk { position: absolute; width: 650px; height: 130px; border-radius: 50%; box-shadow: 0 0 50px rgba(255,107,53,0.25), 0 0 100px rgba(123,47,255,0.2), 0 0 150px rgba(0,212,255,0.1); top: 50%; left: 50%; animation: disk-rotate 8s linear infinite; }
+.hero-eyebrow { font-family: 'Orbitron', monospace; font-size: 0.6rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--nebula-teal); margin-bottom: 2rem; opacity: 0; animation: fadeUp 0.9s 0.3s forwards; }
+.hero-title { font-family: 'Orbitron', monospace; font-weight: 900; font-size: clamp(2.2rem, 6vw, 5.5rem); line-height: 1.05; letter-spacing: 0.05em; opacity: 0; animation: fadeUp 0.9s 0.5s forwards; }
 .hero-title .t1 { color: var(--stellar); display: block; }
 .hero-title .t2 { color: var(--nebula-teal); display: block; }
 .hero-title .t3 { color: var(--pulsar); display: block; font-size: 0.55em; letter-spacing: 0.3em; margin-top: 0.3em; }
-.hero-sub { margin-top: 2rem; font-size: 0.92rem; line-height: 1.9; color: var(--starlight); max-width: 600px; opacity: 0; animation: fadeUp 0.9s 0.7s forwards; position: relative; z-index: 2; fon[...]
+.hero-sub { margin-top: 2rem; font-size: 0.92rem; line-height: 1.9; color: var(--starlight); max-width: 600px; opacity: 0; animation: fadeUp 0.9s 0.7s forwards; position: relative; z-index: 2; font-weight: 300; }
 .hero-actions { margin-top: 3rem; display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; opacity: 0; animation: fadeUp 0.9s 0.9s forwards; position: relative; z-index: 2; }
-.btn-cosmos { background: linear-gradient(135deg, var(--pulsar), var(--nebula-teal)); color: var(--void); padding: 1rem 2.5rem; font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.6[...]
+.btn-cosmos { background: linear-gradient(135deg, var(--pulsar), var(--nebula-teal)); color: var(--void); padding: 1rem 2.5rem; font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.62rem; letter-spacing: 0.12em; border: none; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-block; }
 .btn-cosmos:hover { box-shadow: 0 0 50px rgba(123,47,255,0.6); transform: translateY(-3px); }
-.btn-void { border: 1px solid rgba(0,212,255,0.4); color: var(--nebula-teal); padding: 1rem 2.5rem; font-family: 'Orbitron', monospace; font-weight: 600; font-size: 0.62rem; letter-spacing: 0.15em[...]
+.btn-void { border: 1px solid rgba(0,212,255,0.4); color: var(--nebula-teal); padding: 1rem 2.5rem; font-family: 'Orbitron', monospace; font-weight: 600; font-size: 0.62rem; letter-spacing: 0.15em; background: transparent; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-block; }
 .btn-void:hover { background: rgba(0,212,255,0.08); box-shadow: 0 0 30px rgba(0,212,255,0.2); }
 
 /* ORBIT STATS */
-.orbit-stats { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(4,1fr); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: rgba(0,[...]
+.orbit-stats { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(4,1fr); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: rgba(0,1,10,0.5); }
 .orbit-stat { padding: 2.5rem 2rem; text-align: center; border-right: 1px solid var(--border); position: relative; overflow: hidden; }
 .orbit-stat:last-child { border-right: none; }
-.orbit-stat::before { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 40%; height: 1px; background: linear-gradient(90deg, transparent, var(--nebula-teal[...]
+.orbit-stat::before { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 40%; height: 1px; background: linear-gradient(90deg, transparent, var(--nebula-teal), transparent); opacity: 0.6; }
 .orbit-num { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 1.8rem; color: var(--nebula-teal); text-shadow: 0 0 20px rgba(0,212,255,0.5); line-height: 1; }
 .orbit-label { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-top: 0.5rem; }
 
 /* SECTIONS */
 section { position: relative; z-index: 1; }
 .section-inner { padding: 7rem 4rem; max-width: 1400px; margin: 0 auto; }
-.section-tag { font-family: 'Orbitron', monospace; font-size: 0.58rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--nebula-teal); margin-bottom: 1.2rem; display: flex; align-ite[...]
-.section-tag::before { content: ''; font-size: 0.7rem; color: var(--pulsar); }
-.section-title { font-family: 'Orbitron', monospace; font-weight: 900; font-size: clamp(1.8rem,3.5vw,2.8rem); line-height: 1.15; letter-spacing: 0.03em; margin-bottom: 1rem; text-shadow: 0 0 30px [...]
+.section-tag { font-family: 'Orbitron', monospace; font-size: 0.58rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--nebula-teal); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.8rem; }
+.section-tag::before { content: ''; width: 12px; height: 2px; background: var(--pulsar); }
+.section-title { font-family: 'Orbitron', monospace; font-weight: 900; font-size: clamp(1.8rem,3.5vw,2.8rem); line-height: 1.15; letter-spacing: 0.03em; margin-bottom: 1rem; text-shadow: 0 0 30px rgba(123,47,255,0.2); }
 .section-desc { color: var(--starlight); font-size: 0.88rem; line-height: 1.9; max-width: 580px; margin-bottom: 3.5rem; font-weight: 300; }
 
 /* DASHBOARD */
 .dashboard-section { background: linear-gradient(180deg, var(--void) 0%, var(--nebula-dark) 100%); }
 .dashboard-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 3rem; }
-.dash-card { background: rgba(6,13,46,0.8); border: 1px solid var(--border); padding: 2rem; position: relative; overflow: hidden; transition: border-color 0.3s, transform 0.3s; cursor: none; }
-.dash-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--nebula-teal), transparent); opacity: 0; transitio[...]
+.dash-card { background: rgba(6,13,46,0.8); border: 1px solid var(--border); padding: 2rem; position: relative; overflow: hidden; transition: border-color 0.3s, transform 0.3s; cursor: pointer; }
+.dash-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--nebula-teal), transparent); opacity: 0; transition: opacity 0.3s; }
 .dash-card:hover { border-color: rgba(0,212,255,0.3); transform: translateY(-4px); }
 .dash-card:hover::after { opacity: 1; }
 .dash-icon { display: none; }
@@ -93,7 +93,7 @@ section { position: relative; z-index: 1; }
 .research-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 2px; background: var(--border); margin-top: 3rem; }
 .research-card { background: var(--deep-space); padding: 3rem; position: relative; overflow: hidden; transition: background 0.3s; }
 .research-card:hover { background: rgba(6,13,46,0.95); }
-.research-card::before { content: ''; position: absolute; top: 0; left: 0; width: 0; height: 3px; background: linear-gradient(90deg, var(--pulsar), var(--nebula-teal)); transition: width 0.5s ease[...]
+.research-card::before { content: ''; position: absolute; top: 0; left: 0; width: 0; height: 3px; background: linear-gradient(90deg, var(--pulsar), var(--nebula-teal)); transition: width 0.5s ease-out; }
 .research-card:hover::before { width: 100%; }
 .research-planet { width: 52px; height: 52px; border-radius: 50%; margin-bottom: 1.8rem; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; }
 .planet-1 { background: radial-gradient(circle at 35% 35%,#4a9eff,#0a2a6e); box-shadow: 0 0 20px rgba(74,158,255,0.4); }
@@ -103,13 +103,13 @@ section { position: relative; z-index: 1; }
 .research-title { font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.95rem; margin-bottom: 1rem; color: var(--stellar); letter-spacing: 0.03em; }
 .research-desc { font-size: 0.8rem; line-height: 1.8; color: var(--starlight); font-weight: 300; margin-bottom: 1.5rem; }
 .research-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-.rtag { font-family: 'Orbitron', monospace; font-size: 0.52rem; letter-spacing: 0.1em; padding: 0.28rem 0.65rem; border: 1px solid var(--border-purple); color: var(--pulsar); text-transform: uppe[...]
+.rtag { font-family: 'Orbitron', monospace; font-size: 0.52rem; letter-spacing: 0.1em; padding: 0.28rem 0.65rem; border: 1px solid var(--border-purple); color: var(--pulsar); text-transform: uppercase; }
 .rtag-teal { border-color: var(--border); color: var(--nebula-teal); }
 
 /* HARDWARE */
 .hardware-section { background: linear-gradient(180deg, var(--void) 0%, rgba(10,6,30,1) 100%); }
 .hardware-timeline { position: relative; margin-top: 4rem; }
-.hardware-timeline::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: linear-gradient(180deg, transparent, var(--nebula-teal), var(--pulsar), transpa[...]
+.hardware-timeline::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: linear-gradient(180deg, transparent, var(--nebula-teal), var(--pulsar), transparent); }
 .hw-item { display: grid; grid-template-columns: 1fr 60px 1fr; gap: 0; margin-bottom: 3rem; align-items: start; }
 .hw-item:nth-child(odd) .hw-content { grid-column: 1; text-align: right; padding-right: 3rem; }
 .hw-item:nth-child(odd) .hw-empty { grid-column: 3; }
@@ -132,11 +132,11 @@ section { position: relative; z-index: 1; }
 .ring-1 { width: 300px; height: 300px; border-color: rgba(0,212,255,0.2); animation-duration: 20s; }
 .ring-2 { width: 220px; height: 220px; border-color: rgba(123,47,255,0.3); animation-duration: 15s; animation-direction: reverse; }
 .ring-3 { width: 140px; height: 140px; border-color: rgba(0,212,255,0.4); animation-duration: 10s; }
-.ring-dot { position: absolute; width: 8px; height: 8px; border-radius: 50%; background: var(--nebula-teal); box-shadow: 0 0 10px var(--nebula-teal); top: -4px; left: 50%; transform: translateX(-[...]
+.ring-dot { position: absolute; width: 8px; height: 8px; border-radius: 50%; background: var(--nebula-teal); box-shadow: 0 0 10px var(--nebula-teal); top: -4px; left: 50%; transform: translateX(-50%); }
 .ring-dot-2 { background: var(--pulsar); box-shadow: 0 0 10px var(--pulsar); }
-.ai-core { width: 80px; height: 80px; border-radius: 50%; background: radial-gradient(circle, rgba(123,47,255,0.8), rgba(0,212,255,0.4)); box-shadow: 0 0 40px rgba(123,47,255,0.6), 0 0 80px rgba([...]
+.ai-core { width: 80px; height: 80px; border-radius: 50%; background: radial-gradient(circle, rgba(123,47,255,0.8), rgba(0,212,255,0.4)); box-shadow: 0 0 40px rgba(123,47,255,0.6), 0 0 80px rgba(0,212,255,0.3); }
 .ai-features { display: flex; flex-direction: column; gap: 1.5rem; }
-.ai-feature { display: flex; gap: 1.5rem; align-items: flex-start; padding: 1.5rem; background: rgba(6,13,46,0.6); border: 1px solid var(--border); border-left: 3px solid var(--pulsar); transitio[...]
+.ai-feature { display: flex; gap: 1.5rem; align-items: flex-start; padding: 1.5rem; background: rgba(6,13,46,0.6); border: 1px solid var(--border); border-left: 3px solid var(--pulsar); transition: all 0.3s; }
 .ai-feature:hover { background: rgba(6,13,46,0.9); }
 .ai-feature-icon { display: none; }
 .ai-feature-title { font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.78rem; color: var(--stellar); margin-bottom: 0.4rem; letter-spacing: 0.04em; }
@@ -147,15 +147,14 @@ section { position: relative; z-index: 1; }
 .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem; }
 .course-card { background: rgba(6,13,46,0.9); border: 1px solid rgba(123,47,255,0.3); padding: 3rem; position: relative; overflow: hidden; }
 .course-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--pulsar), var(--nebula-teal)); }
-.course-card::after { content: ''; position: absolute; top: -100px; right: -100px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(123,47,255,0.08) 0%, transparent 70%); poi[...]
-.course-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(123,47,255,0.15); border: 1px solid rgba(123,47,255,0.3); color: var(--pulsar); font-family: 'Orbitron', m[...]
+.course-card::after { content: ''; position: absolute; top: -100px; right: -100px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(123,47,255,0.08) 0%, transparent 70%); pointer-events: none; }
+.course-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(123,47,255,0.15); border: 1px solid rgba(123,47,255,0.3); color: var(--pulsar); font-family: 'Orbitron', monospace; font-size: 0.58rem; padding: 0.4rem 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; }
 .course-badge::before { content: ''; animation: pulse 2s infinite; }
 .course-title { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 1.2rem; line-height: 1.3; margin-bottom: 1rem; letter-spacing: 0.03em; }
 .course-title em { font-family: 'Playfair Display', serif; color: var(--nebula-teal); font-style: italic; font-size: 1.3em; }
 .course-desc { font-size: 0.8rem; line-height: 1.8; color: var(--starlight); font-weight: 300; margin-bottom: 2rem; }
 .modules-list { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 2rem; }
-.module-row { display: flex; align-items: center; gap: 0.8rem; font-size: 0.73rem; color: var(--starlight); padding: 0.55rem 0.8rem; background: rgba(0,0,0,0.3); border-left: 2px solid rgba(0,212[...]
-.module-row::before { content: ''; color: var(--nebula-teal); font-size: 0.6rem; flex-shrink: 0; }
+.module-row { display: flex; align-items: center; gap: 0.8rem; font-size: 0.73rem; color: var(--starlight); padding: 0.55rem 0.8rem; background: rgba(0,0,0,0.3); border-left: 2px solid rgba(0,212,255,0.3); }
 .course-price-block { display: flex; align-items: baseline; gap: 0.8rem; margin-bottom: 1.5rem; }
 .price-big { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 3rem; color: var(--nebula-teal); text-shadow: 0 0 20px rgba(0,212,255,0.4); line-height: 1; }
 .price-note { font-size: 0.7rem; color: var(--muted); line-height: 1.6; }
@@ -172,7 +171,7 @@ section { position: relative; z-index: 1; }
 .about-text p { font-size: 0.87rem; line-height: 1.9; color: var(--starlight); font-weight: 300; margin-bottom: 1.5rem; }
 .about-text strong { color: var(--nebula-teal); font-weight: 600; }
 .about-visual { position: relative; display: flex; align-items: center; justify-content: center; height: 380px; }
-.galaxy-core { width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, rgba(0,212,255,0.9) 0%, rgba(123,47,255,0.6) 40%, transparent 70%); box-shadow: 0 0 60px rgba(0[...]
+.galaxy-core { width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, rgba(0,212,255,0.9) 0%, rgba(123,47,255,0.6) 40%, transparent 70%); box-shadow: 0 0 60px rgba(0,212,255,0.4); font-family: 'Orbitron', monospace; font-weight: 900; font-size: 0.7rem; color: var(--stellar); display: flex; align-items: center; justify-content: center; text-align: center; padding: 1rem; line-height: 1.2; }
 .galaxy-arm { position: absolute; border-radius: 50%; border: 1px dashed; animation: ring-rotate linear infinite; }
 .arm-1 { width: 200px; height: 200px; border-color: rgba(0,212,255,0.2); animation-duration: 25s; }
 .arm-2 { width: 280px; height: 280px; border-color: rgba(123,47,255,0.15); animation-duration: 35s; animation-direction: reverse; }
@@ -191,11 +190,11 @@ section { position: relative; z-index: 1; }
 .contact-section { background: linear-gradient(180deg, var(--void), var(--nebula-dark)); }
 .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
 .form-label { font-family: 'Orbitron', monospace; font-size: 0.56rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 0.4rem; }
-.form-input, .form-select, .form-textarea { background: rgba(6,13,46,0.8); border: 1px solid var(--border); color: var(--stellar); padding: 0.85rem 1rem; font-family: 'Raleway', sans-serif; font-[...]
+.form-input, .form-select, .form-textarea { background: rgba(6,13,46,0.8); border: 1px solid var(--border); color: var(--stellar); padding: 0.85rem 1rem; font-family: 'Raleway', sans-serif; font-size: 0.75rem; width: 100%; }
 .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--nebula-teal); box-shadow: 0 0 12px rgba(0,212,255,0.1); outline: none; }
 .form-select option { background: var(--deep-space); }
 .form-textarea { resize: vertical; min-height: 110px; }
-.form-btn { background: linear-gradient(135deg, var(--pulsar), var(--nebula-teal)); color: var(--void); border: none; padding: 1rem 2.5rem; font-family: 'Orbitron', monospace; font-weight: 700; f[...]
+.form-btn { background: linear-gradient(135deg, var(--pulsar), var(--nebula-teal)); color: var(--void); border: none; padding: 1rem 2.5rem; font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.62rem; letter-spacing: 0.12em; cursor: pointer; transition: all 0.3s; width: 100%; }
 .form-btn:hover { box-shadow: 0 0 40px rgba(123,47,255,0.5); transform: translateY(-2px); }
 #form-success { display: none; border: 1px solid rgba(0,212,255,0.3); padding: 2.5rem; background: rgba(0,212,255,0.04); text-align: center; }
 #form-error { display: none; margin-top: 0.8rem; font-size: 0.73rem; color: var(--nova); }
@@ -206,7 +205,7 @@ section { position: relative; z-index: 1; }
 .contact-val { font-size: 0.83rem; color: var(--stellar); }
 
 /* FOOTER */
-footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 2.5rem 4rem; display: flex; align-items: center; justify-content: space-between; background: rgba(0,1,10,0.9[...]
+footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 2.5rem 4rem; display: flex; align-items: center; justify-content: space-between; background: rgba(0,1,10,0.95); }
 .footer-logo { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 0.9rem; letter-spacing: 0.1em; }
 .footer-logo span { color: var(--nebula-teal); }
 .footer-reg { font-size: 0.6rem; color: var(--muted); margin-top: 0.3rem; }
@@ -217,7 +216,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
 
 /* ANIMATIONS */
 @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
-@keyframes blackhole-pulse { 0%,100% { box-shadow:0 0 80px 30px rgba(123,47,255,0.2),0 0 160px 60px rgba(0,212,255,0.08); } 50% { box-shadow:0 0 120px 50px rgba(123,47,255,0.3),0 0 220px 80px rgb[...]
+@keyframes blackhole-pulse { 0%,100% { box-shadow:0 0 80px 30px rgba(123,47,255,0.2),0 0 160px 60px rgba(0,212,255,0.08); } 50% { box-shadow:0 0 120px 50px rgba(123,47,255,0.3),0 0 220px 80px rgba(0,212,255,0.12); } }
 @keyframes disk-rotate { from { transform:translate(-50%,-63%) rotateX(75deg) rotateZ(0deg); } to { transform:translate(-50%,-63%) rotateX(75deg) rotateZ(360deg); } }
 @keyframes orbit-pulse { 0%,100% { box-shadow:0 0 12px rgba(0,212,255,0.3); } 50% { box-shadow:0 0 24px rgba(0,212,255,0.6); } }
 @keyframes ring-rotate { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
@@ -272,7 +271,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
     <span class="t2">QUANTUM</span>
     <span class="t3">LIMITED</span>
   </h1>
-  <p class="hero-sub">A UK-based quantum technology company at the frontier of quantum computing research, quantum information science, AI-quantum convergence, and next-generation hardware archit[...]
+  <p class="hero-sub">A UK-based quantum technology company at the frontier of quantum computing research, quantum information science, AI-quantum convergence, and next-generation hardware architecture.</p>
   <div class="hero-actions">
     <a href="#research" class="btn-cosmos">Explore Research</a>
     <a href="#education" class="btn-void">Our Courses →</a>
@@ -339,31 +338,31 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
   <div class="section-inner">
     <div class="section-tag">Research Domains</div>
     <h2 class="section-title reveal">What We Research</h2>
-    <p class="section-desc reveal">Our research spans the full quantum computing landscape — from foundational quantum information theory to applied quantum algorithms and hardware-software int[...]
+    <p class="section-desc reveal">Our research spans the full quantum computing landscape — from foundational quantum information theory to applied quantum algorithms and hardware-software integration.</p>
     <div class="research-grid reveal">
       <div class="research-card">
         <div class="research-planet planet-1"></div>
         <div class="research-title">Quantum Information Science</div>
-        <div class="research-desc">Exploring the fundamental principles of quantum information — superposition, entanglement, quantum measurement, and decoherence. We study Bell states, quantum[...]
-        <div class="research-tags"><span class="rtag rtag-teal">Bell States</span><span class="rtag rtag-teal">Entanglement</span><span class="rtag rtag-teal">Quantum Teleportation</span><span cl[...]
+        <div class="research-desc">Exploring the fundamental principles of quantum information — superposition, entanglement, quantum measurement, and decoherence. We study Bell states, quantum teleportation, and quantum cryptography.</div>
+        <div class="research-tags"><span class="rtag rtag-teal">Bell States</span><span class="rtag rtag-teal">Entanglement</span><span class="rtag rtag-teal">Quantum Teleportation</span></div>
       </div>
       <div class="research-card">
         <div class="research-planet planet-2"></div>
         <div class="research-title">Quantum Algorithms & Optimisation</div>
-        <div class="research-desc">Researching near-term quantum algorithms designed for NISQ-era hardware. Our focus includes QAOA (Quantum Approximate Optimisation Algorithm) for combinatorial [...]
-        <div class="research-tags"><span class="rtag">QAOA</span><span class="rtag">VQE</span><span class="rtag">Quantum Annealing</span><span class="rtag">Quantum Advantage</span><span class="rt[...]
+        <div class="research-desc">Researching near-term quantum algorithms designed for NISQ-era hardware. Our focus includes QAOA (Quantum Approximate Optimisation Algorithm) for combinatorial optimisation problems.</div>
+        <div class="research-tags"><span class="rtag">QAOA</span><span class="rtag">VQE</span><span class="rtag">Quantum Annealing</span><span class="rtag">Quantum Advantage</span></div>
       </div>
       <div class="research-card">
         <div class="research-planet planet-3"></div>
         <div class="research-title">Post-Quantum Cryptography</div>
-        <div class="research-desc">Investigating the threat quantum computing poses to current encryption standards and the transition to quantum-safe cryptography. We track NIST's 2024 post-quan[...]
-        <div class="research-tags"><span class="rtag">NIST PQC 2024</span><span class="rtag">Lattice Cryptography</span><span class="rtag">Quantum-Safe Security</span><span class="rtag">Shor's Al[...]
+        <div class="research-desc">Investigating the threat quantum computing poses to current encryption standards and the transition to quantum-safe cryptography. We track NIST's 2024 post-quantum cryptography standards.</div>
+        <div class="research-tags"><span class="rtag">NIST PQC 2024</span><span class="rtag">Lattice Cryptography</span><span class="rtag">Quantum-Safe Security</span><span class="rtag">Shor's Algorithm</span></div>
       </div>
       <div class="research-card">
         <div class="research-planet planet-4"></div>
         <div class="research-title">Quantum Error Correction</div>
-        <div class="research-desc">Studying the path from today's noisy NISQ systems to fault-tolerant quantum computers. Our research covers surface codes, stabiliser codes, and logical qubit en[...]
-        <div class="research-tags"><span class="rtag rtag-teal">Surface Codes</span><span class="rtag rtag-teal">Fault Tolerance</span><span class="rtag rtag-teal">Logical Qubits</span><span clas[...]
+        <div class="research-desc">Studying the path from today's noisy NISQ systems to fault-tolerant quantum computers. Our research covers surface codes, stabiliser codes, and logical qubit encoding.</div>
+        <div class="research-tags"><span class="rtag rtag-teal">Surface Codes</span><span class="rtag rtag-teal">Fault Tolerance</span><span class="rtag rtag-teal">Logical Qubits</span></div>
       </div>
     </div>
   </div>
@@ -392,7 +391,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
         <div class="hw-content">
           <div class="hw-name">Trapped Ion Qubits</div>
           <div class="hw-type">Highest Fidelity</div>
-          <div class="hw-desc">Individual atoms suspended in electromagnetic fields and manipulated with precision lasers. Slower gate operations than superconducting systems but significantly hi[...]
+          <div class="hw-desc">Individual atoms suspended in electromagnetic fields and manipulated with precision lasers. Slower gate operations than superconducting systems but significantly higher fidelity.</div>
           <div class="hw-companies">Key players: IonQ · Quantinuum · Oxford Ionics</div>
         </div>
       </div>
@@ -400,7 +399,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
         <div class="hw-content">
           <div class="hw-name">Neutral Atom Qubits</div>
           <div class="hw-type">High Scalability Potential</div>
-          <div class="hw-desc">Atoms held in place by optical tweezer arrays — laser traps that can hold and rearrange thousands of qubits with high precision. Highly reconfigurable and natural[...]
+          <div class="hw-desc">Atoms held in place by optical tweezer arrays — laser traps that can hold and rearrange thousands of qubits with high precision. Highly reconfigurable and naturally scalable.</div>
           <div class="hw-companies">Key players: QuEra · Pasqal · Atom Computing</div>
         </div>
         <div class="hw-node"><div class="hw-dot"></div></div>
@@ -412,7 +411,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
         <div class="hw-content">
           <div class="hw-name">Photonic Quantum Computing</div>
           <div class="hw-type">Room Temperature Operation</div>
-          <div class="hw-desc">Uses photons (particles of light) as qubits — the only platform operating at room temperature, making it potentially the most practical for large-scale deployment[...]
+          <div class="hw-desc">Uses photons (particles of light) as qubits — the only platform operating at room temperature, making it potentially the most practical for large-scale deployment.</div>
           <div class="hw-companies">Key players: PsiQuantum · Xanadu · QuiX Quantum</div>
         </div>
       </div>
@@ -420,7 +419,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
         <div class="hw-content">
           <div class="hw-name">Quantum Annealing</div>
           <div class="hw-type">Specialised Optimisation</div>
-          <div class="hw-desc">Specifically designed for solving optimisation problems by finding the lowest energy state of a system. Commercially the most deployed form of quantum computing tod[...]
+          <div class="hw-desc">Specifically designed for solving optimisation problems by finding the lowest energy state of a system. Commercially the most deployed form of quantum computing today.</div>
           <div class="hw-companies">Key players: D-Wave Systems</div>
         </div>
         <div class="hw-node"><div class="hw-dot"></div></div>
@@ -448,7 +447,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
           <div class="ai-feature-icon"></div>
           <div>
             <div class="ai-feature-title">Quantum Machine Learning (QML)</div>
-            <div class="ai-feature-desc">Researching how quantum circuits can be used as trainable models — variational quantum classifiers, quantum neural networks, and quantum kernel methods.[...]
+            <div class="ai-feature-desc">Researching how quantum circuits can be used as trainable models — variational quantum classifiers, quantum neural networks, and quantum kernel methods.</div>
           </div>
         </div>
         <div class="ai-feature">
@@ -462,7 +461,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
           <div class="ai-feature-icon"></div>
           <div>
             <div class="ai-feature-title">AI-Assisted Quantum Development</div>
-            <div class="ai-feature-desc">Investigating how classical AI and large language models are being used to design quantum circuits, optimise error correction, and accelerate quantum algo[...]
+            <div class="ai-feature-desc">Investigating how classical AI and large language models are being used to design quantum circuits, optimise error correction, and accelerate quantum algorithm development.</div>
           </div>
         </div>
         <div class="ai-feature">
@@ -532,15 +531,15 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
         <div class="section-tag">About</div>
         <h2 class="section-title reveal">Diarka Quantum Limited</h2>
         <div class="about-text reveal">
-          <p>Diarka Quantum Limited is a <strong>UK-based quantum technology company</strong> dedicated to quantum computing research, quantum information science, and building educational progra[...]
+          <p>Diarka Quantum Limited is a <strong>UK-based quantum technology company</strong> dedicated to quantum computing research, quantum information science, and building educational programmes that prepare professionals and organisations for the quantum era.</p>
           <p>We operate at the frontier of <strong>quantum hardware research</strong> — tracking and studying all major quantum computing platforms.</p>
           <p>Our research spans <strong>quantum information theory, quantum algorithms, AI-quantum convergence, and post-quantum cryptography</strong>.</p>
           <p>We believe the organisations that begin understanding quantum computing <strong>today</strong> will be the ones leading when the technology fully matures.</p>
         </div>
         <div class="values-list reveal">
-          <div class="value-item"><div class="value-icon"></div><div><div class="value-title">Research-First</div><div class="value-desc">Everything we do is grounded in genuine research and indu[...]
-          <div class="value-item"><div class="value-icon"></div><div><div class="value-title">Accessible Science</div><div class="value-desc">We translate frontier quantum science into knowledge [...]
-          <div class="value-item"><div class="value-icon"></div><div><div class="value-title">Future-Oriented</div><div class="value-desc">We think in decades, not quarters — building capabilit[...]
+          <div class="value-item"><div class="value-icon"></div><div><div class="value-title">Research-First</div><div class="value-desc">Everything we do is grounded in genuine research and industry insight, not speculation.</div></div></div>
+          <div class="value-item"><div class="value-icon"></div><div><div class="value-title">Accessible Science</div><div class="value-desc">We translate frontier quantum science into knowledge accessible to non-physicists.</div></div></div>
+          <div class="value-item"><div class="value-icon"></div><div><div class="value-title">Future-Oriented</div><div class="value-desc">We think in decades, not quarters — building capabilities ahead of disruption.</div></div></div>
         </div>
       </div>
       <div class="about-visual reveal">
@@ -562,7 +561,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
     <div class="contact-grid reveal">
       <div>
         <div id="form-success">
-          <div style="font-size:2rem;margin-bottom:1rem">Message sent successfully</div>
+          <div style="font-size:1.5rem;margin-bottom:1rem">Message sent successfully</div>
           <div style="font-family:'Orbitron',monospace;font-weight:700;font-size:1rem;color:var(--nebula-teal);margin-bottom:0.5rem">Message Transmitted</div>
           <div style="font-size:0.78rem;color:var(--starlight)">Thank you for reaching out. We will respond within 24 hours.</div>
         </div>
@@ -593,11 +592,11 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
         <div style="padding:2rem;border:1px solid var(--border-purple);background:rgba(123,47,255,0.05);margin-top:0.5rem">
           <div style="font-family:'Orbitron',monospace;font-size:0.56rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--pulsar);margin-bottom:1.2rem">Collaboration Areas</div>
           <div style="display:flex;flex-direction:column;gap:0.8rem">
-            <div style="display:flex;align-items:center;gap:0.8rem;font-size:0.75rem;color:var(--starlight)"><span style="color:var(--nebula-teal)">-</span>Quantum Research Partnerships</div>
-            <div style="display:flex;align-items:center;gap:0.8rem;font-size:0.75rem;color:var(--starlight)"><span style="color:var(--nebula-teal)">-</span>Academic & Industry Collaborations</div>
-            <div style="display:flex;align-items:center;gap:0.8rem;font-size:0.75rem;color:var(--starlight)"><span style="color:var(--nebula-teal)">-</span>Quantum Education Delivery</div>
-            <div style="display:flex;align-items:center;gap:0.8rem;font-size:0.75rem;color:var(--starlight)"><span style="color:var(--nebula-teal)">-</span>Post-Quantum Security Advisory</div>
-            <div style="display:flex;align-items:center;gap:0.8rem;font-size:0.75rem;color:var(--starlight)"><span style="color:var(--nebula-teal)">-</span>AI-Quantum Convergence Projects</div>
+            <div style="display:flex;align-items:center;gap:0.8rem;font-size:0.75rem;color:var(--starlight)"><span style="color:var(--nebula-teal)">-</span> Quantum Research Partnerships</div>
+            <div style="display:flex;align-items:center;gap:0.8rem;font-size:0.75rem;color:var(--starlight)"><span style="color:var(--nebula-teal)">-</span> Academic & Industry Collaborations</div>
+            <div style="display:flex;align-items:center;gap:0.8rem;font-size:0.75rem;color:var(--starlight)"><span style="color:var(--nebula-teal)">-</span> Quantum Education Delivery</div>
+            <div style="display:flex;align-items:center;gap:0.8rem;font-size:0.75rem;color:var(--starlight)"><span style="color:var(--nebula-teal)">-</span> Post-Quantum Security Advisory</div>
+            <div style="display:flex;align-items:center;gap:0.8rem;font-size:0.75rem;color:var(--starlight)"><span style="color:var(--nebula-teal)">-</span> AI-Quantum Convergence Projects</div>
           </div>
         </div>
       </div>
@@ -640,10 +639,10 @@ setInterval(()=>{ if(shooters.length<3) shooters.push({x:Math.random()*W,y:Math.
 
 function draw(){
   ctx.clearRect(0,0,W,H);
-  nebulae.forEach(n=>{ const g=ctx.createRadialGradient(n.x*W,n.y*H,0,n.x*W,n.y*H,n.r); g.addColorStop(0,`rgba(${n.col},${n.alpha})`); g.addColorStop(1,'transparent'); ctx.fillStyle=g; ctx.beginP[...]
-  stars.forEach(s=>{ s.tw+=s.sp; const a=s.alpha*(0.6+0.4*Math.sin(s.tw)); ctx.beginPath(); ctx.arc(s.x*W,s.y*H,s.r,0,Math.PI*2); ctx.fillStyle=s.r>0.9?`rgba(180,220,255,${a})`:`rgba(255,255,255,[...]
+  nebulae.forEach(n=>{ const g=ctx.createRadialGradient(n.x*W,n.y*H,0,n.x*W,n.y*H,n.r); g.addColorStop(0,`rgba(${n.col},${n.alpha})`); g.addColorStop(1,'transparent'); ctx.fillStyle=g; ctx.beginPath(); ctx.arc(n.x*W,n.y*H,n.r,0,Math.PI*2); ctx.fill(); });
+  stars.forEach(s=>{ s.tw+=s.sp; const a=s.alpha*(0.6+0.4*Math.sin(s.tw)); ctx.beginPath(); ctx.arc(s.x*W,s.y*H,s.r,0,Math.PI*2); ctx.fillStyle=s.r>0.9?`rgba(180,220,255,${a})`:`rgba(255,255,255,${a})`; ctx.fill(); });
   shooters=shooters.filter(s=>s.life>0);
-  shooters.forEach(s=>{ ctx.beginPath(); ctx.moveTo(s.x,s.y); ctx.lineTo(s.x-s.vx*s.len*s.life,s.y-s.vy*s.len*s.life); const g=ctx.createLinearGradient(s.x,s.y,s.x-s.vx*s.len,s.y-s.vy*s.len); g.a[...]
+  shooters.forEach(s=>{ ctx.beginPath(); ctx.moveTo(s.x,s.y); ctx.lineTo(s.x-s.vx*s.len*s.life,s.y-s.vy*s.len*s.life); const g=ctx.createLinearGradient(s.x,s.y,s.x-s.vx*s.len,s.y-s.vy*s.len); g.addColorStop(0,'rgba(0,212,255,0.8)'); g.addColorStop(1,'rgba(0,212,255,0)'); ctx.strokeStyle=g; ctx.lineWidth=2; ctx.stroke(); s.life-=0.02; });
   requestAnimationFrame(draw);
 }
 draw();
