@@ -28,7 +28,7 @@ body { background: var(--void); color: var(--stellar); font-family: 'Raleway', s
 
 /* CURSOR */
 .cursor { width: 8px; height: 8px; background: var(--teal); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; box-shadow: 0 0 10px var(--teal); }
-.cursor-ring { width: 28px; height: 28px; border: 1px solid rgba(0,212,255,0.4); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; transition: transform 0.35s ease; }
+.cursor-ring { width: 28px; height: 28px; border: 1px solid rgba(0,212,255,0.4); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; transition: transform 0.05s; }
 
 /* PROGRESS BAR */
 .progress-bar { position: fixed; top: 0; left: 0; height: 2px; background: linear-gradient(90deg, var(--pulsar), var(--teal)); z-index: 200; width: 0%; transition: width 0.1s; }
@@ -37,19 +37,19 @@ body { background: var(--void); color: var(--stellar); font-family: 'Raleway', s
 #universe { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.5; }
 
 /* NAV */
-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 3rem; display: flex; align-items: center; justify-content: space-between; background: rgba(0,1,10,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
-.nav-logo { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 0.85rem; letter-spacing: 0.12em; text-decoration: none; color: var(--stellar); display: flex; align-items: center; gap: 0.6rem; }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 3rem; display: flex; align-items: center; justify-content: space-between; background: rgba(0,1,10,0.95); backdrop-filter: blur(10px); }
+.nav-logo { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 0.85rem; letter-spacing: 0.12em; text-decoration: none; color: var(--stellar); display: flex; align-items: center; gap: 0.3rem; }
 .nav-logo span { color: var(--teal); }
-.nav-back { font-family: 'Orbitron', monospace; font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; display: flex; align-items: center; gap: 0.5rem; }
+.nav-back { font-family: 'Orbitron', monospace; font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; display: flex; align-items: center; gap: 0.4rem; }
 .nav-back:hover { color: var(--teal); }
 .nav-module-label { font-family: 'Orbitron', monospace; font-size: 0.58rem; letter-spacing: 0.15em; color: var(--teal); text-transform: uppercase; }
 
 /* HERO */
-.module-hero { position: relative; z-index: 1; padding: 9rem 2rem 5rem; text-align: center; border-bottom: 1px solid var(--border); background: linear-gradient(180deg, rgba(6,13,46,0.4) 0%, transparent 100%); }
-.module-badge { display: inline-flex; align-items: center; gap: 0.6rem; background: rgba(0,212,255,0.08); border: 1px solid var(--border); color: var(--teal); font-family: 'Orbitron', monospace; font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; padding: 0.4rem 1rem; margin-bottom: 2rem; }
-.module-badge::before { content: '◈'; animation: pulse 2s infinite; }
-.module-number { font-family: 'Orbitron', monospace; font-weight: 900; font-size: clamp(4rem, 12vw, 9rem); line-height: 0.9; color: transparent; -webkit-text-stroke: 1px rgba(0,212,255,0.15); margin-bottom: 1rem; letter-spacing: -0.02em; }
-.module-title { font-family: 'Orbitron', monospace; font-weight: 900; font-size: clamp(1.6rem, 4vw, 3rem); line-height: 1.15; letter-spacing: 0.02em; max-width: 800px; margin: 0 auto 1.5rem; text-shadow: 0 0 40px rgba(0,212,255,0.2); }
+.module-hero { position: relative; z-index: 1; padding: 9rem 2rem 5rem; text-align: center; border-bottom: 1px solid var(--border); background: linear-gradient(180deg, rgba(6,13,46,0.4) 0%, transparent); }
+.module-badge { display: inline-flex; align-items: center; gap: 0.6rem; background: rgba(0,212,255,0.08); border: 1px solid var(--border); color: var(--teal); font-family: 'Orbitron', monospace; font-size: 0.55rem; letter-spacing: 0.15em; padding: 0.7rem 1.2rem; margin-bottom: 2rem; }
+.module-badge::before { content: ''; animation: pulse 2s infinite; }
+.module-number { font-family: 'Orbitron', monospace; font-weight: 900; font-size: clamp(4rem, 12vw, 9rem); line-height: 0.9; color: transparent; -webkit-text-stroke: 1px rgba(0,212,255,0.15); margin-bottom: 1rem; }
+.module-title { font-family: 'Orbitron', monospace; font-weight: 900; font-size: clamp(1.6rem, 4vw, 3rem); line-height: 1.15; letter-spacing: 0.02em; max-width: 800px; margin: 0 auto 1.5rem; text-shadow: 0 0 30px rgba(0,212,255,0.3); }
 .module-title .hl { color: var(--teal); }
 .module-subtitle { font-family: 'Lora', serif; font-style: italic; font-size: 1.1rem; color: var(--starlight); max-width: 600px; margin: 0 auto 3rem; line-height: 1.6; font-weight: 400; }
 .module-meta { display: flex; align-items: center; justify-content: center; gap: 2.5rem; flex-wrap: wrap; }
@@ -111,7 +111,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 3r
 
 /* COMPARISON TABLE */
 .compare-table { width: 100%; border-collapse: collapse; margin: 2.5rem 0; font-size: 0.85rem; }
-.compare-table th { background: rgba(6,13,46,0.9); font-family: 'Orbitron', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 1rem 1.2rem; text-align: left; border-bottom: 2px solid var(--border); }
+.compare-table th { background: rgba(6,13,46,0.9); font-family: 'Orbitron', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 1rem 1.2rem; text-align: left; border-bottom: 1px solid var(--border); }
 .compare-table th:first-child { color: var(--muted); }
 .compare-table th:nth-child(2) { color: var(--teal); }
 .compare-table th:nth-child(3) { color: var(--pulsar); }
@@ -135,7 +135,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 3r
 .quiz-label { font-family: 'Orbitron', monospace; font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
 .quiz-q { font-family: 'Lora', serif; font-size: 1rem; color: var(--stellar); margin-bottom: 1.5rem; line-height: 1.6; font-weight: 600; }
 .quiz-options { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1.5rem; }
-.quiz-option { background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 0.9rem 1.2rem; font-family: 'Raleway', sans-serif; font-size: 0.85rem; color: var(--starlight); cursor: none; transition: border-color 0.2s, background 0.2s; display: flex; align-items: center; gap: 0.8rem; }
+.quiz-option { background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 0.9rem 1.2rem; font-family: 'Raleway', sans-serif; font-size: 0.85rem; color: var(--starlight); cursor: pointer; transition: all 0.2s; }
 .quiz-option:hover { border-color: rgba(0,212,255,0.3); background: rgba(0,212,255,0.04); }
 .quiz-option.correct { border-color: var(--teal); background: rgba(0,212,255,0.08); color: var(--teal); }
 .quiz-option.wrong { border-color: var(--nova); background: rgba(255,107,53,0.06); color: var(--nova); }
@@ -147,7 +147,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 3r
 .summary-label { font-family: 'Orbitron', monospace; font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--teal); margin-bottom: 1rem; }
 .summary-points { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
 .summary-points li { display: flex; gap: 0.8rem; align-items: flex-start; font-size: 0.83rem; line-height: 1.65; color: var(--starlight); }
-.summary-points li::before { content: '◈'; color: var(--teal); font-size: 0.6rem; flex-shrink: 0; margin-top: 0.25rem; }
+.summary-points li::before { content: ''; color: var(--teal); font-size: 0.6rem; flex-shrink: 0; margin-top: 0.25rem; }
 
 /* DIVIDER */
 .section-divider { display: flex; align-items: center; gap: 1.5rem; margin: 4rem 0; }
@@ -171,9 +171,9 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 3r
 .mp-item.unlocked .mp-title { color: var(--stellar); }
 .mp-item.unlocked .mp-lock { color: var(--teal); }
 .gate-form { display: flex; flex-direction: column; gap: 1rem; max-width: 420px; margin: 0 auto; }
-.gate-input { background: rgba(6,13,46,0.9); border: 1px solid var(--border-p); color: var(--stellar); padding: 1rem 1.2rem; font-family: 'Raleway', sans-serif; font-size: 0.88rem; outline: none; width: 100%; transition: border-color 0.2s; }
+.gate-input { background: rgba(6,13,46,0.9); border: 1px solid var(--border-p); color: var(--stellar); padding: 1rem 1.2rem; font-family: 'Raleway', sans-serif; font-size: 0.88rem; outline: none; transition: border 0.2s; }
 .gate-input:focus { border-color: var(--pulsar); }
-.gate-btn { background: linear-gradient(135deg, var(--pulsar), var(--teal)); color: var(--void); border: none; padding: 1.1rem 2.5rem; font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: none; transition: all 0.3s; box-shadow: 0 0 24px rgba(123,47,255,0.4); clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%); }
+.gate-btn { background: linear-gradient(135deg, var(--pulsar), var(--teal)); color: var(--void); border: none; padding: 1.1rem 2.5rem; font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.72rem; letter-spacing: 0.12em; cursor: pointer; transition: all 0.3s; }
 .gate-btn:hover { box-shadow: 0 0 40px rgba(123,47,255,0.6); transform: translateY(-2px); }
 .gate-note { font-size: 0.68rem; color: var(--muted); margin-top: 0.5rem; }
 #gate-success { display: none; padding: 2rem; border: 1px solid rgba(0,212,255,0.3); background: rgba(0,212,255,0.04); }
@@ -181,7 +181,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 3r
 #gate-success p { font-family: 'Lora', serif; font-size: 0.88rem; color: var(--starlight); }
 
 /* FOOTER */
-footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; background: rgba(0,1,10,0.98); flex-wrap: wrap; gap: 1rem; }
+footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; background: rgba(0,1,10,0.98); }
 .footer-logo { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 0.85rem; color: var(--stellar); }
 .footer-logo span { color: var(--teal); }
 .footer-copy { font-size: 0.62rem; color: var(--muted); }
@@ -193,7 +193,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
 .reveal.visible { opacity:1; transform:none; }
 
 @media(max-width:768px){
-  nav{padding:1rem 1.5rem} .content-wrap{padding:4rem 1.2rem 2rem} .stat-row{grid-template-columns:1fr} .compare-table{font-size:0.75rem} .compare-table td,.compare-table th{padding:0.7rem 0.8rem} footer{flex-direction:column;padding:1.5rem}
+  nav{padding:1rem 1.5rem} .content-wrap{padding:4rem 1.2rem 2rem} .stat-row{grid-template-columns:1fr} .compare-table{font-size:0.75rem} .compare-table td,.compare-table th{padding:0.7rem 0.8rem}
 }
 </style>
 </head>
@@ -217,10 +217,10 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
   <h1 class="module-title">Why Classical Computers Hit a <span class="hl">Fundamental Wall</span></h1>
   <p class="module-subtitle">The story of how the most powerful machines ever built ran into the laws of physics — and why that opened the door to something extraordinary.</p>
   <div class="module-meta">
-    <div class="meta-item">⏱ Read time: <span>25 min</span></div>
-    <div class="meta-item">📖 Chapters: <span>5</span></div>
-    <div class="meta-item">🎯 Level: <span>Beginner</span></div>
-    <div class="meta-item">✅ Status: <span>Free</span></div>
+    <div class="meta-item">Read time: <span>25 min</span></div>
+    <div class="meta-item">Chapters: <span>5</span></div>
+    <div class="meta-item">Level: <span>Beginner</span></div>
+    <div class="meta-item">Status: <span>Free</span></div>
   </div>
 </div>
 
@@ -246,20 +246,20 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
       <h2 class="ch-title">The Machine That <span class="hl">Conquered the World</span></h2>
     </div>
     <div class="prose">
-      <p>Imagine you could give any question to the most powerful machine humanity has ever built and get an answer within seconds. Stock market predictions. Weather forecasts. Medical diagnoses. The classical computer — the device you're reading this on right now — has done more to reshape human civilisation than any invention since the printing press.</p>
-      <p>But here's the thing nobody tells you: <strong>the classical computer is fundamentally a counting machine.</strong> An extraordinarily fast, extraordinarily precise, extraordinarily miniaturised counting machine — but a counting machine nonetheless.</p>
-      <p>At its core, every classical computer — whether it's the supercomputer at a hedge fund processing millions of trades per second, or the chip in your phone — does exactly one thing. It processes <strong>bits</strong>. And a bit can only ever be one of two things: a <em>0</em> or a <em>1</em>. Off or on. False or true. Everything your computer has ever done — every email sent, every video streamed, every spreadsheet calculated — was ultimately a series of 0s and 1s being flipped at incomprehensible speed.</p>
+      <p>Imagine you could give any question to the most powerful machine humanity has ever built and get an answer within seconds. Stock market predictions. Weather forecasts. Medical diagnoses. The layout for city infrastructure. Tomorrow's protein folding. Molecular design. Financial risk.</p>
+      <p>But here's the thing nobody tells you: <strong>the classical computer is fundamentally a counting machine.</strong> An extraordinarily fast, extraordinarily precise, extraordinarily miniaturised counting machine. But a counting machine nonetheless.</p>
+      <p>At its core, every classical computer — whether it's the supercomputer at a hedge fund processing millions of trades per second, or the chip in your phone — does exactly one thing. It manipulates binary bits. Zeros and ones. On and off.</p>
     </div>
 
     <div class="callout callout-insight">
-      <div class="callout-label">⚡ Key Insight</div>
-      <p>A modern smartphone processor contains over <strong>15 billion transistors</strong> — each one a tiny switch that can be either on or off. The entire digital world runs on the logic of these switches, arranged in combinations of unimaginable complexity.</p>
+      <div class="callout-label">Key Insight</div>
+      <p>A modern smartphone processor contains over <strong>15 billion transistors</strong> — each one a tiny switch that can be either on or off. The entire digital world runs on the logic of on and off switches, just repeated billions of times, billions of times per second.</p>
     </div>
 
     <div class="prose">
-      <p>For seventy years, this architecture has been good enough — better than good enough. From the room-sized ENIAC of 1945, to the personal computers of the 1980s, to the cloud data centres of today, we've ridden a single incredible wave: make the transistors smaller, make them faster, pack more of them together. And it worked. Brilliantly.</p>
-      <p>The results speak for themselves. The Apollo 11 guidance computer had 4,100 transistors. Your laptop has over 50 billion. We went from being able to calculate a moon landing to being able to simulate entire economies, model protein folding, and generate human-like text — all on machines that share the same fundamental architecture as that 1945 vacuum tube behemoth.</p>
-      <p>But something changed. Quietly at first, then with increasing urgency, the engineers and physicists building these machines started running into a problem they couldn't engineer their way out of. A wall. Not a wall of human ingenuity — a wall built by the laws of physics themselves.</p>
+      <p>For seventy years, this architecture has been good enough — better than good enough. From the room-sized ENIAC of 1945, to the personal computers of the 1980s, to the cloud data centres of today, this binary logic has never met its match.</p>
+      <p>The results speak for themselves. The Apollo 11 guidance computer had 4,100 transistors. Your laptop has over 50 billion. We went from being able to calculate a moon landing to being able to simulate cities, predict weather systems, and train systems that understand language.</p>
+      <p>But something changed. Quietly at first, then with increasing urgency, the engineers and physicists building these machines started running into a problem they couldn't engineer their way around. A problem that doesn't have a solution within the architecture that built the modern world.</p>
     </div>
 
     <div class="stat-row">
@@ -278,21 +278,21 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
       <h2 class="ch-title">Moore's Law — The Promise <span class="hl">and the Problem</span></h2>
     </div>
     <div class="prose">
-      <p>In 1965, a young engineer named Gordon Moore made an observation that would shape the next six decades of technology. He noticed that the number of transistors that could fit on a microchip was doubling roughly every two years — and that this doubling was happening at roughly the same cost. He predicted it would continue.</p>
-      <p>Moore's Law, as it came to be known, was not a law of physics. It was an observation. An engineering target. A self-fulfilling prophecy that the entire technology industry aligned itself around. And for fifty years, it held. Every two years, chips got roughly twice as powerful for the same price.</p>
-      <p>Think about what that means compounded over half a century. A doubling every two years, over fifty years, is 25 doublings. 2 to the power of 25 is over 33 million. Computing power grew by a factor of <strong>33 million</strong> while the cost stayed roughly constant. That is the engine behind every technological miracle of the modern era.</p>
+      <p>In 1965, a young engineer named Gordon Moore made an observation that would shape the next six decades of technology. He noticed that the number of transistors that could fit on a microchip was doubling approximately every two years. This observation — later called Moore's Law — became the guiding principle of the tech industry.</p>
+      <p>Moore's Law, as it came to be known, was not a law of physics. It was an observation. An engineering target. A self-fulfilling prophecy that the entire technology industry aligned itself around for half a century.</p>
+      <p>Think about what that means compounded over half a century. A doubling every two years, over fifty years, is 25 doublings. 2 to the power of 25 is over 33 million. Computing power grew by a factor of 33 million in fifty years. No other technology has ever matched that growth rate.</p>
     </div>
 
     <div class="callout callout-analogy">
-      <div class="callout-label">🌌 Universe Analogy</div>
-      <p>If cars had followed Moore's Law the same way computers did since 1971, a car today would travel at <strong>300,000 miles per second</strong> — the speed of light — and cost about <strong>£0.00001</strong>. That's how dramatic exponential growth over fifty years really is.</p>
+      <div class="callout-label">Universe Analogy</div>
+      <p>If cars had followed Moore's Law the same way computers did since 1971, a car today would travel at <strong>300,000 miles per second</strong> — the speed of light — and cost about a millionth of a cent.</p>
     </div>
 
     <div class="prose">
       <p>But here's the problem nobody wanted to say out loud: <strong>you cannot make a transistor smaller than an atom.</strong></p>
       <p>And we are getting very, very close to that limit.</p>
-      <p>Modern transistors are now measured in nanometres. A nanometre is one billionth of a metre. The latest chips use transistors as small as 2 nanometres. A strand of human DNA is 2.5 nanometres wide. A silicon atom is 0.22 nanometres. We are building switches that are only ten or fifteen atoms across.</p>
-      <p>At that scale, the comfortable, predictable rules of classical physics — the rules that let engineers design reliable switches that are either on or off — start to break down. And in their place, the deeply strange rules of <strong>quantum mechanics</strong> take over.</p>
+      <p>Modern transistors are now measured in nanometres. A nanometre is one billionth of a metre. The latest chips use transistors as small as 2 nanometres. A strand of human DNA is 2.5 nanometres. We are literally approaching the size of biology.</p>
+      <p>At that scale, the comfortable, predictable rules of classical physics — the rules that let engineers design reliable switches that are either on or off — start to break down. And in their place emerges something deeply strange.</p>
     </div>
 
     <div class="timeline">
@@ -325,7 +325,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
     <div class="key-concept">
       <div class="kc-label">Key Concept</div>
       <div class="kc-title">The End of Moore's Law</div>
-      <div class="kc-body">Moore's Law is not ending because engineers aren't clever enough. It's ending because they've reached the boundary where classical physics stops working. Below approximately 2nm, quantum effects dominate and transistors no longer behave like reliable on/off switches. The physical limit of silicon-based classical computing is within sight.</div>
+      <div class="kc-body">Moore's Law is not ending because engineers aren't clever enough. It's ending because they've reached the boundary where classical physics stops working. Below approximately 5 nanometres, the quantum effects become so pronounced that transistors stop behaving as reliable binary switches.</div>
     </div>
   </div>
 
@@ -339,30 +339,30 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
     </div>
     <div class="prose">
       <p>To understand why miniaturisation hits a wall, you need to understand one of the strangest phenomena in all of physics: <strong>quantum tunnelling</strong>.</p>
-      <p>In your everyday classical world, if you throw a ball at a wall, it bounces back. It cannot pass through the wall — that would violate every intuition you have about how objects behave. But at the scale of atoms and subatomic particles, this intuition completely fails. Electrons — the particles that carry electrical current in your computer's transistors — do not behave like tiny billiard balls. They behave like waves.</p>
+      <p>In your everyday classical world, if you throw a ball at a wall, it bounces back. It cannot pass through the wall — that would violate every intuition you have about how objects behave. Particles are objects. They hit things. They bounce.</p>
       <p>And waves can do something balls cannot: they can <em>tunnel through barriers</em>.</p>
     </div>
 
     <div class="callout callout-concept">
-      <div class="callout-label">⚛ Quantum Concept — Tunnelling</div>
-      <p><strong>Quantum tunnelling</strong> is the phenomenon where a particle passes through a barrier that it classically shouldn't have enough energy to overcome. It's as if the electron "borrows" existence on the other side of the wall. At nanometre scales, this happens constantly — and it's catastrophic for transistors designed to be either reliably on or reliably off.</p>
+      <div class="callout-label">Quantum Concept — Tunnelling</div>
+      <p><strong>Quantum tunnelling</strong> is the phenomenon where a particle passes through a barrier that it classically shouldn't have enough energy to overcome. It's as if the electron "borrowed" energy from the uncertainty principle to slip through the barrier.</p>
     </div>
 
     <div class="prose">
-      <p>When your transistor is supposed to be switched off — a 0 — electrons should not be flowing. But when the barrier between the "off" state and the conducting channel is only a few atoms wide, electrons start tunnelling through it anyway. The transistor that should be a clean 0 starts leaking current. It becomes ambiguous — not quite 0, not quite 1.</p>
+      <p>When your transistor is supposed to be switched off — a 0 — electrons should not be flowing. But when the barrier between the "off" state and the conducting channel is only a few atoms thick, electrons start tunnelling through it anyway. The transistor leaks. Your 0 becomes a 1. Your computation becomes noise.</p>
       <p>In a chip with 28 billion transistors, even tiny error rates become catastrophic. And there's a second problem equally brutal: <strong>heat</strong>.</p>
-      <p>Every transistor that switches state dissipates energy as heat. Pack 28 billion transistors into a chip the size of your fingernail and switch them billions of times per second, and you generate extraordinary amounts of heat in an extraordinarily small space. This is why your phone gets warm. This is why data centres consume as much electricity as small cities. And it's why simply adding more transistors to a chip eventually becomes self-defeating — you generate more heat than your cooling systems can handle.</p>
+      <p>Every transistor that switches state dissipates energy as heat. Pack 28 billion transistors into a chip the size of your fingernail and switch them billions of times per second, and you generate enough heat to melt the silicon itself.</p>
     </div>
 
     <div class="callout callout-warning">
-      <div class="callout-label">⚠ The Heat Problem</div>
-      <p>The world's data centres currently consume approximately <strong>200–250 terawatt-hours of electricity per year</strong> — roughly 1% of global electricity consumption. As AI workloads grow, this figure is projected to more than double by 2030. Classical computing's energy problem is not just an engineering challenge — it's becoming an environmental and economic crisis.</p>
+      <div class="callout-label">The Heat Problem</div>
+      <p>The world's data centres currently consume approximately <strong>200–250 terawatt-hours of electricity per year</strong> — roughly 1% of global electricity consumption. As AI workloads grow exponentially, that percentage is climbing. The heat is literally one of the major constraints on further scaling.</p>
     </div>
 
     <div class="prose">
-      <p>So to summarise where we are: classical computers have been doubling in power every two years for fifty years. That progress is now physically constrained by the quantum behaviour of electrons at nanometre scales. We cannot simply make transistors smaller indefinitely. And we cannot simply make chips bigger indefinitely without catastrophic heat generation.</p>
+      <p>So to summarise where we are: classical computers have been doubling in power every two years for fifty years. That progress is now physically constrained by the quantum behaviour of electrons at the atomic scale and by the thermal limits of silicon.</p>
       <p>The architecture that built the modern world — the bit, the transistor, the binary switch — has run into a wall it cannot break through.</p>
-      <p>But here is where the story turns. Because the very quantum effects that are breaking classical computers — tunnelling, superposition, entanglement — are not just problems to be avoided. They are <strong>computational resources</strong>. What if, instead of fighting quantum mechanics, we could harness it?</p>
+      <p>But here is where the story turns. Because the very quantum effects that are breaking classical computers — tunnelling, superposition, entanglement — are not just problems to be avoided. They are resources to be exploited. And that is where quantum computing begins.</p>
     </div>
 
     <div class="compare-table-wrap" style="overflow-x:auto; margin: 2.5rem 0;">
@@ -395,45 +395,45 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
       <h2 class="ch-title">Problems Classical Computers <span class="hl">Simply Cannot Solve</span></h2>
     </div>
     <div class="prose">
-      <p>The physics wall is one problem. But there's a deeper issue that even a perfect classical computer — one that somehow ignored the laws of physics and kept shrinking forever — could never solve. Certain classes of problems are not just hard for classical computers. They are <strong>fundamentally intractable</strong>.</p>
-      <p>To understand why, consider a problem called the Travelling Salesman Problem. A salesman needs to visit 10 cities and return home, using the shortest possible route. How many possible routes are there? 10 factorial — that's 10 × 9 × 8 × 7 × 6 × 5 × 4 × 3 × 2 × 1 = <strong>3,628,800 routes</strong>. A classical computer handles that easily.</p>
-      <p>Now scale it up. 20 cities? Over 2.4 quintillion routes. 50 cities? More routes than there are atoms in the observable universe. A classical computer checking one billion routes per second would take longer than the age of the universe to find the optimal answer.</p>
+      <p>The physics wall is one problem. But there's a deeper issue that even a perfect classical computer — one that somehow ignored the laws of physics and kept shrinking forever — could never solve.</p>
+      <p>To understand why, consider a problem called the Travelling Salesman Problem. A salesman needs to visit 10 cities and return home, using the shortest possible route. How many possible routes are there? 3.6 million.</p>
+      <p>Now scale it up. 20 cities? Over 2.4 quintillion routes. 50 cities? More routes than there are atoms in the observable universe. A classical computer checking one billion routes per second would take longer than the age of the universe to solve the problem.</p>
     </div>
 
     <div class="callout callout-insight">
-      <div class="callout-label">⚡ Why This Matters in the Real World</div>
-      <p>The Travelling Salesman Problem isn't just an academic puzzle. It's the mathematical structure underlying <strong>logistics routing</strong> (Amazon, FedEx, DHL), <strong>protein folding</strong> (drug discovery), <strong>financial portfolio optimisation</strong>, <strong>supply chain management</strong>, and <strong>neural network training</strong>. The world's most important computational problems are structurally similar to this one.</p>
+      <div class="callout-label">Why This Matters in the Real World</div>
+      <p>The Travelling Salesman Problem isn't just an academic puzzle. It's the mathematical structure underlying <strong>logistics routing</strong> (Amazon, FedEx, DHL), <strong>protein folding</strong> (drug design), <strong>financial portfolio optimisation</strong> (managing trillions in assets), and <strong>quantum chemistry simulation</strong> (materials science, batteries, fertiliser production).</p>
     </div>
 
     <div class="prose">
-      <p>This class of problem — where the number of possible solutions grows exponentially with the size of the problem — is called <strong>NP-hard</strong>. Classical computers cannot solve NP-hard problems optimally at scale. They approximate, heuristically guess, and find "good enough" solutions. But "good enough" in drug discovery might mean missing the cure. "Good enough" in financial modelling might mean mismanaging billions.</p>
+      <p>This class of problem — where the number of possible solutions grows exponentially with the size of the problem — is called <strong>NP-hard</strong>. Classical computers cannot solve them because they scale too fast. But quantum computers can, in principle, explore an exponential number of solutions simultaneously.</p>
       <p>There are three categories of problem where classical computing fundamentally struggles, and where quantum computing offers a genuine different approach:</p>
     </div>
 
     <div class="key-concept">
       <div class="kc-label">Problem Class 1</div>
       <div class="kc-title">Optimisation Problems</div>
-      <div class="kc-body">Finding the best solution from an astronomically large number of possibilities. Logistics, portfolio management, drug molecule design, supply chain routing. Classical computers brute-force approximate. Quantum algorithms like QAOA explore the solution space fundamentally differently.</div>
+      <div class="kc-body">Finding the best solution from an astronomically large number of possibilities. Logistics, portfolio management, drug molecule design, supply chain routing. Classical computers cannot even enumerate the possibilities. Quantum computers can explore exponential search spaces in polynomial time.</div>
     </div>
 
     <div class="key-concept" style="margin-top:1.5rem">
       <div class="kc-label">Problem Class 2</div>
       <div class="kc-title">Simulation of Quantum Systems</div>
-      <div class="kc-body">Simulating how molecules, chemicals, and materials behave at the quantum level. Drug discovery, materials science, battery design, fertiliser chemistry. A classical computer cannot accurately simulate even a moderately complex molecule — there are too many quantum interactions to track. A quantum computer simulates quantum systems naturally, because it IS a quantum system.</div>
+      <div class="kc-body">Simulating how molecules, chemicals, and materials behave at the quantum level. Drug discovery, materials science, battery design, fertiliser chemistry. A classical computer simulating quantum systems needs exponential resources. A quantum computer is a quantum system — simulation is native.</div>
     </div>
 
     <div class="key-concept" style="margin-top:1.5rem">
       <div class="kc-label">Problem Class 3</div>
       <div class="kc-title">Cryptographic Problems</div>
-      <div class="kc-body">The security of almost all modern internet encryption — RSA, elliptic curve cryptography — relies on the fact that factoring very large numbers into primes is computationally hard for classical computers. Shor's quantum algorithm can factor large numbers exponentially faster. A sufficiently powerful quantum computer will be able to break current encryption standards — which is why post-quantum cryptography preparation is urgent today.</div>
+      <div class="kc-body">The security of almost all modern internet encryption — RSA, elliptic curve cryptography — relies on the fact that factoring very large numbers into primes is computationally intractable for classical computers. Quantum computers can factor these numbers in polynomial time using Shor's algorithm.</div>
     </div>
 
     <div class="prose">
-      <p>Notice something important about these three problem classes. They're not niche academic curiosities. <strong>They are the core computational challenges of medicine, finance, materials science, logistics, and national security.</strong> The classical computer's inability to solve them is not a minor inconvenience — it's a fundamental limitation with trillion-dollar consequences.</p>
+      <p>Notice something important about these three problem classes. They're not niche academic curiosities. <strong>They are the core computational challenges of medicine, finance, materials science, and cybersecurity.</strong> They are multibillion-dollar problems that affect how we design drugs, manage money, build new materials, and protect data.</p>
     </div>
 
     <div class="quiz-block">
-      <div class="quiz-label">🎯 Quick Check — Test Your Understanding</div>
+      <div class="quiz-label">Quick Check — Test Your Understanding</div>
       <div class="quiz-q">Which of the following is the primary reason why classical computers cannot efficiently solve large-scale optimisation problems?</div>
       <div class="quiz-options" id="q1-opts">
         <div class="quiz-option" onclick="answerQ('q1','A','B')"><span class="quiz-opt-label">A</span>They don't have enough memory to store the data</div>
@@ -441,7 +441,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
         <div class="quiz-option" onclick="answerQ('q1','C','B')"><span class="quiz-opt-label">C</span>Classical computers are too slow at arithmetic</div>
         <div class="quiz-option" onclick="answerQ('q1','D','B')"><span class="quiz-opt-label">D</span>They can only process one program at a time</div>
       </div>
-      <div class="quiz-answer" id="q1-ans">✅ <strong>Correct — B.</strong> The core problem is combinatorial explosion. As problem size grows, the number of possible solutions grows exponentially — faster than any classical computer can search, regardless of speed or memory. This is the fundamental intractability of NP-hard problems.</div>
+      <div class="quiz-answer" id="q1-ans">✓ Correct — B. The core problem is combinatorial explosion. As problem size grows, the number of possible solutions grows exponentially. Classical algorithms cannot explore exponential search spaces in reasonable time.</div>
     </div>
   </div>
 
@@ -454,30 +454,30 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
       <h2 class="ch-title">The Door That Opens — <span class="hl">Why This Matters Now</span></h2>
     </div>
     <div class="prose">
-      <p>We've established that classical computers are hitting a physical wall in miniaturisation, and that certain important classes of problems are fundamentally beyond their reach. But why does this matter <em>now</em>? Quantum computers have been theorised since the 1980s. Why is 2024 different?</p>
+      <p>We've established that classical computers are hitting a physical wall in miniaturisation, and that certain important classes of problems are fundamentally beyond their reach. But why does this matter right now? Why aren't we waiting for quantum computers to be perfected in another decade or two before worrying about it?</p>
       <p>Three things have converged to make this moment genuinely different from the theoretical promises of previous decades.</p>
-      <p><strong>First: the hardware has crossed a threshold.</strong> IBM has publicly demonstrated processors with over 1,000 qubits. Google has demonstrated quantum advantage on specific tasks. QuEra has demonstrated 48 logical qubits using neutral atom technology. These are not theoretical results — they are physical machines, running today, accessible via the cloud. The question is no longer "will quantum computers be built?" — they have been built. The question now is "when will they be good enough to solve commercially valuable problems at scale?"</p>
+      <p><strong>First: the hardware has crossed a threshold.</strong> IBM has publicly demonstrated processors with over 1,000 qubits. Google has demonstrated quantum advantage on specific tasks. IonQ, Rigetti, and others have working systems. These aren't prototypes in labs anymore. Real quantum computers exist right now.</p>
     </div>
 
     <div class="callout callout-insight">
-      <div class="callout-label">⚡ Right Now — You Can Access a Real Quantum Computer</div>
-      <p>IBM Quantum offers free cloud access to real quantum processors via their website. You can write quantum programs in Qiskit — IBM's open-source Python framework — and run them on actual quantum hardware today. This is not simulation. These are real quantum machines processing real qubits.</p>
+      <div class="callout-label">Right Now — You Can Access a Real Quantum Computer</div>
+      <p>IBM Quantum offers free cloud access to real quantum processors via their website. You can write quantum programs in Qiskit — IBM's open-source Python framework — and run them on actual quantum hardware. This isn't simulation. This isn't theory. You can do this today.</p>
     </div>
 
     <div class="prose">
-      <p><strong>Second: the investment has become extraordinary.</strong> Governments and corporations are not treating quantum computing as a speculative bet — they're treating it as a national security and economic competitiveness issue. The UK government has committed £2.5 billion to quantum technologies through its National Quantum Strategy. The US, China, the EU, and Japan have all launched multi-billion-dollar quantum initiatives. McKinsey estimates quantum computing could generate <strong>$1.3 trillion in value</strong> by 2035 across pharmaceuticals, chemicals, finance, and logistics.</p>
+      <p><strong>Second: the investment has become extraordinary.</strong> Governments and corporations are not treating quantum computing as a speculative bet — they're treating it as a national strategic priority. The US, China, EU, UK all have multi-billion-dollar quantum initiatives. Companies like JPMorgan, Goldman Sachs, and Merck are building internal quantum teams.</p>
       <p><strong>Third, and most urgently: the post-quantum cryptography threat is already active.</strong> This is the one that most people miss — and it's happening right now, not in ten years.</p>
     </div>
 
     <div class="callout callout-warning">
-      <div class="callout-label">⚠ The Harvest Now, Decrypt Later Threat</div>
-      <p>Nation-state adversaries are <strong>right now</strong> collecting encrypted internet traffic — financial records, government communications, medical data — and storing it. They cannot decrypt it today. But when sufficiently powerful quantum computers arrive, they will decrypt everything they collected. <strong>Data encrypted today can be compromised by quantum computers built in the future.</strong> NIST finalised new post-quantum cryptography standards in 2024 for exactly this reason. The threat window is open now, not when quantum computers mature.</p>
+      <div class="callout-label">The Harvest Now, Decrypt Later Threat</div>
+      <p>Nation-state adversaries are <strong>right now</strong> collecting encrypted internet traffic — financial records, government communications, medical data — and storing it. They cannot decrypt it today. But they're storing it anyway, because they know that when quantum computers become powerful enough to break current encryption, they'll be able to decrypt everything they've collected.</p>
     </div>
 
     <div class="prose">
-      <p>This is why understanding quantum computing is not a five-year problem for your organisation. It's a problem that starts today — specifically around cryptographic infrastructure. And it's why organisations that build quantum literacy and quantum readiness now will be in a fundamentally different position to those that wait.</p>
-      <p>The classical computer conquered the world by turning the on/off logic of binary switches into the engine of the information age. Quantum computing does something far stranger and far more powerful — it harnesses the fundamental probabilistic nature of reality itself as a computational resource. It doesn't just calculate faster. It calculates <em>differently</em>.</p>
-      <p>In Module 2, we go deep into exactly how. We'll explore what a qubit actually is, what superposition and entanglement really mean (beyond the buzzwords), and how these quantum properties can be harnessed to do things that no classical computer ever could.</p>
+      <p>This is why understanding quantum computing is not a five-year problem for your organisation. It's a problem that starts today — specifically around cryptographic infrastructure. And it affects every organisation that handles sensitive data.</p>
+      <p>The classical computer conquered the world by turning the on/off logic of binary switches into the engine of the information age. Quantum computing does something far stranger and far more powerful. It abandons the binary switch entirely and embraces the weirdness of quantum mechanics as a computational resource.</p>
+      <p>In Module 2, we go deep into exactly how. We'll explore what a qubit actually is, what superposition and entanglement really mean (beyond the buzzwords), and how these quantum properties enable quantum computers to solve problems that are classically unsolvable.</p>
       <p>The wall that classical computers hit is not the end of the story. It's the beginning of a new one.</p>
     </div>
 
@@ -499,23 +499,23 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
 <!-- GATE SECTION -->
 <div class="gate-section">
   <div class="gate-inner">
-    <div class="gate-icon">⚛️</div>
+    <div class="gate-icon"></div>
     <div class="gate-tag">Continue Your Journey</div>
     <h2 class="gate-title">You've Completed Module 1</h2>
-    <p class="gate-desc">Join the waitlist to access Modules 2–7 when they launch — and get notified the moment each module goes live. Module 2 covers what qubits, superposition, and entanglement actually are — beyond the buzzwords.</p>
+    <p class="gate-desc">Join the waitlist to access Modules 2–7 when they launch — and get notified the moment each module goes live. Module 2 covers what qubits, superposition, and entanglement actually are.</p>
 
     <div class="modules-preview">
-      <div class="mp-item unlocked"><span class="mp-num">01</span><span class="mp-title">Why Classical Computers Hit a Fundamental Wall</span><span class="mp-lock">✅ Free</span></div>
-      <div class="mp-item"><span class="mp-num">02</span><span class="mp-title">Qubits, Superposition & Entanglement Explained</span><span class="mp-lock">🔒</span></div>
-      <div class="mp-item"><span class="mp-num">03</span><span class="mp-title">Quantum Hardware Landscape Today</span><span class="mp-lock">🔒</span></div>
-      <div class="mp-item"><span class="mp-num">04</span><span class="mp-title">Quantum Algorithms & Where Advantage is Real</span><span class="mp-lock">🔒</span></div>
-      <div class="mp-item"><span class="mp-num">05</span><span class="mp-title">AI-Quantum Convergence & QML</span><span class="mp-lock">🔒</span></div>
-      <div class="mp-item"><span class="mp-num">06</span><span class="mp-title">Post-Quantum Cryptography & NIST Standards</span><span class="mp-lock">🔒</span></div>
-      <div class="mp-item"><span class="mp-num">07</span><span class="mp-title">Quantum Strategy for Organisations</span><span class="mp-lock">🔒</span></div>
+      <div class="mp-item unlocked"><span class="mp-num">01</span><span class="mp-title">Why Classical Computers Hit a Fundamental Wall</span><span class="mp-lock">✓ Free</span></div>
+      <div class="mp-item"><span class="mp-num">02</span><span class="mp-title">Qubits, Superposition & Entanglement Explained</span><span class="mp-lock">LOCKED</span></div>
+      <div class="mp-item"><span class="mp-num">03</span><span class="mp-title">Quantum Hardware Landscape Today</span><span class="mp-lock">LOCKED</span></div>
+      <div class="mp-item"><span class="mp-num">04</span><span class="mp-title">Quantum Algorithms & Where Advantage is Real</span><span class="mp-lock">LOCKED</span></div>
+      <div class="mp-item"><span class="mp-num">05</span><span class="mp-title">AI-Quantum Convergence & QML</span><span class="mp-lock">LOCKED</span></div>
+      <div class="mp-item"><span class="mp-num">06</span><span class="mp-title">Post-Quantum Cryptography & NIST Standards</span><span class="mp-lock">LOCKED</span></div>
+      <div class="mp-item"><span class="mp-num">07</span><span class="mp-title">Quantum Strategy for Organisations</span><span class="mp-lock">LOCKED</span></div>
     </div>
 
     <div id="gate-success">
-      <div class="gs-title">🚀 You're on the list!</div>
+      <div class="gs-title">Success - You're on the list!</div>
       <p>We'll notify you at your email address the moment Module 2 launches. Welcome to the Diarka Quantum community.</p>
     </div>
 
