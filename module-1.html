@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 1 — Why Classical Computers Hit a Wall | Diarka Quantum</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Raleway:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --void: #00010a;
+  --deep: #020818;
+  --nebula: #060d2e;
+  --teal: #00d4ff;
+  --teal-dim: #0099bb;
+  --pulsar: #7b2fff;
+  --gold: #f0c060;
+  --nova: #ff6b35;
+  --stellar: #e8f4ff;
+  --starlight: #c8d8ff;
+  --muted: #4a6080;
+  --border: rgba(0,212,255,0.1);
+  --border-p: rgba(123,47,255,0.15);
+  --reading-width: 760px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--void); color: var(--stellar); font-family: 'Raleway', sans-serif; font-weight: 400; overflow-x: hidden; cursor: none; line-height: 1; }
+
+/* CURSOR */
+.cursor { width: 8px; height: 8px; background: var(--teal); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; box-shadow: 0 0 10px var(--teal); }
+.cursor-ring { width: 28px; height: 28px; border: 1px solid rgba(0,212,255,0.4); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; transition: transform 0.35s ease; }
+
+/* PROGRESS BAR */
+.progress-bar { position: fixed; top: 0; left: 0; height: 2px; background: linear-gradient(90deg, var(--pulsar), var(--teal)); z-index: 200; width: 0%; transition: width 0.1s; }
+
+/* CANVAS */
+#universe { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.5; }
+
+/* NAV */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 3rem; display: flex; align-items: center; justify-content: space-between; background: rgba(0,1,10,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+.nav-logo { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 0.85rem; letter-spacing: 0.12em; text-decoration: none; color: var(--stellar); display: flex; align-items: center; gap: 0.6rem; }
+.nav-logo span { color: var(--teal); }
+.nav-back { font-family: 'Orbitron', monospace; font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; display: flex; align-items: center; gap: 0.5rem; }
+.nav-back:hover { color: var(--teal); }
+.nav-module-label { font-family: 'Orbitron', monospace; font-size: 0.58rem; letter-spacing: 0.15em; color: var(--teal); text-transform: uppercase; }
+
+/* HERO */
+.module-hero { position: relative; z-index: 1; padding: 9rem 2rem 5rem; text-align: center; border-bottom: 1px solid var(--border); background: linear-gradient(180deg, rgba(6,13,46,0.4) 0%, transparent 100%); }
+.module-badge { display: inline-flex; align-items: center; gap: 0.6rem; background: rgba(0,212,255,0.08); border: 1px solid var(--border); color: var(--teal); font-family: 'Orbitron', monospace; font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; padding: 0.4rem 1rem; margin-bottom: 2rem; }
+.module-badge::before { content: '◈'; animation: pulse 2s infinite; }
+.module-number { font-family: 'Orbitron', monospace; font-weight: 900; font-size: clamp(4rem, 12vw, 9rem); line-height: 0.9; color: transparent; -webkit-text-stroke: 1px rgba(0,212,255,0.15); margin-bottom: 1rem; letter-spacing: -0.02em; }
+.module-title { font-family: 'Orbitron', monospace; font-weight: 900; font-size: clamp(1.6rem, 4vw, 3rem); line-height: 1.15; letter-spacing: 0.02em; max-width: 800px; margin: 0 auto 1.5rem; text-shadow: 0 0 40px rgba(0,212,255,0.2); }
+.module-title .hl { color: var(--teal); }
+.module-subtitle { font-family: 'Lora', serif; font-style: italic; font-size: 1.1rem; color: var(--starlight); max-width: 600px; margin: 0 auto 3rem; line-height: 1.6; font-weight: 400; }
+.module-meta { display: flex; align-items: center; justify-content: center; gap: 2.5rem; flex-wrap: wrap; }
+.meta-item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.72rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+.meta-item span { color: var(--teal); font-family: 'Orbitron', monospace; font-weight: 700; }
+
+/* PDF INLINE CTA */
+.pdf-inline { position: relative; z-index: 1; background: rgba(6,13,46,0.7); border-top: 1px solid var(--border); border-bottom: 2px solid rgba(123,47,255,0.3); padding: 1.8rem 2rem; display: flex; align-items: center; justify-content: center; gap: 2rem; flex-wrap: wrap; text-align: center; }
+.pdf-inline-text { font-family: 'Raleway', sans-serif; font-size: 0.82rem; color: var(--starlight); line-height: 1.6; }
+.pdf-inline-text strong { color: var(--stellar); }
+.pdf-inline-btn { display: inline-flex; align-items: center; gap: 0.6rem; background: linear-gradient(135deg, var(--pulsar), var(--teal)); color: var(--void); padding: 0.75rem 1.8rem; font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; white-space: nowrap; clip-path: polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%); box-shadow: 0 0 20px rgba(123,47,255,0.4); transition: all 0.3s; }
+.pdf-inline-btn:hover { box-shadow: 0 0 36px rgba(123,47,255,0.65); transform: translateY(-1px); }
+
+/* CONTENT */
+.content-wrap { position: relative; z-index: 1; max-width: var(--reading-width); margin: 0 auto; padding: 5rem 2rem 3rem; }
+
+/* CHAPTER NAV */
+.chapter-nav { background: rgba(6,13,46,0.8); border: 1px solid var(--border); padding: 2rem; margin-bottom: 4rem; }
+.chapter-nav-title { font-family: 'Orbitron', monospace; font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--teal); margin-bottom: 1.2rem; }
+.chapter-list { display: flex; flex-direction: column; gap: 0.5rem; }
+.chapter-link { display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--starlight); font-size: 0.8rem; padding: 0.45rem 0; border-bottom: 1px solid rgba(255,255,255,0.04); transition: color 0.2s; }
+.chapter-link:hover { color: var(--teal); }
+.chapter-link:last-child { border-bottom: none; }
+.ch-num { font-family: 'Orbitron', monospace; font-size: 0.55rem; color: var(--pulsar); letter-spacing: 0.1em; min-width: 28px; }
+
+/* CHAPTER */
+.chapter { margin-bottom: 4.5rem; scroll-margin-top: 80px; }
+.chapter-header { margin-bottom: 1.8rem; padding-bottom: 1.2rem; border-bottom: 1px solid var(--border); }
+.ch-tag { font-family: 'Orbitron', monospace; font-size: 0.55rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--pulsar); margin-bottom: 0.7rem; }
+.ch-title { font-family: 'Orbitron', monospace; font-weight: 900; font-size: clamp(1.1rem, 2.8vw, 1.6rem); line-height: 1.2; letter-spacing: 0.02em; color: var(--stellar); }
+.ch-title .hl { color: var(--teal); }
+
+/* BRIEF */
+.ch-brief { font-family: 'Lora', serif; font-size: 0.97rem; line-height: 1.85; color: var(--starlight); font-weight: 400; margin-bottom: 2rem; }
+.ch-brief strong { color: var(--stellar); font-weight: 600; }
+.ch-brief em { color: var(--teal); font-style: italic; }
+
+/* INSIGHT STRIP */
+.insight-strip { display: flex; align-items: flex-start; gap: 1rem; background: rgba(0,212,255,0.04); border-left: 3px solid var(--teal); padding: 1.2rem 1.5rem; margin-bottom: 2rem; }
+.insight-label { font-family: 'Orbitron', monospace; font-size: 0.48rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--teal); white-space: nowrap; margin-top: 0.15rem; min-width: 70px; }
+.insight-body { font-family: 'Lora', serif; font-size: 0.88rem; line-height: 1.7; color: var(--starlight); }
+.insight-body strong { color: var(--stellar); }
+
+/* STAT ROW */
+.stat-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); margin-bottom: 2rem; }
+.stat-cell { background: rgba(6,13,46,0.8); padding: 1.2rem; text-align: center; }
+.stat-val { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 1.4rem; color: var(--teal); text-shadow: 0 0 16px rgba(0,212,255,0.4); line-height: 1; margin-bottom: 0.35rem; }
+.stat-label { font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); line-height: 1.4; }
+
+/* QUIZ */
+.quiz-block { background: rgba(6,13,46,0.7); border: 1px solid var(--border); padding: 2rem 2.2rem; margin-bottom: 0; }
+.quiz-header { font-family: 'Orbitron', monospace; font-size: 0.52rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.6rem; padding-bottom: 0.8rem; border-bottom: 1px solid rgba(240,192,96,0.15); }
+.quiz-item { margin-bottom: 2rem; }
+.quiz-item:last-child { margin-bottom: 0; }
+.quiz-q { font-family: 'Lora', serif; font-size: 0.93rem; color: var(--stellar); margin-bottom: 1rem; line-height: 1.6; font-weight: 600; }
+.quiz-options { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 0.8rem; }
+.quiz-option { background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 0.75rem 1rem; font-family: 'Raleway', sans-serif; font-size: 0.82rem; color: var(--starlight); cursor: none; transition: border-color 0.2s, background 0.2s; display: flex; align-items: flex-start; gap: 0.8rem; line-height: 1.5; }
+.quiz-option:hover { border-color: rgba(0,212,255,0.3); background: rgba(0,212,255,0.03); }
+.quiz-option.correct { border-color: var(--teal); background: rgba(0,212,255,0.07); color: var(--teal); }
+.quiz-option.wrong { border-color: var(--nova); background: rgba(255,107,53,0.06); color: var(--nova); }
+.quiz-opt-label { font-family: 'Orbitron', monospace; font-size: 0.55rem; color: var(--muted); min-width: 18px; flex-shrink: 0; margin-top: 0.15rem; }
+.quiz-answer { display: none; padding: 0.9rem 1.1rem; background: rgba(0,212,255,0.04); border-left: 3px solid var(--teal); font-family: 'Lora', serif; font-size: 0.84rem; line-height: 1.65; color: var(--starlight); margin-top: 0.2rem; }
+.quiz-answer strong { color: var(--teal); }
+.quiz-divider { height: 1px; background: var(--border); margin: 1.8rem 0; }
+
+/* DIVIDER */
+.section-divider { display: flex; align-items: center; gap: 1.5rem; margin: 3rem 0; }
+.section-divider::before, .section-divider::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); }
+.section-divider span { font-family: 'Orbitron', monospace; font-size: 0.58rem; letter-spacing: 0.3em; color: var(--muted); text-transform: uppercase; white-space: nowrap; }
+
+/* PDF DOWNLOAD */
+.pdf-download { position: relative; z-index: 1; padding: 5rem 2rem; background: linear-gradient(180deg, var(--void) 0%, rgba(6,13,46,0.6) 50%, var(--void) 100%); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.pdf-inner { max-width: 640px; margin: 0 auto; text-align: center; }
+.pdf-eyebrow { font-family: 'Orbitron', monospace; font-size: 0.52rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--teal); margin-bottom: 1rem; }
+.pdf-title { font-family: 'Orbitron', monospace; font-weight: 900; font-size: clamp(1.1rem, 2.5vw, 1.55rem); line-height: 1.25; margin-bottom: 1rem; color: var(--stellar); }
+.pdf-desc { font-family: 'Lora', serif; font-size: 0.9rem; line-height: 1.8; color: var(--starlight); margin-bottom: 2rem; }
+.pdf-stats { display: flex; align-items: center; justify-content: center; gap: 2.5rem; flex-wrap: wrap; margin-bottom: 2.2rem; }
+.pdf-stat { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; }
+.pdf-stat-val { font-family: 'Orbitron', monospace; font-weight: 700; font-size: 1.1rem; color: var(--teal); }
+.pdf-stat-label { font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+.pdf-btn { display: inline-flex; align-items: center; gap: 0.7rem; background: linear-gradient(135deg, var(--pulsar), var(--teal)); color: var(--void); padding: 1.1rem 2.8rem; font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.63rem; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; box-shadow: 0 0 28px rgba(123,47,255,0.45); clip-path: polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%); transition: all 0.3s; }
+.pdf-btn:hover { box-shadow: 0 0 48px rgba(123,47,255,0.7); transform: translateY(-2px); }
+.pdf-note { font-size: 0.62rem; color: var(--muted); margin-top: 1rem; letter-spacing: 0.04em; }
+
+/* GATE */
+.gate-section { position: relative; z-index: 1; background: linear-gradient(180deg, var(--void) 0%, rgba(6,13,46,0.95) 100%); border-top: 1px solid var(--border); padding: 6rem 2rem; text-align: center; }
+.gate-inner { max-width: 600px; margin: 0 auto; }
+.gate-tag { font-family: 'Orbitron', monospace; font-size: 0.55rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--pulsar); margin-bottom: 1.2rem; }
+.gate-title { font-family: 'Orbitron', monospace; font-weight: 900; font-size: clamp(1.4rem, 3vw, 2.2rem); line-height: 1.2; margin-bottom: 1rem; }
+.gate-desc { font-family: 'Lora', serif; font-size: 0.95rem; line-height: 1.8; color: var(--starlight); margin-bottom: 2.5rem; }
+.modules-preview { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 3rem; text-align: left; }
+.mp-item { display: flex; align-items: center; gap: 1rem; padding: 0.75rem 1.1rem; background: rgba(123,47,255,0.06); border: 1px solid var(--border-p); }
+.mp-num { font-family: 'Orbitron', monospace; font-size: 0.58rem; color: var(--pulsar); min-width: 26px; }
+.mp-title { font-size: 0.78rem; color: var(--starlight); }
+.mp-lock { margin-left: auto; font-size: 0.65rem; color: var(--muted); font-family: 'Orbitron', monospace; letter-spacing: 0.05em; }
+.mp-item.unlocked { border-color: rgba(0,212,255,0.2); background: rgba(0,212,255,0.04); }
+.mp-item.unlocked .mp-num { color: var(--teal); }
+.mp-item.unlocked .mp-title { color: var(--stellar); }
+.mp-item.unlocked .mp-lock { color: var(--teal); }
+.gate-form { display: flex; flex-direction: column; gap: 1rem; max-width: 420px; margin: 0 auto; }
+.gate-input { background: rgba(6,13,46,0.9); border: 1px solid var(--border-p); color: var(--stellar); padding: 1rem 1.2rem; font-family: 'Raleway', sans-serif; font-size: 0.88rem; outline: none; width: 100%; transition: border-color 0.2s; }
+.gate-input:focus { border-color: var(--pulsar); }
+.gate-btn { background: linear-gradient(135deg, var(--pulsar), var(--teal)); color: var(--void); border: none; padding: 1.1rem 2.5rem; font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.63rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: none; transition: all 0.3s; box-shadow: 0 0 24px rgba(123,47,255,0.4); clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%); }
+.gate-btn:hover { box-shadow: 0 0 40px rgba(123,47,255,0.6); transform: translateY(-2px); }
+.gate-note { font-size: 0.66rem; color: var(--muted); margin-top: 0.4rem; }
+#gate-success { display: none; padding: 2rem; border: 1px solid rgba(0,212,255,0.3); background: rgba(0,212,255,0.04); }
+#gate-success .gs-title { font-family: 'Orbitron', monospace; font-weight: 700; color: var(--teal); margin-bottom: 0.5rem; font-size: 0.9rem; }
+#gate-success p { font-family: 'Lora', serif; font-size: 0.88rem; color: var(--starlight); }
+
+/* FOOTER */
+footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; background: rgba(0,1,10,0.98); flex-wrap: wrap; gap: 1rem; }
+.footer-logo { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 0.85rem; color: var(--stellar); }
+.footer-logo span { color: var(--teal); }
+.footer-copy { font-size: 0.6rem; color: var(--muted); }
+
+/* ANIMATIONS */
+@keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.3} }
+.reveal { opacity:0; transform:translateY(18px); transition:opacity 0.65s ease,transform 0.65s ease; }
+.reveal.visible { opacity:1; transform:none; }
+
+@media(max-width:768px){
+  nav { padding:1rem 1.5rem; }
+  .content-wrap { padding:4rem 1.2rem 2rem; }
+  .stat-row { grid-template-columns:1fr; }
+  .pdf-inline { flex-direction:column; gap:1rem; }
+  .pdf-stats { gap:1.5rem; }
+  footer { flex-direction:column; padding:1.5rem; }
+  .insight-strip { flex-direction:column; gap:0.5rem; }
+}
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+<div class="progress-bar" id="progress"></div>
+<canvas id="universe"></canvas>
+
+<!-- NAV -->
+<nav>
+  <a href="diarka-quantum.html" class="nav-logo">Diarka<span>Quantum</span></a>
+  <div class="nav-module-label">Module 01 of 07</div>
+  <a href="diarka-quantum.html#education" class="nav-back">Back to Course</a>
+</nav>
+
+<!-- HERO -->
+<div class="module-hero">
+  <div class="module-badge">Free Module — Diarka Quantum Education</div>
+  <div class="module-number">01</div>
+  <h1 class="module-title">Why Classical Computers Hit a <span class="hl">Fundamental Wall</span></h1>
+  <p class="module-subtitle">The story of how the most powerful machines ever built ran into the laws of physics — and why that opens the door to something extraordinary.</p>
+  <div class="module-meta">
+    <div class="meta-item">Brief overview: <span>8 Chapters</span></div>
+    <div class="meta-item">Read time: <span>~10 min</span></div>
+    <div class="meta-item">Level: <span>Beginner</span></div>
+    <div class="meta-item">Status: <span>Free</span></div>
+  </div>
+</div>
+
+<!-- PDF INLINE CTA -->
+<div class="pdf-inline">
+  <div class="pdf-inline-text">
+    This page is a <strong>brief overview</strong> of each chapter. For the full 15,000-word deep-dive — with research citations, diagrams, and evidence — download the free PDF edition.
+  </div>
+  <a href="diarka-quantum-module-1.pdf" download="Diarka-Quantum-Module-1.pdf" class="pdf-inline-btn">Download Full PDF — Free</a>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <!-- CHAPTER NAV -->
+  <div class="chapter-nav reveal">
+    <div class="chapter-nav-title">In This Module — 8 Chapters</div>
+    <div class="chapter-list">
+      <a href="#ch1" class="chapter-link"><span class="ch-num">01</span>The Machine That Conquered the World</a>
+      <a href="#ch2" class="chapter-link"><span class="ch-num">02</span>Moore's Law — The Promise and the Breaking Point</a>
+      <a href="#ch3" class="chapter-link"><span class="ch-num">03</span>The Physics Wall — When Electrons Get Weird</a>
+      <a href="#ch4" class="chapter-link"><span class="ch-num">04</span>The Strange World of Quantum Mechanics</a>
+      <a href="#ch5" class="chapter-link"><span class="ch-num">05</span>Problems Classical Computers Simply Cannot Solve</a>
+      <a href="#ch6" class="chapter-link"><span class="ch-num">06</span>The Quantum Opportunity — A New Paradigm</a>
+      <a href="#ch7" class="chapter-link"><span class="ch-num">07</span>The State of Quantum Computing Today</a>
+      <a href="#ch8" class="chapter-link"><span class="ch-num">08</span>Why This Matters Now — The Urgency of Quantum Literacy</a>
+    </div>
+  </div>
+
+  <!-- CHAPTER 1 -->
+  <div class="chapter reveal" id="ch1">
+    <div class="chapter-header">
+      <div class="ch-tag">Chapter 01</div>
+      <h2 class="ch-title">The Machine That <span class="hl">Conquered the World</span></h2>
+    </div>
+    <p class="ch-brief">Every classical computer ever built — from the room-sized ENIAC of 1945 to the Apple M4 of 2024 — does exactly one thing at its core: it processes <strong>bits</strong>, each either a 0 or a 1. These bits are physically represented by transistors, tiny electronic switches that are either open or closed. By 2024, the Apple M4 contains 28 billion of these switches in a chip smaller than a postage stamp, performing over a trillion operations per second. The entire digital world — every email, video, financial transaction, and AI model — is ultimately billions of these switches flipping states at incomprehensible speed. This architecture has driven the most extraordinary technological transformation in human history. But it carries within it the seeds of its own physical limit.</p>
+    <div class="insight-strip">
+      <div class="insight-label">Key Insight</div>
+      <div class="insight-body">The Intel 4004 (1971) had 2,300 transistors. The Apple M4 (2024) has 28 billion — a 12-million-fold increase in a chip costing less per transistor by a factor of millions. <strong>No technology in history has improved at this rate for this long.</strong></div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-cell"><div class="stat-val">1945</div><div class="stat-label">ENIAC<br>17,468 vacuum tubes</div></div>
+      <div class="stat-cell"><div class="stat-val">28B</div><div class="stat-label">Apple M4<br>transistors (2024)</div></div>
+      <div class="stat-cell"><div class="stat-val">2nm</div><div class="stat-label">Modern transistor<br>10–15 silicon atoms</div></div>
+    </div>
+    <div class="quiz-block">
+      <div class="quiz-header">Quick Check — Test Your Understanding</div>
+      <div class="quiz-item">
+        <div class="quiz-q">1. What is the fundamental unit of information that every classical computer processes?</div>
+        <div class="quiz-options" id="q1a-opts">
+          <div class="quiz-option" onclick="answerQ('q1a','A','C')"><span class="quiz-opt-label">A</span>A byte</div>
+          <div class="quiz-option" onclick="answerQ('q1a','B','C')"><span class="quiz-opt-label">B</span>A pixel</div>
+          <div class="quiz-option" onclick="answerQ('q1a','C','C')"><span class="quiz-opt-label">C</span>A bit — a value of either 0 or 1</div>
+          <div class="quiz-option" onclick="answerQ('q1a','D','C')"><span class="quiz-opt-label">D</span>A transistor state index</div>
+        </div>
+        <div class="quiz-answer" id="q1a-ans"><strong>Correct — C.</strong> A bit is the most fundamental unit of classical computing — a value that can only ever be 0 or 1. A byte is simply 8 bits grouped together. Everything in the digital world is ultimately a sequence of these binary values being processed at speed.</div>
+      </div>
+      <div class="quiz-divider"></div>
+      <div class="quiz-item">
+        <div class="quiz-q">2. What physical component represents a single bit inside a modern processor?</div>
+        <div class="quiz-options" id="q1b-opts">
+          <div class="quiz-option" onclick="answerQ('q1b','A','B')"><span class="quiz-opt-label">A</span>A capacitor</div>
+          <div class="quiz-option" onclick="answerQ('q1b','B','B')"><span class="quiz-opt-label">B</span>A transistor — an electronic on/off switch</div>
+          <div class="quiz-option" onclick="answerQ('q1b','C','B')"><span class="quiz-opt-label">C</span>A silicon atom</div>
+          <div class="quiz-option" onclick="answerQ('q1b','D','B')"><span class="quiz-opt-label">D</span>A logic gate array</div>
+        </div>
+        <div class="quiz-answer" id="q1b-ans"><strong>Correct — B.</strong> A transistor is a semiconductor switch. When the gate voltage is on, current flows — representing 1. When off, no current flows — representing 0. Every bit in every processor is physically implemented this way.</div>
+      </div>
+      <div class="quiz-divider"></div>
+      <div class="quiz-item">
+        <div class="quiz-q">3. Approximately how many transistors does the Apple M4 chip (2024) contain?</div>
+        <div class="quiz-options" id="q1c-opts">
+          <div class="quiz-option" onclick="answerQ('q1c','A','C')"><span class="quiz-opt-label">A</span>42 million</div>
+          <div class="quiz-option" onclick="answerQ('q1c','B','C')"><span class="quiz-opt-label">B</span>1 billion</div>
+          <div class="quiz-option" onclick="answerQ('q1c','C','C')"><span class="quiz-opt-label">C</span>28 billion</div>
+          <div class="quiz-option" onclick="answerQ('q1c','D','C')"><span class="quiz-opt-label">D</span>1 trillion</div>
+        </div>
+        <div class="quiz-answer" id="q1c-ans"><strong>Correct — C.</strong> The Apple M4 contains 28 billion transistors in a chip smaller than a postage stamp. The Intel 4004 from 1971 had just 2,300 — making the M4 approximately 12 million times denser. This is the scale of Moore's Law compounded over 53 years.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>Moore's Law</span></div>
+
+  <!-- CHAPTER 2 -->
+  <div class="chapter reveal" id="ch2">
+    <div class="chapter-header">
+      <div class="ch-tag">Chapter 02</div>
+      <h2 class="ch-title">Moore's Law — The Promise <span class="hl">and the Breaking Point</span></h2>
+    </div>
+    <p class="ch-brief">In 1965, Gordon Moore observed that the number of transistors on a chip was doubling roughly every two years at constant cost, and predicted this would continue. For fifty years, the entire semiconductor industry organised itself around delivering this prophecy — and it held. Twenty-five doublings amounts to a 33-million-fold improvement in computing power at roughly constant price. But by the mid-2010s, physics began to resist. Transistor dimensions had dropped below 10nm, where quantum effects begin to dominate. The doubling cadence slowed from 18–24 months to 3–5 years per node. Intel, TSMC, and Samsung continue advancing to 3nm and 2nm — but the era of reliable, predictable exponential doubling is over. Future performance gains now require architectural innovation, not simply smaller transistors.</p>
+    <div class="insight-strip">
+      <div class="insight-label">Key Insight</div>
+      <div class="insight-body">Moore's Law was not a law of physics — it was a self-fulfilling engineering prophecy. <strong>It is ending not because engineers lack ingenuity, but because silicon transistors are approaching atomic dimensions where classical physics stops working reliably.</strong></div>
+    </div>
+    <div class="quiz-block">
+      <div class="quiz-header">Quick Check — Test Your Understanding</div>
+      <div class="quiz-item">
+        <div class="quiz-q">1. What does Moore's Law state?</div>
+        <div class="quiz-options" id="q2a-opts">
+          <div class="quiz-option" onclick="answerQ('q2a','A','B')"><span class="quiz-opt-label">A</span>Computing speed doubles every year regardless of transistor count</div>
+          <div class="quiz-option" onclick="answerQ('q2a','B','B')"><span class="quiz-opt-label">B</span>The number of transistors on a chip doubles approximately every two years at constant cost</div>
+          <div class="quiz-option" onclick="answerQ('q2a','C','B')"><span class="quiz-opt-label">C</span>Chip prices halve every 18 months</div>
+          <div class="quiz-option" onclick="answerQ('q2a','D','B')"><span class="quiz-opt-label">D</span>Memory capacity doubles every three years</div>
+        </div>
+        <div class="quiz-answer" id="q2a-ans"><strong>Correct — B.</strong> Moore's 1965 observation was specifically about the density of components on a chip doubling approximately every two years at minimum cost. It was never a law of physics — it was an empirical observation that became a roadmap the industry funded and delivered for fifty years.</div>
+      </div>
+      <div class="quiz-divider"></div>
+      <div class="quiz-item">
+        <div class="quiz-q">2. Why is Moore's Law slowing down today?</div>
+        <div class="quiz-options" id="q2b-opts">
+          <div class="quiz-option" onclick="answerQ('q2b','A','C')"><span class="quiz-opt-label">A</span>Semiconductor companies have lost investment and research capacity</div>
+          <div class="quiz-option" onclick="answerQ('q2b','B','C')"><span class="quiz-opt-label">B</span>Consumer demand for faster processors has declined</div>
+          <div class="quiz-option" onclick="answerQ('q2b','C','C')"><span class="quiz-opt-label">C</span>Transistors are approaching atomic dimensions where quantum effects make reliable binary operation impossible</div>
+          <div class="quiz-option" onclick="answerQ('q2b','D','C')"><span class="quiz-opt-label">D</span>Silicon has been replaced by inferior materials at smaller scales</div>
+        </div>
+        <div class="quiz-answer" id="q2b-ans"><strong>Correct — C.</strong> At 2–3nm, transistors are only 10–15 silicon atoms wide. At this scale, quantum mechanical effects — particularly electron tunnelling — cause transistors to misbehave as binary switches. This is a fundamental physical limit, not an engineering or investment problem.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>The Physics Wall</span></div>
+
+  <!-- CHAPTER 3 -->
+  <div class="chapter reveal" id="ch3">
+    <div class="chapter-header">
+      <div class="ch-tag">Chapter 03</div>
+      <h2 class="ch-title">The Physics Wall — When <span class="hl">Electrons Get Weird</span></h2>
+    </div>
+    <p class="ch-brief">At nanometre scales, electrons stop behaving like classical particles and start exhibiting quantum behaviour. The most destructive of these is <strong>quantum tunnelling</strong> — electrons passing through insulating barriers they classically cannot overcome. When a transistor's insulating layer is only a few atoms thick, electrons tunnel through it even when the transistor is switched off, causing leakage that destroys reliable binary logic. IBM Research confirmed that off-state leakage increases by over 1,000x at 2nm compared to 28nm nodes. Alongside tunnelling, there is heat: every switching event dissipates energy, and packing 28 billion transistors into a fingernail-sized chip generates heat densities exceeding nuclear reactor fuel rods. These two problems — tunnelling and thermal density — are not engineering challenges that more investment can solve. They are consequences of how matter behaves at atomic scales.</p>
+    <div class="insight-strip">
+      <div class="insight-label">Key Insight</div>
+      <div class="insight-body">Global data centres consumed approximately 240 terawatt-hours of electricity in 2022. The IEA projects this will exceed <strong>1,000 TWh by 2026</strong> as AI workloads grow. Microsoft and Google have already signed agreements to restart decommissioned nuclear plants to meet data centre demand.</div>
+    </div>
+    <div class="quiz-block">
+      <div class="quiz-header">Quick Check — Test Your Understanding</div>
+      <div class="quiz-item">
+        <div class="quiz-q">1. What is quantum tunnelling in the context of transistors?</div>
+        <div class="quiz-options" id="q3a-opts">
+          <div class="quiz-option" onclick="answerQ('q3a','A','C')"><span class="quiz-opt-label">A</span>A method used to speed up electron flow inside a chip</div>
+          <div class="quiz-option" onclick="answerQ('q3a','B','C')"><span class="quiz-opt-label">B</span>A design technique to reduce heat in processors</div>
+          <div class="quiz-option" onclick="answerQ('q3a','C','C')"><span class="quiz-opt-label">C</span>Electrons passing through insulating barriers they should be blocked by, causing leakage in off-state transistors</div>
+          <div class="quiz-option" onclick="answerQ('q3a','D','C')"><span class="quiz-opt-label">D</span>A process for shrinking transistor gate lengths below 1nm</div>
+        </div>
+        <div class="quiz-answer" id="q3a-ans"><strong>Correct — C.</strong> Quantum tunnelling occurs because electrons have wave-like properties. At dimensions below ~5nm, the insulating barrier is so thin that electrons tunnel through it even when the gate is off, making it impossible to maintain a clean 0 state. This directly undermines the binary logic that classical computing relies on.</div>
+      </div>
+      <div class="quiz-divider"></div>
+      <div class="quiz-item">
+        <div class="quiz-q">2. Why does packing more transistors into a chip create a heat problem?</div>
+        <div class="quiz-options" id="q3b-opts">
+          <div class="quiz-option" onclick="answerQ('q3b','A','B')"><span class="quiz-opt-label">A</span>Larger chips absorb more ambient heat from the environment</div>
+          <div class="quiz-option" onclick="answerQ('q3b','B','B')"><span class="quiz-opt-label">B</span>Every switching event dissipates energy as heat — billions of switches firing per second in a tiny area creates extreme thermal density</div>
+          <div class="quiz-option" onclick="answerQ('q3b','C','B')"><span class="quiz-opt-label">C</span>Transistors generate heat only when in the on state</div>
+          <div class="quiz-option" onclick="answerQ('q3b','D','B')"><span class="quiz-opt-label">D</span>Silicon becomes thermally unstable at nanometre dimensions</div>
+        </div>
+        <div class="quiz-answer" id="q3b-ans"><strong>Correct — B.</strong> The Landauer principle states that erasing a bit requires minimum energy dissipation. Multiply this by 28 billion transistors switching billions of times per second, and the resulting heat flux per unit area exceeds that of nuclear reactor fuel rods — making cooling a fundamental constraint, not just an engineering challenge.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>Quantum Mechanics</span></div>
+
+  <!-- CHAPTER 4 -->
+  <div class="chapter reveal" id="ch4">
+    <div class="chapter-header">
+      <div class="ch-tag">Chapter 04</div>
+      <h2 class="ch-title">The Strange World of <span class="hl">Quantum Mechanics</span></h2>
+    </div>
+    <p class="ch-brief">The quantum phenomena destroying classical computing are not only problems — they are computational resources. Wave-particle duality, confirmed experimentally from 1801 through to 1927, establishes that all matter has wave-like properties. This leads to <strong>superposition</strong>: a quantum particle genuinely exists in multiple states simultaneously until measured. A qubit exploits this, existing as a combination of 0 and 1 at the same time. Ten qubits can represent 1,024 states simultaneously; 300 qubits can represent more states than atoms in the observable universe. Then there is <strong>entanglement</strong>: when two qubits are entangled, measuring one instantly determines the other regardless of distance. The 2022 Nobel Prize in Physics was awarded specifically for experimental work conclusively confirming entanglement. These are experimentally verified phenomena that quantum computers harness as their primary computational resources.</p>
+    <div class="insight-strip">
+      <div class="insight-label">Key Insight</div>
+      <div class="insight-body">Quantum computers do not work by "trying all answers at once." They work by <strong>engineering interference patterns</strong> — amplifying the probability of correct answers and cancelling out incorrect ones. Only specific problem classes with particular mathematical structure can exploit this approach.</div>
+    </div>
+    <div class="quiz-block">
+      <div class="quiz-header">Quick Check — Test Your Understanding</div>
+      <div class="quiz-item">
+        <div class="quiz-q">1. What is quantum superposition?</div>
+        <div class="quiz-options" id="q4a-opts">
+          <div class="quiz-option" onclick="answerQ('q4a','A','C')"><span class="quiz-opt-label">A</span>A qubit switching rapidly between 0 and 1 faster than classical bits</div>
+          <div class="quiz-option" onclick="answerQ('q4a','B','C')"><span class="quiz-opt-label">B</span>A qubit storing both 0 and 1 in separate memory locations simultaneously</div>
+          <div class="quiz-option" onclick="answerQ('q4a','C','C')"><span class="quiz-opt-label">C</span>A qubit genuinely existing in a combination of 0 and 1 simultaneously until the moment of measurement</div>
+          <div class="quiz-option" onclick="answerQ('q4a','D','C')"><span class="quiz-opt-label">D</span>Two qubits sharing the same physical location in a chip</div>
+        </div>
+        <div class="quiz-answer" id="q4a-ans"><strong>Correct — C.</strong> Superposition is not a metaphor. A qubit in superposition is mathematically described as a combination of both states simultaneously. The probabilities only resolve to a definite value at the moment of measurement. This is one of the most rigorously tested results in all of physics.</div>
+      </div>
+      <div class="quiz-divider"></div>
+      <div class="quiz-item">
+        <div class="quiz-q">2. What was the significance of the 2022 Nobel Prize in Physics for quantum computing?</div>
+        <div class="quiz-options" id="q4b-opts">
+          <div class="quiz-option" onclick="answerQ('q4b','A','B')"><span class="quiz-opt-label">A</span>It was awarded for building the first fault-tolerant quantum computer</div>
+          <div class="quiz-option" onclick="answerQ('q4b','B','B')"><span class="quiz-opt-label">B</span>It was awarded for experimental work conclusively confirming that quantum entanglement is real and cannot be explained by classical physics</div>
+          <div class="quiz-option" onclick="answerQ('q4b','C','B')"><span class="quiz-opt-label">C</span>It was awarded for developing the first quantum algorithm to beat a classical computer</div>
+          <div class="quiz-option" onclick="answerQ('q4b','D','B')"><span class="quiz-opt-label">D</span>It was awarded for discovering the qubit as a theoretical concept</div>
+        </div>
+        <div class="quiz-answer" id="q4b-ans"><strong>Correct — B.</strong> Alain Aspect, John Clauser, and Anton Zeilinger shared the 2022 Nobel Prize for Bell test experiments that definitively closed all known loopholes and confirmed quantum entanglement beyond any classical explanation. Not theoretical, not contested — one of the most rigorously verified results in science.</div>
+      </div>
+      <div class="quiz-divider"></div>
+      <div class="quiz-item">
+        <div class="quiz-q">3. How many simultaneous states can 10 qubits in superposition represent?</div>
+        <div class="quiz-options" id="q4c-opts">
+          <div class="quiz-option" onclick="answerQ('q4c','A','C')"><span class="quiz-opt-label">A</span>10</div>
+          <div class="quiz-option" onclick="answerQ('q4c','B','C')"><span class="quiz-opt-label">B</span>100</div>
+          <div class="quiz-option" onclick="answerQ('q4c','C','C')"><span class="quiz-opt-label">C</span>1,024</div>
+          <div class="quiz-option" onclick="answerQ('q4c','D','C')"><span class="quiz-opt-label">D</span>10,000</div>
+        </div>
+        <div class="quiz-answer" id="q4c-ans"><strong>Correct — C.</strong> Each additional qubit doubles the number of states representable simultaneously: 2 to the power of 10 = 1,024. This exponential scaling is the source of quantum computing's potential advantage — 50 qubits can represent over a quadrillion states, and 300 qubits more states than atoms in the observable universe.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>Unsolvable Problems</span></div>
+
+  <!-- CHAPTER 5 -->
+  <div class="chapter reveal" id="ch5">
+    <div class="chapter-header">
+      <div class="ch-tag">Chapter 05</div>
+      <h2 class="ch-title">Problems Classical Computers <span class="hl">Simply Cannot Solve</span></h2>
+    </div>
+    <p class="ch-brief">Beyond the physical wall, there is a mathematical one. Certain problem classes are not merely hard for classical computers — they are provably intractable. The Travelling Salesman Problem illustrates this: finding the optimal route through 50 cities requires evaluating a number of possible routes with 64 digits — more routes than atoms in the observable universe. This combinatorial explosion affects three critically important real-world domains: <strong>optimisation</strong> (logistics, drug discovery, portfolio management); <strong>quantum system simulation</strong> (molecular modelling, materials science — where simulating even a caffeine molecule requires more classical memory than exists on Earth); and <strong>cryptographic factoring</strong> (where Shor's quantum algorithm can break RSA encryption that classical computers cannot crack in the age of the universe). McKinsey estimates these three domains represent $450–850 billion in annual quantum computing value by 2035.</p>
+    <div class="insight-strip">
+      <div class="insight-label">Key Insight</div>
+      <div class="insight-body">Richard Feynman (1982): <em>"Nature isn't classical, dammit, and if you want to make a simulation of nature, you'd better make it quantum mechanical."</em> Quantum computers can simulate molecules naturally because <strong>they are quantum systems themselves.</strong></div>
+    </div>
+    <div class="quiz-block">
+      <div class="quiz-header">Quick Check — Test Your Understanding</div>
+      <div class="quiz-item">
+        <div class="quiz-q">1. Why is the Travelling Salesman Problem intractable for classical computers at large scale?</div>
+        <div class="quiz-options" id="q5a-opts">
+          <div class="quiz-option" onclick="answerQ('q5a','A','C')"><span class="quiz-opt-label">A</span>Classical computers cannot process geographic data efficiently</div>
+          <div class="quiz-option" onclick="answerQ('q5a','B','C')"><span class="quiz-opt-label">B</span>The problem requires too much memory to store city coordinates</div>
+          <div class="quiz-option" onclick="answerQ('q5a','C','C')"><span class="quiz-opt-label">C</span>The number of possible routes grows factorially — faster than any classical computer can search regardless of speed</div>
+          <div class="quiz-option" onclick="answerQ('q5a','D','C')"><span class="quiz-opt-label">D</span>Classical computers cannot handle floating-point distance calculations at scale</div>
+        </div>
+        <div class="quiz-answer" id="q5a-ans"><strong>Correct — C.</strong> For n cities, the number of possible routes is n factorial. At 50 cities, this number has 64 digits — more routes than atoms in the observable universe. No increase in classical computing speed changes this fundamental mathematical reality. This class of problem is called NP-hard.</div>
+      </div>
+      <div class="quiz-divider"></div>
+      <div class="quiz-item">
+        <div class="quiz-q">2. Which of the following is NOT one of the three problem classes where quantum computing offers genuine advantage?</div>
+        <div class="quiz-options" id="q5b-opts">
+          <div class="quiz-option" onclick="answerQ('q5b','A','D')"><span class="quiz-opt-label">A</span>Optimisation problems such as logistics and drug design</div>
+          <div class="quiz-option" onclick="answerQ('q5b','B','D')"><span class="quiz-opt-label">B</span>Simulation of quantum systems such as molecules</div>
+          <div class="quiz-option" onclick="answerQ('q5b','C','D')"><span class="quiz-opt-label">C</span>Cryptographic factoring of large integers</div>
+          <div class="quiz-option" onclick="answerQ('q5b','D','D')"><span class="quiz-opt-label">D</span>Streaming video and rendering graphics</div>
+        </div>
+        <div class="quiz-answer" id="q5b-ans"><strong>Correct — D.</strong> Video rendering and graphics are well-suited to classical parallel computing via GPUs. Quantum advantage is specific to problems with exponential solution spaces (optimisation), quantum-mechanical structures (molecular simulation), and number-theoretic hardness (cryptography). Quantum computers will not replace classical computers for general tasks.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>The Quantum Opportunity</span></div>
+
+  <!-- CHAPTER 6 -->
+  <div class="chapter reveal" id="ch6">
+    <div class="chapter-header">
+      <div class="ch-tag">Chapter 06</div>
+      <h2 class="ch-title">The Quantum Opportunity — <span class="hl">A New Paradigm</span></h2>
+    </div>
+    <p class="ch-brief">Quantum computers are not faster classical computers. They are a fundamentally different kind of computer suited to a different class of problems — and making that distinction is the hallmark of genuine quantum literacy. Three algorithms define the primary domains of quantum advantage: <strong>Shor's Algorithm (1994)</strong> factors large integers in polynomial time, breaking RSA encryption that classical computers cannot crack; <strong>Grover's Algorithm (1996)</strong> searches unsorted databases in square-root time, delivering a quadratic speedup for search; and <strong>QAOA (2014)</strong> provides near-term approaches to combinatorial optimisation on current NISQ hardware. A quantum computation works not by trying all answers simultaneously but by engineering interference — quantum gates are arranged so that correct answers constructively amplify while incorrect answers destructively cancel, and measurement collapses the system to the correct result with high probability.</p>
+    <div class="insight-strip">
+      <div class="insight-label">Key Insight</div>
+      <div class="insight-body">Quantum computers will operate <strong>alongside</strong> classical computers, not replace them. They handle the specific subset of problems where quantum mechanics provides genuine computational advantage. <strong>Knowing which problems fall into this category is the core skill of quantum business strategy.</strong></div>
+    </div>
+    <div class="quiz-block">
+      <div class="quiz-header">Quick Check — Test Your Understanding</div>
+      <div class="quiz-item">
+        <div class="quiz-q">1. What does Shor's Algorithm do that makes it significant for cybersecurity?</div>
+        <div class="quiz-options" id="q6a-opts">
+          <div class="quiz-option" onclick="answerQ('q6a','A','C')"><span class="quiz-opt-label">A</span>It detects intrusion attempts on quantum networks faster than classical firewalls</div>
+          <div class="quiz-option" onclick="answerQ('q6a','B','C')"><span class="quiz-opt-label">B</span>It encrypts data using quantum entanglement, making it unbreakable</div>
+          <div class="quiz-option" onclick="answerQ('q6a','C','C')"><span class="quiz-opt-label">C</span>It factors large integers in polynomial time, which would break RSA and most current internet encryption</div>
+          <div class="quiz-option" onclick="answerQ('q6a','D','C')"><span class="quiz-opt-label">D</span>It generates truly random cryptographic keys using quantum noise</div>
+        </div>
+        <div class="quiz-answer" id="q6a-ans"><strong>Correct — C.</strong> RSA encryption is secure because factoring a 2048-bit number is computationally intractable for classical computers — it would take longer than the age of the universe. Shor's Algorithm solves factoring in polynomial time on a quantum computer, meaning a sufficiently powerful quantum machine could break RSA-2048 in hours.</div>
+      </div>
+      <div class="quiz-divider"></div>
+      <div class="quiz-item">
+        <div class="quiz-q">2. How do quantum computers actually achieve correct results — what is the core mechanism?</div>
+        <div class="quiz-options" id="q6b-opts">
+          <div class="quiz-option" onclick="answerQ('q6b','A','C')"><span class="quiz-opt-label">A</span>By testing every possible answer simultaneously and selecting the best one</div>
+          <div class="quiz-option" onclick="answerQ('q6b','B','C')"><span class="quiz-opt-label">B</span>By using entangled qubits to communicate the answer between processors instantly</div>
+          <div class="quiz-option" onclick="answerQ('q6b','C','C')"><span class="quiz-opt-label">C</span>By engineering quantum interference so correct answers amplify and incorrect answers cancel out before measurement</div>
+          <div class="quiz-option" onclick="answerQ('q6b','D','C')"><span class="quiz-opt-label">D</span>By running the same calculation many times and averaging the results</div>
+        </div>
+        <div class="quiz-answer" id="q6b-ans"><strong>Correct — C.</strong> Quantum computation works through interference. Quantum gates are designed so that the probability amplitudes of correct answers add constructively while those of incorrect answers add destructively. Measurement then collapses the system to the correct result with high probability. This is the fundamental mechanic — not brute-force parallelism.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>Hardware Today</span></div>
+
+  <!-- CHAPTER 7 -->
+  <div class="chapter reveal" id="ch7">
+    <div class="chapter-header">
+      <div class="ch-tag">Chapter 07</div>
+      <h2 class="ch-title">The State of Quantum <span class="hl">Computing Today</span></h2>
+    </div>
+    <p class="ch-brief">Quantum computing is not a theoretical future technology — it exists and is accessible now. IBM, Google, IonQ, Quantinuum, QuEra, and D-Wave all operate real quantum hardware, with IBM's Condor processor reaching 1,121 qubits and QuEra's Aquila operating 256 neutral atom qubits. The current era is described by physicist John Preskill's term <strong>NISQ — Noisy Intermediate-Scale Quantum</strong>: machines large enough to demonstrate genuine quantum effects, but with error rates too high for full-scale fault-tolerant computation. The landmark QuEra/Harvard paper (Nature, 2023) demonstrated 48 logical qubits encoded from 280 physical qubits — the most significant milestone toward fault-tolerant quantum computing achieved to date, cited over 500 times. IBM Quantum offers free cloud access: anyone can write a quantum program in Python using Qiskit and run it on real quantum hardware today.</p>
+    <div class="insight-strip">
+      <div class="insight-label">Key Insight</div>
+      <div class="insight-body">McKinsey estimates quantum computing could generate <strong>$450–850 billion in annual value by 2035</strong> across pharmaceuticals ($100–170B), finance ($60–80B), logistics ($40–70B), and materials science ($50–100B) — based on specific use cases with demonstrated theoretical quantum advantage.</div>
+    </div>
+    <div class="quiz-block">
+      <div class="quiz-header">Quick Check — Test Your Understanding</div>
+      <div class="quiz-item">
+        <div class="quiz-q">1. What does NISQ stand for, and what does it describe?</div>
+        <div class="quiz-options" id="q7a-opts">
+          <div class="quiz-option" onclick="answerQ('q7a','A','C')"><span class="quiz-opt-label">A</span>New Integrated Silicon Quantum — the first silicon-based quantum chips</div>
+          <div class="quiz-option" onclick="answerQ('q7a','B','C')"><span class="quiz-opt-label">B</span>Non-Isolated Sequential Qubit — a design approach for stable qubits</div>
+          <div class="quiz-option" onclick="answerQ('q7a','C','C')"><span class="quiz-opt-label">C</span>Noisy Intermediate-Scale Quantum — current machines with genuine quantum capability but error rates too high for full fault-tolerant computation</div>
+          <div class="quiz-option" onclick="answerQ('q7a','D','C')"><span class="quiz-opt-label">D</span>Near-Infinite Speed Quantum — the theoretical performance ceiling of quantum processors</div>
+        </div>
+        <div class="quiz-answer" id="q7a-ans"><strong>Correct — C.</strong> NISQ was coined by John Preskill in 2018 to describe the current generation of quantum hardware: real, working machines with 50–1,000+ qubits, but with error rates that prevent running full-scale Shor's or Grover's algorithms at commercially useful scale. It is the current productive research era, not a failure state.</div>
+      </div>
+      <div class="quiz-divider"></div>
+      <div class="quiz-item">
+        <div class="quiz-q">2. What was the significance of the QuEra / Harvard paper published in Nature in 2023?</div>
+        <div class="quiz-options" id="q7b-opts">
+          <div class="quiz-option" onclick="answerQ('q7b','A','B')"><span class="quiz-opt-label">A</span>It announced the first quantum computer to break RSA encryption</div>
+          <div class="quiz-option" onclick="answerQ('q7b','B','B')"><span class="quiz-opt-label">B</span>It demonstrated 48 logical qubits with below-threshold error rates — the most significant milestone toward fault-tolerant quantum computing achieved to date</div>
+          <div class="quiz-option" onclick="answerQ('q7b','C','B')"><span class="quiz-opt-label">C</span>It proved neutral atom quantum computers are definitively superior to all other qubit technologies</div>
+          <div class="quiz-option" onclick="answerQ('q7b','D','B')"><span class="quiz-opt-label">D</span>It was the first time a quantum computer solved an NP-hard problem faster than a classical supercomputer</div>
+        </div>
+        <div class="quiz-answer" id="q7b-ans"><strong>Correct — B.</strong> The Bluvstein et al. paper demonstrated 48 logical qubits encoded from 280 physical qubits using neutral atom arrays, with error rates below the fault-tolerance threshold. Logical qubits — error-corrected qubits — are essential for practical quantum computing at scale. This was the first demonstration at this scale, making it the field's most important recent experimental milestone.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>The Urgency</span></div>
+
+  <!-- CHAPTER 8 -->
+  <div class="chapter reveal" id="ch8">
+    <div class="chapter-header">
+      <div class="ch-tag">Chapter 08</div>
+      <h2 class="ch-title">Why This Matters Now — <span class="hl">The Urgency of Quantum Literacy</span></h2>
+    </div>
+    <p class="ch-brief">The most urgent quantum threat is not a future event — it is happening now. Nation-state adversaries are currently collecting and storing encrypted internet traffic. They cannot decrypt it today. When sufficiently powerful quantum computers arrive (current estimates: 2030–2040), they will decrypt everything collected. This is the <strong>harvest now, decrypt later</strong> strategy, and data with 10–20 year sensitivity — medical records, military intelligence, financial agreements — is already at risk. In response, NIST finalised three post-quantum cryptography standards in August 2024: CRYSTALS-Kyber (FIPS 203) for key encapsulation, CRYSTALS-Dilithium (FIPS 204) for digital signatures, and SPHINCS+ (FIPS 205) as a hash-based fallback. Organisations must audit their cryptographic implementations, identify long-sensitivity data, and begin migration planning now. The window for preparation is open — and it is not infinite.</p>
+    <div class="insight-strip">
+      <div class="insight-label">Key Insight</div>
+      <div class="insight-body">NIST published FIPS 203, 204, and 205 in August 2024 — the first standardised post-quantum cryptography algorithms. <strong>Migration from classical to post-quantum cryptography is not a five-year problem. It is a present one.</strong> The UK NCSC, US CISA, and NATO have all issued guidance recommending organisations begin migration planning now.</div>
+    </div>
+    <div class="quiz-block">
+      <div class="quiz-header">Quick Check — Test Your Understanding</div>
+      <div class="quiz-item">
+        <div class="quiz-q">1. What is the "harvest now, decrypt later" threat?</div>
+        <div class="quiz-options" id="q8a-opts">
+          <div class="quiz-option" onclick="answerQ('q8a','A','C')"><span class="quiz-opt-label">A</span>A technique where quantum computers harvest energy from classical processors to power decryption</div>
+          <div class="quiz-option" onclick="answerQ('q8a','B','C')"><span class="quiz-opt-label">B</span>A strategy for quantum computers to break encryption in real time as data is transmitted</div>
+          <div class="quiz-option" onclick="answerQ('q8a','C','C')"><span class="quiz-opt-label">C</span>Adversaries collecting and storing encrypted data today so it can be decrypted by future quantum computers</div>
+          <div class="quiz-option" onclick="answerQ('q8a','D','C')"><span class="quiz-opt-label">D</span>A data mining approach that extracts patterns from encrypted traffic without decrypting it</div>
+        </div>
+        <div class="quiz-answer" id="q8a-ans"><strong>Correct — C.</strong> Nation-state actors with sufficient resources are storing encrypted internet traffic now, knowing they cannot decrypt it today. When fault-tolerant quantum computers capable of running Shor's Algorithm arrive, all of that stored data becomes readable retroactively. This makes data encrypted today vulnerable to future quantum attacks — the threat window is already open.</div>
+      </div>
+      <div class="quiz-divider"></div>
+      <div class="quiz-item">
+        <div class="quiz-q">2. Which organisation finalised post-quantum cryptography standards in August 2024?</div>
+        <div class="quiz-options" id="q8b-opts">
+          <div class="quiz-option" onclick="answerQ('q8b','A','B')"><span class="quiz-opt-label">A</span>IBM Quantum</div>
+          <div class="quiz-option" onclick="answerQ('q8b','B','B')"><span class="quiz-opt-label">B</span>NIST — the US National Institute of Standards and Technology</div>
+          <div class="quiz-option" onclick="answerQ('q8b','C','B')"><span class="quiz-opt-label">C</span>The European Quantum Flagship programme</div>
+          <div class="quiz-option" onclick="answerQ('q8b','D','B')"><span class="quiz-opt-label">D</span>The UK National Quantum Strategy</div>
+        </div>
+        <div class="quiz-answer" id="q8b-ans"><strong>Correct — B.</strong> NIST published FIPS 203 (CRYSTALS-Kyber), FIPS 204 (CRYSTALS-Dilithium), and FIPS 205 (SPHINCS+) in August 2024. These are the first standardised algorithms designed to resist attacks from quantum computers, and organisations are now expected to begin planning migration to these standards.</div>
+      </div>
+      <div class="quiz-divider"></div>
+      <div class="quiz-item">
+        <div class="quiz-q">3. Why should organisations address post-quantum cryptography now, even though fault-tolerant quantum computers do not yet exist?</div>
+        <div class="quiz-options" id="q8c-opts">
+          <div class="quiz-option" onclick="answerQ('q8c','A','D')"><span class="quiz-opt-label">A</span>Because quantum computers already exist that can break current encryption</div>
+          <div class="quiz-option" onclick="answerQ('q8c','B','D')"><span class="quiz-opt-label">B</span>Because regulators currently fine organisations that use classical encryption</div>
+          <div class="quiz-option" onclick="answerQ('q8c','C','D')"><span class="quiz-opt-label">C</span>Because post-quantum algorithms are already faster and cheaper than classical ones</div>
+          <div class="quiz-option" onclick="answerQ('q8c','D','D')"><span class="quiz-opt-label">D</span>Because data with long-term sensitivity is already being harvested today, and cryptographic migration across complex systems takes years</div>
+        </div>
+        <div class="quiz-answer" id="q8c-ans"><strong>Correct — D.</strong> Two reasons create urgency: first, the harvest now/decrypt later threat means today's data is already at risk from future quantum computers; second, cryptographic migration is not a quick fix — auditing systems, testing new algorithms, and updating infrastructure across an organisation can take 3–7 years. Waiting until quantum computers arrive is already too late for sensitive data.</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end content-wrap -->
+
+<!-- PDF DOWNLOAD SECTION -->
+<div class="pdf-download">
+  <div class="pdf-inner">
+    <div class="pdf-eyebrow">◈ Deep Dive Edition — Full Research Document</div>
+    <h2 class="pdf-title">Read the Complete Module 1 — Free PDF</h2>
+    <p class="pdf-desc">This page covered the essentials of each chapter. The full PDF edition goes 15,000 words deep — detailed diagrams, IBM Research citations, McKinsey value estimates, the complete hardware landscape, NIST standards breakdown, and every chapter expanded to full research depth. No email required.</p>
+    <div class="pdf-stats">
+      <div class="pdf-stat"><div class="pdf-stat-val">15,000</div><div class="pdf-stat-label">Words</div></div>
+      <div class="pdf-stat"><div class="pdf-stat-val">8</div><div class="pdf-stat-label">Deep Chapters</div></div>
+      <div class="pdf-stat"><div class="pdf-stat-val">~60</div><div class="pdf-stat-label">Min Read</div></div>
+      <div class="pdf-stat"><div class="pdf-stat-val">Free</div><div class="pdf-stat-label">No Sign-up</div></div>
+    </div>
+    <a href="diarka-quantum-module-1.pdf" download="Diarka-Quantum-Module-1.pdf" class="pdf-btn">Download Full PDF — Free</a>
+    <p class="pdf-note">Downloads directly to your device · No email required · © 2025 Diarka Quantum Limited</p>
+  </div>
+</div>
+
+<!-- GATE SECTION -->
+<div class="gate-section">
+  <div class="gate-inner">
+    <div class="gate-tag">Continue Your Journey</div>
+    <h2 class="gate-title">You've Completed Module 1</h2>
+    <p class="gate-desc">Join the waitlist to access Modules 2–7 when they launch — and get notified the moment each module goes live. Module 2 covers what qubits, superposition, and entanglement actually are — beyond the buzzwords.</p>
+    <div class="modules-preview">
+      <div class="mp-item unlocked"><span class="mp-num">01</span><span class="mp-title">Why Classical Computers Hit a Fundamental Wall</span><span class="mp-lock">Free</span></div>
+      <div class="mp-item"><span class="mp-num">02</span><span class="mp-title">Qubits, Superposition &amp; Entanglement Explained</span><span class="mp-lock">Locked</span></div>
+      <div class="mp-item"><span class="mp-num">03</span><span class="mp-title">Quantum Hardware Landscape Today</span><span class="mp-lock">Locked</span></div>
+      <div class="mp-item"><span class="mp-num">04</span><span class="mp-title">Quantum Algorithms &amp; Where Advantage is Real</span><span class="mp-lock">Locked</span></div>
+      <div class="mp-item"><span class="mp-num">05</span><span class="mp-title">AI-Quantum Convergence &amp; QML</span><span class="mp-lock">Locked</span></div>
+      <div class="mp-item"><span class="mp-num">06</span><span class="mp-title">Post-Quantum Cryptography &amp; NIST Standards</span><span class="mp-lock">Locked</span></div>
+      <div class="mp-item"><span class="mp-num">07</span><span class="mp-title">Quantum Strategy for Organisations</span><span class="mp-lock">Locked</span></div>
+    </div>
+    <div id="gate-success">
+      <div class="gs-title">You are on the list.</div>
+      <p>We will notify you at your email address the moment Module 2 launches. Welcome to the Diarka Quantum community.</p>
+    </div>
+    <form class="gate-form" id="gate-form" onsubmit="handleGate(event)">
+      <input type="text" name="name" class="gate-input" placeholder="Your name" required>
+      <input type="email" name="email" class="gate-input" placeholder="Your email address" required>
+      <input type="text" name="_gotcha" style="display:none">
+      <button type="submit" class="gate-btn" id="gate-btn">Join the Waitlist — Free</button>
+      <div class="gate-note">No spam. No selling your data. Notification only when the next module is ready.</div>
+    </form>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Diarka<span>Quantum</span> Limited</div>
+  <div class="footer-copy">© 2025 Diarka Quantum Limited · Module 1 of 7 · diarkaquantum.co.uk</div>
+</footer>
+
+<script>
+// CURSOR
+const cursor=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{ mx=e.clientX; my=e.clientY; cursor.style.transform=`translate(${mx-4}px,${my-4}px)`; });
+(function loop(){ rx+=(mx-rx)*0.1; ry+=(my-ry)*0.1; ring.style.transform=`translate(${rx-14}px,${ry-14}px)`; requestAnimationFrame(loop); })();
+
+// PROGRESS BAR
+const pb=document.getElementById('progress');
+window.addEventListener('scroll',()=>{ const h=document.documentElement.scrollHeight-window.innerHeight; pb.style.width=(window.scrollY/h*100)+'%'; });
+
+// UNIVERSE CANVAS
+const canvas=document.getElementById('universe'),ctx=canvas.getContext('2d');
+let W,H;
+function resize(){ W=canvas.width=window.innerWidth; H=canvas.height=window.innerHeight; }
+resize(); window.addEventListener('resize',resize);
+const stars=Array.from({length:200},()=>({x:Math.random(),y:Math.random(),r:Math.random()*1.2+0.2,alpha:Math.random()*0.6+0.1,tw:Math.random()*Math.PI*2,sp:Math.random()*0.015+0.003}));
+const nebulae=Array.from({length:4},()=>({x:Math.random(),y:Math.random(),r:Math.random()*180+80,col:Math.random()>0.5?'0,212,255':'123,47,255',alpha:Math.random()*0.04+0.01}));
+function drawUniverse(){
+  ctx.clearRect(0,0,W,H);
+  nebulae.forEach(n=>{ const g=ctx.createRadialGradient(n.x*W,n.y*H,0,n.x*W,n.y*H,n.r); g.addColorStop(0,`rgba(${n.col},${n.alpha})`); g.addColorStop(1,'transparent'); ctx.fillStyle=g; ctx.beginPath(); ctx.arc(n.x*W,n.y*H,n.r,0,Math.PI*2); ctx.fill(); });
+  stars.forEach(s=>{ s.tw+=s.sp; const a=s.alpha*(0.6+0.4*Math.sin(s.tw)); ctx.beginPath(); ctx.arc(s.x*W,s.y*H,s.r,0,Math.PI*2); ctx.fillStyle=`rgba(200,220,255,${a})`; ctx.fill(); });
+  requestAnimationFrame(drawUniverse);
+}
+drawUniverse();
+
+// REVEAL
+const obs=new IntersectionObserver(es=>es.forEach((e,i)=>{ if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'),i*80); obs.unobserve(e.target); } }),{threshold:0.07});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+
+// QUIZ
+function answerQ(qid,chosen,correct){
+  const opts=document.querySelectorAll('#'+qid+'-opts .quiz-option');
+  const ans=document.getElementById(qid+'-ans');
+  opts.forEach((o,i)=>{
+    const labels=['A','B','C','D'];
+    o.style.pointerEvents='none';
+    if(labels[i]===correct) o.classList.add('correct');
+    else if(labels[i]===chosen && chosen!==correct) o.classList.add('wrong');
+  });
+  ans.style.display='block';
+}
+
+// GATE FORM
+async function handleGate(e){
+  e.preventDefault();
+  const form=document.getElementById('gate-form'),btn=document.getElementById('gate-btn'),suc=document.getElementById('gate-success');
+  btn.textContent='Joining...'; btn.disabled=true; btn.style.opacity='0.7';
+  try {
+    const res=await fetch('https://formspree.io/f/YOUR_FORM_ID',{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}});
+    if(res.ok){ form.style.display='none'; suc.style.display='block'; }
+    else throw new Error();
+  } catch { btn.textContent='Join the Waitlist — Free'; btn.disabled=false; btn.style.opacity='1'; alert('Something went wrong. Please try again or email nageshj@diarkaquantum.co.uk'); }
+}
+</script>
+</body>
+</html>
