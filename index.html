@@ -31,34 +31,36 @@ body { background: var(--void); color: var(--stellar); font-family: 'Raleway', s
 
 /* CURSOR */
 .cursor { width: 8px; height: 8px; background: var(--nebula-teal); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; box-shadow: 0 0 10px var(--nebula-teal); }
-.cursor-ring { width: 32px; height: 32px; border: 1px solid rgba(0,212,255,0.5); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; transition: transform 0.1s ease-out; }
+.cursor-ring { width: 32px; height: 32px; border: 1px solid rgba(0,212,255,0.5); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; transition: transform 0.1s ease-out, width 0.2s, height 0.2s, border-color 0.2s; }
 #universe { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
 
 /* NAV */
-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.2rem 3rem; display: flex; align-items: center; justify-content: space-between; background: linear-gradient(to bottom, rgba(0,1,10,0.95), rgba(0,1,10,0)); border-bottom: 1px solid rgba(0,212,255,0.1); }
-.nav-logo { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 1rem; letter-spacing: 0.12em; text-decoration: none; color: var(--stellar); display: flex; align-items: center; gap: 0.6rem; }
-.nav-logo .logo-icon { width: 32px; height: 32px; border: 1px solid var(--nebula-teal); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; box-shadow: 0 0 12px rgba(0,212,255,0.3); }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.2rem 3rem; display: flex; align-items: center; justify-content: space-between; background: linear-gradient(to bottom, rgba(0,1,10,0.95), rgba(0,1,10,0.8)); border-bottom: 1px solid rgba(0,212,255,0.08); backdrop-filter: blur(4px); }
+.nav-logo { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 1rem; letter-spacing: 0.12em; text-decoration: none; color: var(--stellar); display: flex; align-items: center; gap: 0.6rem; transition: color 0.2s; }
+.nav-logo:hover { color: var(--nebula-teal); }
+.logo-icon { width: 32px; height: 32px; border: 1px solid var(--nebula-teal); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; box-shadow: 0 0 12px rgba(0,212,255,0.2); flex-shrink: 0; }
+.brand-logo-img { width: 40px; height: 40px; object-fit: contain; display: block; flex-shrink: 0; }
 .nav-logo span { color: var(--nebula-teal); }
 .nav-links { display: flex; gap: 0.1rem; list-style: none; }
-.nav-links a { color: var(--starlight); text-decoration: none; font-size: 0.63rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.5rem 0.7rem; transition: color 0.2s, background 0.2s; }
+.nav-links a { color: var(--starlight); text-decoration: none; font-size: 0.63rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.5rem 0.7rem; transition: color 0.2s, background 0.2s; border-radius: 3px; }
 .nav-links a:hover { color: var(--nebula-teal); background: rgba(0,212,255,0.05); }
-.nav-cta { background: transparent; border: 1px solid var(--nebula-teal); color: var(--nebula-teal); padding: 0.5rem 1.2rem; font-family: 'Orbitron', monospace; font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
+.nav-cta { background: transparent; border: 1px solid var(--nebula-teal); color: var(--nebula-teal); padding: 0.5rem 1.2rem; font-family: 'Orbitron', monospace; font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; border-radius: 3px; transition: all 0.2s; cursor: pointer; }
 .nav-cta:hover { background: var(--nebula-teal); color: var(--void); box-shadow: 0 0 24px rgba(0,212,255,0.4); }
 
 /* HERO */
 .hero { position: relative; z-index: 1; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 8rem 2rem 4rem; overflow: hidden; }
-.black-hole { position: absolute; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, #000 0%, #000 20%, transparent 65%); box-shadow: 0 0 80px 30px rgba(123,47,255,0.2), 0 0 160px 60px rgba(0,212,255,0.08); animation: blackhole-pulse 4s ease-in-out infinite; top: 50%; left: 50%; transform: translate(-50%, -50%); }
-.accretion-disk { position: absolute; width: 650px; height: 130px; border-radius: 50%; box-shadow: 0 0 50px rgba(255,107,53,0.25), 0 0 100px rgba(123,47,255,0.2), 0 0 150px rgba(0,212,255,0.1); top: 50%; left: 50%; transform: translate(-50%, -63%) rotateX(75deg); animation: disk-rotate 20s linear infinite; }
+.black-hole { position: absolute; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, #000 0%, #000 20%, transparent 65%); box-shadow: 0 0 80px 30px rgba(123,47,255,0.2); animation: blackhole-pulse 4s ease-in-out infinite; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+.accretion-disk { position: absolute; width: 650px; height: 130px; border-radius: 50%; box-shadow: 0 0 50px rgba(255,107,53,0.25), 0 0 100px rgba(123,47,255,0.2), 0 0 150px rgba(0,212,255,0.1); top: 50%; left: 50%; transform: translate(-50%, -63%) rotateX(75deg); animation: disk-rotate 12s linear infinite; }
 .hero-eyebrow { font-family: 'Orbitron', monospace; font-size: 0.6rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--nebula-teal); margin-bottom: 2rem; opacity: 0; animation: fadeUp 0.9s 0.3s forwards; }
-.hero-title { font-family: 'Orbitron', monospace; font-weight: 900; font-size: clamp(2.2rem, 6vw, 5.5rem); line-height: 1.05; letter-spacing: 0.05em; opacity: 0; animation: fadeUp 0.9s 0.5s forwards; }
+.hero-title { font-family: 'Orbitron', monospace; font-weight: 900; font-size: clamp(2.2rem, 6vw, 5.5rem); line-height: 1.05; letter-spacing: 0.05em; opacity: 0; animation: fadeUp 0.9s 0.5s forwards; position: relative; z-index: 2; }
 .hero-title .t1 { color: var(--stellar); display: block; }
 .hero-title .t2 { color: var(--nebula-teal); display: block; }
 .hero-title .t3 { color: var(--pulsar); display: block; font-size: 0.55em; letter-spacing: 0.3em; margin-top: 0.3em; }
 .hero-sub { margin-top: 2rem; font-size: 0.92rem; line-height: 1.9; color: var(--starlight); max-width: 600px; opacity: 0; animation: fadeUp 0.9s 0.7s forwards; position: relative; z-index: 2; font-weight: 300; }
 .hero-actions { margin-top: 3rem; display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; opacity: 0; animation: fadeUp 0.9s 0.9s forwards; position: relative; z-index: 2; }
-.btn-cosmos { background: linear-gradient(135deg, var(--pulsar), var(--nebula-teal)); color: var(--void); padding: 1rem 2.5rem; font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; border: none; cursor: pointer; transition: all 0.3s; }
+.btn-cosmos { background: linear-gradient(135deg, var(--pulsar), var(--nebula-teal)); color: var(--void); padding: 1rem 2.5rem; font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; border: none; border-radius: 3px; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-block; }
 .btn-cosmos:hover { box-shadow: 0 0 50px rgba(123,47,255,0.6); transform: translateY(-3px); }
-.btn-void { border: 1px solid rgba(0,212,255,0.4); color: var(--nebula-teal); padding: 1rem 2.5rem; font-family: 'Orbitron', monospace; font-weight: 600; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; background: transparent; cursor: pointer; transition: all 0.3s; }
+.btn-void { border: 1px solid rgba(0,212,255,0.4); color: var(--nebula-teal); padding: 1rem 2.5rem; font-family: 'Orbitron', monospace; font-weight: 600; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; background: transparent; border-radius: 3px; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-block; }
 .btn-void:hover { background: rgba(0,212,255,0.08); box-shadow: 0 0 30px rgba(0,212,255,0.2); }
 
 /* ORBIT STATS */
@@ -74,13 +76,13 @@ section { position: relative; z-index: 1; }
 .section-inner { padding: 7rem 4rem; max-width: 1400px; margin: 0 auto; }
 .section-tag { font-family: 'Orbitron', monospace; font-size: 0.58rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--nebula-teal); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.8rem; }
 .section-tag::before { content: ''; width: 12px; height: 2px; background: var(--pulsar); }
-.section-title { font-family: 'Orbitron', monospace; font-weight: 900; font-size: clamp(1.8rem,3.5vw,2.8rem); line-height: 1.15; letter-spacing: 0.03em; margin-bottom: 1rem; text-shadow: 0 0 30px rgba(123,47,255,0.2); }
+.section-title { font-family: 'Orbitron', monospace; font-weight: 900; font-size: clamp(1.8rem,3.5vw,2.8rem); line-height: 1.15; letter-spacing: 0.03em; margin-bottom: 1rem; text-shadow: 0 0 30px rgba(0,212,255,0.1); }
 .section-desc { color: var(--starlight); font-size: 0.88rem; line-height: 1.9; max-width: 580px; margin-bottom: 3.5rem; font-weight: 300; }
 
 /* DASHBOARD */
 .dashboard-section { background: linear-gradient(180deg, var(--void) 0%, var(--nebula-dark) 100%); }
 .dashboard-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 3rem; }
-.dash-card { background: rgba(6,13,46,0.8); border: 1px solid var(--border); padding: 2rem; position: relative; overflow: hidden; transition: border-color 0.3s, transform 0.3s; cursor: pointer; }
+.dash-card { background: rgba(6,13,46,0.8); border: 1px solid var(--border); padding: 2rem; position: relative; overflow: hidden; transition: border-color 0.3s, transform 0.3s; cursor: pointer; border-radius: 3px; }
 .dash-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--nebula-teal), transparent); opacity: 0; transition: opacity 0.3s; }
 .dash-card:hover { border-color: rgba(0,212,255,0.3); transform: translateY(-4px); }
 .dash-card:hover::after { opacity: 1; }
@@ -94,9 +96,9 @@ section { position: relative; z-index: 1; }
 /* RESEARCH */
 .research-section { background: var(--void); }
 .research-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 2px; background: var(--border); margin-top: 3rem; }
-.research-card { background: var(--deep-space); padding: 3rem; position: relative; overflow: hidden; transition: background 0.3s; }
+.research-card { background: var(--deep-space); padding: 3rem; position: relative; overflow: hidden; transition: background 0.3s; border-radius: 3px; }
 .research-card:hover { background: rgba(6,13,46,0.95); }
-.research-card::before { content: ''; position: absolute; top: 0; left: 0; width: 0; height: 3px; background: linear-gradient(90deg, var(--pulsar), var(--nebula-teal)); transition: width 0.5s ease-out; }
+.research-card::before { content: ''; position: absolute; top: 0; left: 0; width: 0; height: 3px; background: linear-gradient(90deg, var(--pulsar), var(--nebula-teal)); transition: width 0.5s ease; }
 .research-card:hover::before { width: 100%; }
 .research-planet { width: 52px; height: 52px; border-radius: 50%; margin-bottom: 1.8rem; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; }
 .planet-1 { background: radial-gradient(circle at 35% 35%,#4a9eff,#0a2a6e); box-shadow: 0 0 20px rgba(74,158,255,0.4); }
@@ -106,7 +108,7 @@ section { position: relative; z-index: 1; }
 .research-title { font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.95rem; margin-bottom: 1rem; color: var(--stellar); letter-spacing: 0.03em; }
 .research-desc { font-size: 0.8rem; line-height: 1.8; color: var(--starlight); font-weight: 300; margin-bottom: 1.5rem; }
 .research-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-.rtag { font-family: 'Orbitron', monospace; font-size: 0.52rem; letter-spacing: 0.1em; padding: 0.28rem 0.65rem; border: 1px solid var(--border-purple); color: var(--pulsar); text-transform: uppercase; }
+.rtag { font-family: 'Orbitron', monospace; font-size: 0.52rem; letter-spacing: 0.1em; padding: 0.28rem 0.65rem; border: 1px solid var(--border-purple); color: var(--pulsar); text-transform: uppercase; border-radius: 2px; }
 .rtag-teal { border-color: var(--border); color: var(--nebula-teal); }
 
 /* HARDWARE */
@@ -120,7 +122,7 @@ section { position: relative; z-index: 1; }
 .hw-item:nth-child(even) .hw-content { grid-column: 3; padding-left: 3rem; }
 .hw-node { grid-column: 2; display: flex; align-items: center; justify-content: center; padding-top: 1rem; }
 .hw-dot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--nebula-teal); background: var(--void); box-shadow: 0 0 12px var(--nebula-teal); position: relative; z-index: 1; }
-.hw-content { background: rgba(6,13,46,0.7); border: 1px solid var(--border); padding: 2rem; transition: border-color 0.3s; }
+.hw-content { background: rgba(6,13,46,0.7); border: 1px solid var(--border); padding: 2rem; transition: border-color 0.3s; border-radius: 3px; }
 .hw-content:hover { border-color: rgba(0,212,255,0.3); }
 .hw-name { font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.88rem; color: var(--nebula-teal); margin-bottom: 0.4rem; letter-spacing: 0.05em; }
 .hw-type { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--pulsar); margin-bottom: 0.8rem; }
@@ -137,9 +139,9 @@ section { position: relative; z-index: 1; }
 .ring-3 { width: 140px; height: 140px; border-color: rgba(0,212,255,0.4); animation-duration: 10s; }
 .ring-dot { position: absolute; width: 8px; height: 8px; border-radius: 50%; background: var(--nebula-teal); box-shadow: 0 0 10px var(--nebula-teal); top: -4px; left: 50%; transform: translateX(-50%); }
 .ring-dot-2 { background: var(--pulsar); box-shadow: 0 0 10px var(--pulsar); }
-.ai-core { width: 80px; height: 80px; border-radius: 50%; background: radial-gradient(circle, rgba(123,47,255,0.8), rgba(0,212,255,0.4)); box-shadow: 0 0 40px rgba(123,47,255,0.6), 0 0 80px rgba(0,212,255,0.3); }
+.ai-core { width: 80px; height: 80px; border-radius: 50%; background: radial-gradient(circle, rgba(123,47,255,0.8), rgba(0,212,255,0.4)); box-shadow: 0 0 40px rgba(123,47,255,0.6), 0 0 80px rgba(0,212,255,0.2); }
 .ai-features { display: flex; flex-direction: column; gap: 1.5rem; }
-.ai-feature { display: flex; gap: 1.5rem; align-items: flex-start; padding: 1.5rem; background: rgba(6,13,46,0.6); border: 1px solid var(--border); border-left: 3px solid var(--pulsar); transition: all 0.3s; }
+.ai-feature { display: flex; gap: 1.5rem; align-items: flex-start; padding: 1.5rem; background: rgba(6,13,46,0.6); border: 1px solid var(--border); border-left: 3px solid var(--pulsar); transition: all 0.3s; border-radius: 3px; }
 .ai-feature:hover { background: rgba(6,13,46,0.9); }
 .ai-feature-icon { display: none; }
 .ai-feature-title { font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.78rem; color: var(--stellar); margin-bottom: 0.4rem; letter-spacing: 0.04em; }
@@ -148,21 +150,21 @@ section { position: relative; z-index: 1; }
 /* EDUCATION */
 .education-section { background: linear-gradient(180deg, var(--void) 0%, rgba(6,13,46,0.8) 100%); }
 .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem; }
-.course-card { background: rgba(6,13,46,0.9); border: 1px solid rgba(123,47,255,0.3); padding: 3rem; position: relative; overflow: hidden; }
+.course-card { background: rgba(6,13,46,0.9); border: 1px solid rgba(123,47,255,0.3); padding: 3rem; position: relative; overflow: hidden; border-radius: 3px; }
 .course-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--pulsar), var(--nebula-teal)); }
 .course-card::after { content: ''; position: absolute; top: -100px; right: -100px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(123,47,255,0.08) 0%, transparent 70%); pointer-events: none; }
-.course-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(123,47,255,0.15); border: 1px solid rgba(123,47,255,0.3); color: var(--pulsar); font-family: 'Orbitron', monospace; font-size: 0.5rem; letter-spacing: 0.1em; padding: 0.35rem 0.7rem; text-transform: uppercase; margin-bottom: 1rem; position: relative; z-index: 1; }
+.course-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(123,47,255,0.15); border: 1px solid rgba(123,47,255,0.3); color: var(--pulsar); font-family: 'Orbitron', monospace; font-size: 0.5rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.4rem 0.8rem; border-radius: 2px; margin-bottom: 1rem; position: relative; z-index: 1; }
 .course-badge::before { content: ''; animation: pulse 2s infinite; }
 .course-title { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 1.2rem; line-height: 1.3; margin-bottom: 1rem; letter-spacing: 0.03em; }
 .course-title em { font-family: 'Playfair Display', serif; color: var(--nebula-teal); font-style: italic; font-size: 1.3em; }
 .course-desc { font-size: 0.8rem; line-height: 1.8; color: var(--starlight); font-weight: 300; margin-bottom: 2rem; }
 .modules-list { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 2rem; }
-.module-row { display: flex; align-items: center; gap: 0.8rem; font-size: 0.73rem; color: var(--starlight); padding: 0.55rem 0.8rem; background: rgba(0,0,0,0.3); border-left: 2px solid rgba(0,212,255,0.3); }
+.module-row { display: flex; align-items: center; gap: 0.8rem; font-size: 0.73rem; color: var(--starlight); padding: 0.55rem 0.8rem; background: rgba(0,0,0,0.3); border-left: 2px solid rgba(0,212,255,0.3); border-radius: 2px; }
 .course-price-block { display: flex; align-items: baseline; gap: 0.8rem; margin-bottom: 1.5rem; }
 .price-big { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 3rem; color: var(--nebula-teal); text-shadow: 0 0 20px rgba(0,212,255,0.4); line-height: 1; }
 .price-note { font-size: 0.7rem; color: var(--muted); line-height: 1.6; }
 .edu-info { display: flex; flex-direction: column; gap: 1.5rem; }
-.edu-card { background: rgba(6,13,46,0.7); border: 1px solid var(--border); padding: 2rem; transition: border-color 0.3s; }
+.edu-card { background: rgba(6,13,46,0.7); border: 1px solid var(--border); padding: 2rem; transition: border-color 0.3s; border-radius: 3px; }
 .edu-card:hover { border-color: rgba(0,212,255,0.3); }
 .edu-card-icon { display: none; }
 .edu-card-title { font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.78rem; color: var(--stellar); margin-bottom: 0.5rem; letter-spacing: 0.04em; }
@@ -174,7 +176,7 @@ section { position: relative; z-index: 1; }
 .about-text p { font-size: 0.87rem; line-height: 1.9; color: var(--starlight); font-weight: 300; margin-bottom: 1.5rem; }
 .about-text strong { color: var(--nebula-teal); font-weight: 600; }
 .about-visual { position: relative; display: flex; align-items: center; justify-content: center; height: 380px; }
-.galaxy-core { width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, rgba(0,212,255,0.9) 0%, rgba(123,47,255,0.6) 40%, transparent 70%); box-shadow: 0 0 60px rgba(0,212,255,0.4); }
+.galaxy-core { width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, rgba(0,212,255,0.9) 0%, rgba(123,47,255,0.6) 40%, transparent 70%); box-shadow: 0 0 60px rgba(0,212,255,0.4); display: flex; align-items: center; justify-content: center; text-align: center; font-family: 'Orbitron', monospace; font-weight: 900; font-size: 0.65rem; line-height: 1.2; color: var(--stellar); }
 .galaxy-arm { position: absolute; border-radius: 50%; border: 1px dashed; animation: ring-rotate linear infinite; }
 .arm-1 { width: 200px; height: 200px; border-color: rgba(0,212,255,0.2); animation-duration: 25s; }
 .arm-2 { width: 280px; height: 280px; border-color: rgba(123,47,255,0.15); animation-duration: 35s; animation-direction: reverse; }
@@ -184,7 +186,7 @@ section { position: relative; z-index: 1; }
 .op-2 { background: radial-gradient(circle at 35% 35%,#ff6b35,#6e1a0a); box-shadow: 0 0 8px rgba(255,107,53,0.6); }
 .op-3 { background: radial-gradient(circle at 35% 35%,#7b2fff,#2a0a6e); box-shadow: 0 0 8px rgba(123,47,255,0.6); }
 .values-list { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
-.value-item { display: flex; gap: 1.2rem; align-items: flex-start; padding: 1rem 1.2rem; background: rgba(6,13,46,0.5); border-left: 2px solid var(--nebula-teal); }
+.value-item { display: flex; gap: 1.2rem; align-items: flex-start; padding: 1rem 1.2rem; background: rgba(6,13,46,0.5); border-left: 2px solid var(--nebula-teal); border-radius: 2px; }
 .value-icon { display: none; }
 .value-title { font-family: 'Orbitron', monospace; font-size: 0.7rem; font-weight: 700; color: var(--nebula-teal); margin-bottom: 0.2rem; letter-spacing: 0.06em; }
 .value-desc { font-size: 0.73rem; color: var(--starlight); line-height: 1.6; font-weight: 300; }
@@ -193,16 +195,16 @@ section { position: relative; z-index: 1; }
 .contact-section { background: linear-gradient(180deg, var(--void), var(--nebula-dark)); }
 .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
 .form-label { font-family: 'Orbitron', monospace; font-size: 0.56rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 0.4rem; }
-.form-input, .form-select, .form-textarea { background: rgba(6,13,46,0.8); border: 1px solid var(--border); color: var(--stellar); padding: 0.85rem 1rem; font-family: 'Raleway', sans-serif; font-size: 0.8rem; transition: border-color 0.3s; }
+.form-input, .form-select, .form-textarea { background: rgba(6,13,46,0.8); border: 1px solid var(--border); color: var(--stellar); padding: 0.85rem 1rem; font-family: 'Raleway', sans-serif; font-size: 0.85rem; border-radius: 3px; transition: border-color 0.2s; }
 .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--nebula-teal); box-shadow: 0 0 12px rgba(0,212,255,0.1); outline: none; }
 .form-select option { background: var(--deep-space); }
 .form-textarea { resize: vertical; min-height: 110px; }
-.form-btn { background: linear-gradient(135deg, var(--pulsar), var(--nebula-teal)); color: var(--void); border: none; padding: 1rem 2.5rem; font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
+.form-btn { background: linear-gradient(135deg, var(--pulsar), var(--nebula-teal)); color: var(--void); border: none; padding: 1rem 2.5rem; font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; border-radius: 3px; cursor: pointer; transition: all 0.3s; }
 .form-btn:hover { box-shadow: 0 0 40px rgba(123,47,255,0.5); transform: translateY(-2px); }
-#form-success { display: none; border: 1px solid rgba(0,212,255,0.3); padding: 2.5rem; background: rgba(0,212,255,0.04); text-align: center; }
+#form-success { display: none; border: 1px solid rgba(0,212,255,0.3); padding: 2.5rem; background: rgba(0,212,255,0.04); text-align: center; border-radius: 3px; }
 #form-error { display: none; margin-top: 0.8rem; font-size: 0.73rem; color: var(--nova); }
 .contact-details { display: flex; flex-direction: column; gap: 1.5rem; }
-.contact-item { display: flex; gap: 1.2rem; align-items: flex-start; padding: 1.5rem; background: rgba(6,13,46,0.6); border: 1px solid var(--border); }
+.contact-item { display: flex; gap: 1.2rem; align-items: flex-start; padding: 1.5rem; background: rgba(6,13,46,0.6); border: 1px solid var(--border); border-radius: 3px; }
 .contact-icon { display: none; }
 .contact-label { font-family: 'Orbitron', monospace; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem; }
 .contact-val { font-size: 0.83rem; color: var(--stellar); }
@@ -219,7 +221,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
 
 /* ANIMATIONS */
 @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
-@keyframes blackhole-pulse { 0%,100% { box-shadow:0 0 80px 30px rgba(123,47,255,0.2),0 0 160px 60px rgba(0,212,255,0.08); } 50% { box-shadow:0 0 120px 50px rgba(123,47,255,0.3),0 0 220px 80px rgba(0,212,255,0.15); } }
+@keyframes blackhole-pulse { 0%,100% { box-shadow:0 0 80px 30px rgba(123,47,255,0.2),0 0 160px 60px rgba(0,212,255,0.08); } 50% { box-shadow:0 0 120px 50px rgba(123,47,255,0.3),0 0 220px 80px rgba(0,212,255,0.12); } }
 @keyframes disk-rotate { from { transform:translate(-50%,-63%) rotateX(75deg) rotateZ(0deg); } to { transform:translate(-50%,-63%) rotateX(75deg) rotateZ(360deg); } }
 @keyframes orbit-pulse { 0%,100% { box-shadow:0 0 12px rgba(0,212,255,0.3); } 50% { box-shadow:0 0 24px rgba(0,212,255,0.6); } }
 @keyframes ring-rotate { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
@@ -250,7 +252,10 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
 
 <!-- NAV -->
 <nav>
-  <a href="#hero" class="nav-logo"><div class="logo-icon">Q</div>Diarka<span>Quantum</span></a>
+  <a href="#hero" class="nav-logo">
+    <img src="assets/diarka-logo.png" alt="Diarka Quantum logo" class="brand-logo-img">
+    <span>Diarka<span>Quantum</span></span>
+  </a>
   <ul class="nav-links">
     <li><a href="#hero">Home</a></li>
     <li><a href="#dashboard">Dashboard</a></li>
@@ -346,25 +351,25 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
       <div class="research-card">
         <div class="research-planet planet-1"></div>
         <div class="research-title">Quantum Information Science</div>
-        <div class="research-desc">Exploring the fundamental principles of quantum information — superposition, entanglement, quantum measurement, and decoherence. We study Bell states, quantum teleportation, and foundational quantum information theory.</div>
+        <div class="research-desc">Exploring the fundamental principles of quantum information — superposition, entanglement, quantum measurement, and decoherence. We study Bell states, quantum teleportation, and the math that underpins quantum advantage.</div>
         <div class="research-tags"><span class="rtag rtag-teal">Bell States</span><span class="rtag rtag-teal">Entanglement</span><span class="rtag rtag-teal">Quantum Teleportation</span></div>
       </div>
       <div class="research-card">
         <div class="research-planet planet-2"></div>
         <div class="research-title">Quantum Algorithms & Optimisation</div>
-        <div class="research-desc">Researching near-term quantum algorithms designed for NISQ-era hardware. Our focus includes QAOA (Quantum Approximate Optimisation Algorithm) for combinatorial problems and variational quantum eigensolvers.</div>
+        <div class="research-desc">Researching near-term quantum algorithms designed for NISQ-era hardware. Our focus includes QAOA (Quantum Approximate Optimisation Algorithm) for combinatorial problems and VQE for chemistry.</div>
         <div class="research-tags"><span class="rtag">QAOA</span><span class="rtag">VQE</span><span class="rtag">Quantum Annealing</span><span class="rtag">Quantum Advantage</span></div>
       </div>
       <div class="research-card">
         <div class="research-planet planet-3"></div>
         <div class="research-title">Post-Quantum Cryptography</div>
-        <div class="research-desc">Investigating the threat quantum computing poses to current encryption standards and the transition to quantum-safe cryptography. We track NIST's 2024 post-quantum cryptography standards and lattice-based approaches.</div>
-        <div class="research-tags"><span class="rtag">NIST PQC 2024</span><span class="rtag">Lattice Cryptography</span><span class="rtag">Quantum-Safe Security</span><span class="rtag">Shor's Algorithm</span></div>
+        <div class="research-desc">Investigating the threat quantum computing poses to current encryption standards and the transition to quantum-safe cryptography. We track NIST's 2024 post-quantum standards closely.</div>
+        <div class="research-tags"><span class="rtag">NIST PQC 2024</span><span class="rtag">Lattice Cryptography</span><span class="rtag">Quantum-Safe Security</span><span class="rtag">Shor's Algorithm Impact</span></div>
       </div>
       <div class="research-card">
         <div class="research-planet planet-4"></div>
         <div class="research-title">Quantum Error Correction</div>
-        <div class="research-desc">Studying the path from today's noisy NISQ systems to fault-tolerant quantum computers. Our research covers surface codes, stabiliser codes, and logical qubit encoding for practical quantum computing.</div>
+        <div class="research-desc">Studying the path from today's noisy NISQ systems to fault-tolerant quantum computers. Our research covers surface codes, stabiliser codes, and logical qubit engineering.</div>
         <div class="research-tags"><span class="rtag rtag-teal">Surface Codes</span><span class="rtag rtag-teal">Fault Tolerance</span><span class="rtag rtag-teal">Logical Qubits</span></div>
       </div>
     </div>
@@ -534,15 +539,15 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
         <div class="section-tag">About</div>
         <h2 class="section-title reveal">Diarka Quantum Limited</h2>
         <div class="about-text reveal">
-          <p>Diarka Quantum Limited is a <strong>UK-based quantum technology company</strong> dedicated to quantum computing research, quantum information science, and building educational programmes that prepare professionals and organisations for the quantum era.</p>
+          <p>Diarka Quantum Limited is a <strong>UK-based quantum technology company</strong> dedicated to quantum computing research, quantum information science, and building educational programmes that demystify quantum technology.</p>
           <p>We operate at the frontier of <strong>quantum hardware research</strong> — tracking and studying all major quantum computing platforms.</p>
           <p>Our research spans <strong>quantum information theory, quantum algorithms, AI-quantum convergence, and post-quantum cryptography</strong>.</p>
           <p>We believe the organisations that begin understanding quantum computing <strong>today</strong> will be the ones leading when the technology fully matures.</p>
         </div>
         <div class="values-list reveal">
-          <div class="value-item"><div class="value-icon"></div><div><div class="value-title">Research-First</div><div class="value-desc">Everything we do is grounded in genuine research and industry expertise.</div></div></div>
-          <div class="value-item"><div class="value-icon"></div><div><div class="value-title">Accessible Science</div><div class="value-desc">We translate frontier quantum science into knowledge accessible to professionals.</div></div></div>
-          <div class="value-item"><div class="value-icon"></div><div><div class="value-title">Future-Oriented</div><div class="value-desc">We think in decades, not quarters — building capabilities ahead of disruption.</div></div></div>
+          <div class="value-item"><div class="value-icon"></div><div><div class="value-title">Research-First</div><div class="value-desc">Everything we do is grounded in genuine research and industry insights, not hype.</div></div></div>
+          <div class="value-item"><div class="value-icon"></div><div><div class="value-title">Accessible Science</div><div class="value-desc">We translate frontier quantum science into knowledge anyone can understand and act upon.</div></div></div>
+          <div class="value-item"><div class="value-icon"></div><div><div class="value-title">Future-Oriented</div><div class="value-desc">We think in decades, not quarters — building capability and understanding ahead of disruption.</div></div></div>
         </div>
       </div>
       <div class="about-visual reveal">
@@ -645,7 +650,7 @@ function draw(){
   nebulae.forEach(n=>{ const g=ctx.createRadialGradient(n.x*W,n.y*H,0,n.x*W,n.y*H,n.r); g.addColorStop(0,`rgba(${n.col},${n.alpha})`); g.addColorStop(1,'transparent'); ctx.fillStyle=g; ctx.beginPath(); ctx.arc(n.x*W,n.y*H,n.r,0,Math.PI*2); ctx.fill(); });
   stars.forEach(s=>{ s.tw+=s.sp; const a=s.alpha*(0.6+0.4*Math.sin(s.tw)); ctx.beginPath(); ctx.arc(s.x*W,s.y*H,s.r,0,Math.PI*2); ctx.fillStyle=s.r>0.9?`rgba(180,220,255,${a})`:`rgba(255,255,255,${a})`; ctx.fill(); });
   shooters=shooters.filter(s=>s.life>0);
-  shooters.forEach(s=>{ ctx.beginPath(); ctx.moveTo(s.x,s.y); ctx.lineTo(s.x-s.vx*s.len*s.life,s.y-s.vy*s.len*s.life); const g=ctx.createLinearGradient(s.x,s.y,s.x-s.vx*s.len,s.y-s.vy*s.len); g.addColorStop(0,`rgba(0,212,255,${0.8*s.life})`); g.addColorStop(1,'transparent'); ctx.strokeStyle=g; ctx.lineWidth=1.5; ctx.stroke(); s.life-=0.01; });
+  shooters.forEach(s=>{ ctx.beginPath(); ctx.moveTo(s.x,s.y); ctx.lineTo(s.x-s.vx*s.len*s.life,s.y-s.vy*s.len*s.life); const g=ctx.createLinearGradient(s.x,s.y,s.x-s.vx*s.len,s.y-s.vy*s.len); g.addColorStop(0,'rgba(0,212,255,0.8)'); g.addColorStop(1,'rgba(0,212,255,0)'); ctx.strokeStyle=g; ctx.lineWidth=1.5; ctx.stroke(); s.life-=0.01; });
   requestAnimationFrame(draw);
 }
 draw();
