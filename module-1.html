@@ -159,6 +159,42 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 3r
 #gate-success .gs-title { font-family: 'Orbitron', monospace; font-weight: 700; color: var(--teal); margin-bottom: 0.5rem; font-size: 0.9rem; }
 #gate-success p { font-family: 'Lora', serif; font-size: 0.88rem; color: var(--starlight); }
 
+/* DUAL PATH (Free + Paid) */
+.path-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 820px; margin: 2.5rem auto 0; }
+.path-card { background: rgba(6,13,46,0.7); border: 1px solid var(--border-p); padding: 2.2rem 1.8rem; text-align: center; position: relative; overflow: hidden; transition: border-color 0.3s, transform 0.3s; }
+.path-card:hover { border-color: rgba(0,212,255,0.4); transform: translateY(-3px); }
+.path-card.featured { border-color: rgba(123,47,255,0.5); background: linear-gradient(180deg, rgba(123,47,255,0.08), rgba(6,13,46,0.7)); }
+.path-card.featured::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--pulsar), var(--teal)); }
+.path-badge { display: inline-block; font-family: 'Orbitron', monospace; font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.3rem 0.7rem; border-radius: 2px; margin-bottom: 0.9rem; }
+.path-badge.free { background: rgba(0,212,255,0.12); color: var(--teal); border: 1px solid rgba(0,212,255,0.3); }
+.path-badge.paid { background: rgba(123,47,255,0.15); color: var(--pulsar); border: 1px solid rgba(123,47,255,0.4); }
+.path-title { font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.95rem; color: var(--stellar); margin-bottom: 0.7rem; letter-spacing: 0.04em; }
+.path-price { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 2.2rem; color: var(--teal); line-height: 1; margin-bottom: 0.3rem; }
+.path-price.free-price { color: var(--teal); }
+.path-price.paid-price { color: var(--pulsar); }
+.path-price-note { font-size: 0.65rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.2rem; }
+.path-features { list-style: none; padding: 0; margin: 0 0 1.5rem; text-align: left; }
+.path-features li { font-family: 'Lora', serif; font-size: 0.78rem; color: var(--starlight); padding: 0.4rem 0 0.4rem 1.4rem; position: relative; line-height: 1.5; }
+.path-features li::before { content: '→'; position: absolute; left: 0; color: var(--teal); font-weight: 700; }
+.path-card.featured .path-features li::before { color: var(--pulsar); }
+.path-cta { display: inline-block; width: 100%; padding: 0.95rem 1rem; font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; border: none; transition: all 0.3s; text-decoration: none; clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%); }
+.path-cta.free { background: transparent; color: var(--teal); border: 1px solid var(--teal); }
+.path-cta.free:hover { background: rgba(0,212,255,0.1); box-shadow: 0 0 20px rgba(0,212,255,0.3); }
+.path-cta.paid { background: linear-gradient(135deg, var(--pulsar), var(--teal)); color: var(--void); box-shadow: 0 0 24px rgba(123,47,255,0.4); }
+.path-cta.paid:hover { box-shadow: 0 0 40px rgba(123,47,255,0.6); transform: translateY(-2px); }
+.path-cta:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* MODAL */
+.modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px); z-index: 9999; align-items: center; justify-content: center; padding: 2rem; }
+.modal-overlay.active { display: flex; }
+.modal-box { background: var(--deep-space); border: 1px solid rgba(0,212,255,0.3); padding: 2.5rem; max-width: 480px; width: 100%; position: relative; box-shadow: 0 0 60px rgba(0,212,255,0.15); }
+.modal-close { position: absolute; top: 1rem; right: 1.2rem; background: none; border: none; color: var(--muted); font-size: 1.5rem; cursor: pointer; transition: color 0.2s; }
+.modal-close:hover { color: var(--teal); }
+.modal-title { font-family: 'Orbitron', monospace; font-weight: 700; font-size: 1rem; color: var(--stellar); margin-bottom: 0.6rem; letter-spacing: 0.04em; }
+.modal-desc { font-family: 'Lora', serif; font-size: 0.85rem; color: var(--starlight); margin-bottom: 1.5rem; line-height: 1.6; }
+
+@media (max-width:700px) { .path-grid { grid-template-columns: 1fr; } }
+
 /* FOOTER */
 footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; background: rgba(0,1,10,0.98); flex-wrap: wrap; gap: 1rem; }
 .footer-logo { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 0.85rem; color: var(--stellar); }
@@ -620,13 +656,58 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
       <div class="gs-title">You are on the list.</div>
       <p>We will notify you at your email address the moment Module 2 launches. Welcome to the Diarka Quantum community.</p>
     </div>
-    <form class="gate-form" id="gate-form" onsubmit="handleGate(event)">
-      <input type="text" name="name" class="gate-input" placeholder="Your name" required>
-      <input type="email" name="email" class="gate-input" placeholder="Your email address" required>
-      <input type="text" name="_gotcha" style="display:none">
-      <button type="submit" class="gate-btn" id="gate-btn">Join the Waitlist — Free</button>
-      <div class="gate-note">No spam. No selling your data. Notification only when the next module is ready.</div>
-    </form>
+
+    <!-- TWO PATHS: FREE WAITLIST + PAID INSTANT ACCESS -->
+    <div class="path-grid" id="path-grid">
+
+      <!-- PATH 1: FREE WAITLIST -->
+      <div class="path-card">
+        <div class="path-badge free">Free Path</div>
+        <div class="path-title">Join the Waitlist</div>
+        <div class="path-price free-price">£0</div>
+        <div class="path-price-note">No payment required</div>
+        <ul class="path-features">
+          <li>Email notification when Module 2 launches</li>
+          <li>Notified for all future modules (3–7)</li>
+          <li>Diarka Quantum newsletter access</li>
+          <li>Wait until each module is publicly released</li>
+        </ul>
+        <button type="button" class="path-cta free" onclick="openWaitlistModal()">Join Waitlist — Free</button>
+      </div>
+
+      <!-- PATH 2: PAID INSTANT ACCESS -->
+      <div class="path-card featured">
+        <div class="path-badge paid">★ Recommended</div>
+        <div class="path-title">Get Module 2 Now</div>
+        <div class="path-price paid-price">£19</div>
+        <div class="path-price-note">One-time payment · Instant access</div>
+        <ul class="path-features">
+          <li><strong>Module 2 PDF emailed instantly</strong> after payment</li>
+          <li>Full module: Qubits, Superposition, Entanglement</li>
+          <li>Payment receipt &amp; confirmation email</li>
+          <li>Lifetime access to your purchased module</li>
+        </ul>
+        <a href="#" class="path-cta paid" id="paid-cta" onclick="handlePaidClick(event)">Unlock Module 2 — £19</a>
+      </div>
+
+    </div>
+
+    <!-- WAITLIST MODAL -->
+    <div class="modal-overlay" id="waitlist-modal">
+      <div class="modal-box">
+        <button class="modal-close" onclick="closeWaitlistModal()">×</button>
+        <div class="modal-title">Join the Free Waitlist</div>
+        <p class="modal-desc">We'll email you the moment Module 2 launches. No spam, ever.</p>
+        <form class="gate-form" id="gate-form" onsubmit="handleGate(event)">
+          <input type="text" name="name" class="gate-input" placeholder="Your name" required>
+          <input type="email" name="email" class="gate-input" placeholder="Your email address" required>
+          <input type="hidden" name="source" value="Module 1 — Waitlist">
+          <input type="text" name="_gotcha" style="display:none">
+          <button type="submit" class="gate-btn" id="gate-btn">Join the Waitlist — Free</button>
+          <div class="gate-note">No spam. No selling your data. Notification only when the next module is ready.</div>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -679,16 +760,44 @@ function answerQ(qid,chosen,correct){
   ans.style.display='block';
 }
 
-// GATE FORM
+// GATE FORM (WAITLIST)
 async function handleGate(e){
   e.preventDefault();
-  const form=document.getElementById('gate-form'),btn=document.getElementById('gate-btn'),suc=document.getElementById('gate-success');
+  const form=document.getElementById('gate-form'),btn=document.getElementById('gate-btn'),suc=document.getElementById('gate-success'),grid=document.getElementById('path-grid');
   btn.textContent='Joining...'; btn.disabled=true; btn.style.opacity='0.7';
   try {
-    const res=await fetch('https://formspree.io/f/YOUR_FORM_ID',{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}});
-    if(res.ok){ form.style.display='none'; suc.style.display='block'; }
+    const res=await fetch('https://formspree.io/f/xyklazoo',{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}});
+    if(res.ok){
+      closeWaitlistModal();
+      grid.style.display='none';
+      suc.style.display='block';
+      suc.scrollIntoView({behavior:'smooth',block:'center'});
+    }
     else throw new Error();
   } catch { btn.textContent='Join the Waitlist — Free'; btn.disabled=false; btn.style.opacity='1'; alert('Something went wrong. Please try again or email nageshj@diarkaquantum.co.uk'); }
+}
+
+// WAITLIST MODAL CONTROLS
+function openWaitlistModal(){
+  document.getElementById('waitlist-modal').classList.add('active');
+  document.body.style.overflow='hidden';
+}
+function closeWaitlistModal(){
+  document.getElementById('waitlist-modal').classList.remove('active');
+  document.body.style.overflow='';
+}
+document.getElementById('waitlist-modal').addEventListener('click',e=>{ if(e.target.id==='waitlist-modal') closeWaitlistModal(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeWaitlistModal(); });
+
+// PAID CTA — Lemon Squeezy (placeholder until account approved)
+function handlePaidClick(e){
+  e.preventDefault();
+  const LEMON_SQUEEZY_URL = ''; // ← PASTE YOUR LEMON SQUEEZY CHECKOUT URL HERE WHEN APPROVED
+  if(LEMON_SQUEEZY_URL && LEMON_SQUEEZY_URL.startsWith('http')){
+    window.open(LEMON_SQUEEZY_URL,'_blank','noopener');
+  } else {
+    alert("Module 2 launches soon!\n\nOur secure payment system is being set up — we'll email you the moment it goes live.\n\nIn the meantime, join the free waitlist and you'll be the first to know.");
+  }
 }
 </script>
 </body>
