@@ -792,7 +792,7 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeWaitlistModal
 // PAID CTA — Lemon Squeezy (placeholder until account approved)
 function handlePaidClick(e){
   e.preventDefault();
-  const LEMON_SQUEEZY_URL = ''; // ← PASTE YOUR LEMON SQUEEZY CHECKOUT URL HERE WHEN APPROVED
+  const LEMON_SQUEEZY_URL = 'https://diarkaquantum.lemonsqueezy.com/checkout/buy/5f97d01a-409f-4227-946c-611b36199289'; // ← PASTE YOUR LEMON SQUEEZY CHECKOUT URL HERE WHEN APPROVED
   if(LEMON_SQUEEZY_URL && LEMON_SQUEEZY_URL.startsWith('http')){
     window.open(LEMON_SQUEEZY_URL,'_blank','noopener');
   } else {
