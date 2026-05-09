@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 2 — Qubits, Superposition &amp; Entanglement | Diarka Quantum</title>
+<meta name="description" content="Module 2 of the Diarka Quantum education series. Qubits, superposition, and entanglement explained — 10 chapters with quizzes plus a free 34-page deep-dive PDF.">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png">
+<link rel="icon" type="image/png" sizes="64x64" href="/favicon-64x64.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="shortcut icon" href="/favicon.ico">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Raleway:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --void:#00010a; --deep:#020818; --nebula:#060d2e;
+  --teal:#00d4ff; --teal-dim:#0099bb; --pulsar:#7b2fff;
+  --gold:#f0c060; --nova:#ff6b35;
+  --stellar:#e8f4ff; --starlight:#c8d8ff; --muted:#4a6080;
+  --border:rgba(0,212,255,0.1); --border-p:rgba(123,47,255,0.15);
+  --reading-width:760px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--void);color:var(--stellar);font-family:'Raleway',sans-serif;font-weight:400;overflow-x:hidden;cursor:none;line-height:1;}
+.cursor{width:8px;height:8px;background:var(--teal);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;box-shadow:0 0 10px var(--teal);}
+.cursor-ring{width:28px;height:28px;border:1px solid rgba(0,212,255,0.4);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transition:transform 0.35s ease;}
+.progress-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--pulsar),var(--teal));z-index:200;width:0%;transition:width 0.1s;}
+#universe{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0.5;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 3rem;display:flex;align-items:center;justify-content:space-between;background:rgba(0,1,10,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Orbitron',monospace;font-weight:900;font-size:0.85rem;letter-spacing:0.12em;text-decoration:none;color:var(--stellar);display:flex;align-items:center;gap:0.6rem;transition:color 0.2s;}
+.nav-logo:hover{color:var(--teal);}
+.nav-logo span{color:var(--teal);}
+.brand-logo-img{width:44px;height:44px;object-fit:contain;display:block;flex-shrink:0;filter:drop-shadow(0 0 8px rgba(0,212,255,0.4));transition:filter 0.3s;}
+.nav-logo:hover .brand-logo-img{filter:drop-shadow(0 0 14px rgba(0,212,255,0.7));}
+.nav-back{font-family:'Orbitron',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.2s;display:flex;align-items:center;gap:0.5rem;}
+.nav-back:hover{color:var(--teal);}
+.nav-module-label{font-family:'Orbitron',monospace;font-size:0.58rem;letter-spacing:0.15em;color:var(--teal);text-transform:uppercase;}
+.module-hero{position:relative;z-index:1;padding:9rem 2rem 5rem;text-align:center;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(6,13,46,0.4) 0%,transparent 100%);}
+.module-badge{display:inline-flex;align-items:center;gap:0.6rem;background:rgba(123,47,255,0.08);border:1px solid var(--border-p);color:var(--pulsar);font-family:'Orbitron',monospace;font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;padding:0.4rem 1rem;margin-bottom:2rem;}
+.module-badge::before{content:'◈';animation:pulse 2s infinite;}
+.module-number{font-family:'Orbitron',monospace;font-weight:900;font-size:clamp(4rem,12vw,9rem);line-height:0.9;color:transparent;-webkit-text-stroke:1px rgba(123,47,255,0.18);margin-bottom:1rem;letter-spacing:-0.02em;}
+.module-title{font-family:'Orbitron',monospace;font-weight:900;font-size:clamp(1.6rem,4vw,3rem);line-height:1.15;letter-spacing:0.02em;max-width:860px;margin:0 auto 1.5rem;text-shadow:0 0 40px rgba(123,47,255,0.2);}
+.module-title .hl{color:var(--teal);}
+.module-title .hl2{color:var(--pulsar);}
+.module-subtitle{font-family:'Lora',serif;font-style:italic;font-size:1.1rem;color:var(--starlight);max-width:660px;margin:0 auto 3rem;line-height:1.6;font-weight:400;}
+.module-meta{display:flex;align-items:center;justify-content:center;gap:2.5rem;flex-wrap:wrap;}
+.meta-item{display:flex;align-items:center;gap:0.6rem;font-size:0.72rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;}
+.meta-item span{color:var(--teal);font-family:'Orbitron',monospace;font-weight:700;}
+.intro-strip{position:relative;z-index:1;padding:4rem 2rem;background:linear-gradient(180deg,rgba(6,13,46,0.5) 0%,var(--void) 100%);border-bottom:1px solid var(--border);}
+.intro-inner{max-width:var(--reading-width);margin:0 auto;}
+.intro-eyebrow{font-family:'Orbitron',monospace;font-size:0.55rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--teal);margin-bottom:1rem;text-align:center;}
+.intro-title{font-family:'Orbitron',monospace;font-weight:900;font-size:clamp(1.3rem,2.5vw,1.8rem);line-height:1.2;color:var(--stellar);text-align:center;margin-bottom:1.5rem;}
+.intro-body{font-family:'Lora',serif;font-size:1.0rem;line-height:1.85;color:var(--starlight);text-align:center;max-width:660px;margin:0 auto;font-weight:400;}
+.intro-body strong{color:var(--stellar);font-weight:600;}
+.intro-body em{color:var(--teal);font-style:italic;}
+.pdf-inline{position:relative;z-index:1;background:rgba(6,13,46,0.7);border-top:1px solid var(--border);border-bottom:2px solid rgba(123,47,255,0.3);padding:1.8rem 2rem;display:flex;align-items:center;justify-content:center;gap:2rem;flex-wrap:wrap;text-align:center;}
+.pdf-inline-text{font-family:'Raleway',sans-serif;font-size:0.82rem;color:var(--starlight);line-height:1.6;}
+.pdf-inline-text strong{color:var(--stellar);}
+.pdf-inline-btn{display:inline-flex;align-items:center;gap:0.6rem;background:linear-gradient(135deg,var(--pulsar),var(--teal));color:var(--void);padding:0.75rem 1.8rem;font-family:'Orbitron',monospace;font-weight:700;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;white-space:nowrap;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);box-shadow:0 0 20px rgba(123,47,255,0.4);transition:all 0.3s;}
+.pdf-inline-btn:hover{box-shadow:0 0 36px rgba(123,47,255,0.65);transform:translateY(-1px);}
+.content-wrap{position:relative;z-index:1;max-width:var(--reading-width);margin:0 auto;padding:5rem 2rem 3rem;}
+.chapter-nav{background:rgba(6,13,46,0.8);border:1px solid var(--border);padding:2rem;margin-bottom:4rem;}
+.chapter-nav-title{font-family:'Orbitron',monospace;font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--teal);margin-bottom:1.2rem;}
+.chapter-list{display:flex;flex-direction:column;gap:0.5rem;}
+.chapter-link{display:flex;align-items:center;gap:1rem;text-decoration:none;color:var(--starlight);font-size:0.8rem;padding:0.45rem 0;border-bottom:1px solid rgba(255,255,255,0.04);transition:color 0.2s;}
+.chapter-link:hover{color:var(--teal);}
+.chapter-link:last-child{border-bottom:none;}
+.ch-num{font-family:'Orbitron',monospace;font-size:0.55rem;color:var(--pulsar);letter-spacing:0.1em;min-width:28px;}
+.chapter{margin-bottom:4.5rem;scroll-margin-top:80px;}
+.chapter-header{margin-bottom:1.8rem;padding-bottom:1.2rem;border-bottom:1px solid var(--border);}
+.ch-tag{font-family:'Orbitron',monospace;font-size:0.55rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--pulsar);margin-bottom:0.7rem;}
+.ch-title{font-family:'Orbitron',monospace;font-weight:900;font-size:clamp(1.1rem,2.8vw,1.55rem);line-height:1.2;letter-spacing:0.02em;color:var(--stellar);}
+.ch-title .hl{color:var(--teal);}
+.ch-brief{font-family:'Lora',serif;font-size:0.97rem;line-height:1.85;color:var(--starlight);font-weight:400;margin-bottom:2rem;}
+.ch-brief strong{color:var(--stellar);font-weight:600;}
+.ch-brief em{color:var(--teal);font-style:italic;}
+.insight-strip{display:flex;align-items:flex-start;gap:1rem;background:rgba(0,212,255,0.04);border-left:3px solid var(--teal);padding:1.2rem 1.5rem;margin-bottom:2rem;}
+.insight-label{font-family:'Orbitron',monospace;font-size:0.48rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--teal);white-space:nowrap;margin-top:0.15rem;min-width:70px;}
+.insight-body{font-family:'Lora',serif;font-size:0.88rem;line-height:1.7;color:var(--starlight);}
+.insight-body strong{color:var(--stellar);}
+.quiz-block{background:rgba(6,13,46,0.7);border:1px solid var(--border);padding:2rem 2.2rem;}
+.quiz-header{font-family:'Orbitron',monospace;font-size:0.52rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:1.6rem;padding-bottom:0.8rem;border-bottom:1px solid rgba(240,192,96,0.15);}
+.quiz-item{margin-bottom:2rem;}
+.quiz-item:last-child{margin-bottom:0;}
+.quiz-q{font-family:'Lora',serif;font-size:0.93rem;color:var(--stellar);margin-bottom:1rem;line-height:1.6;font-weight:600;}
+.quiz-options{display:flex;flex-direction:column;gap:0.6rem;margin-bottom:0.8rem;}
+.quiz-option{background:rgba(255,255,255,0.02);border:1px solid var(--border);padding:0.75rem 1rem;font-family:'Raleway',sans-serif;font-size:0.82rem;color:var(--starlight);cursor:none;transition:border-color 0.2s,background 0.2s;display:flex;align-items:flex-start;gap:0.8rem;line-height:1.5;}
+.quiz-option:hover{border-color:rgba(0,212,255,0.3);background:rgba(0,212,255,0.03);}
+.quiz-option.correct{border-color:var(--teal);background:rgba(0,212,255,0.07);color:var(--teal);}
+.quiz-option.wrong{border-color:var(--nova);background:rgba(255,107,53,0.06);color:var(--nova);}
+.quiz-opt-label{font-family:'Orbitron',monospace;font-size:0.55rem;color:var(--muted);min-width:18px;flex-shrink:0;margin-top:0.15rem;}
+.quiz-answer{display:none;padding:0.9rem 1.1rem;background:rgba(0,212,255,0.04);border-left:3px solid var(--teal);font-family:'Lora',serif;font-size:0.84rem;line-height:1.65;color:var(--starlight);margin-top:0.2rem;}
+.quiz-answer strong{color:var(--teal);}
+.quiz-divider{height:1px;background:var(--border);margin:1.8rem 0;}
+.section-divider{display:flex;align-items:center;gap:1.5rem;margin:3rem 0;}
+.section-divider::before,.section-divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);}
+.section-divider span{font-family:'Orbitron',monospace;font-size:0.58rem;letter-spacing:0.3em;color:var(--muted);text-transform:uppercase;white-space:nowrap;}
+.pdf-download{position:relative;z-index:1;padding:5rem 2rem;background:linear-gradient(180deg,var(--void) 0%,rgba(6,13,46,0.6) 50%,var(--void) 100%);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.pdf-inner{max-width:640px;margin:0 auto;text-align:center;}
+.pdf-eyebrow{font-family:'Orbitron',monospace;font-size:0.52rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--teal);margin-bottom:1rem;}
+.pdf-title{font-family:'Orbitron',monospace;font-weight:900;font-size:clamp(1.1rem,2.5vw,1.55rem);line-height:1.25;margin-bottom:1rem;color:var(--stellar);}
+.pdf-desc{font-family:'Lora',serif;font-size:0.9rem;line-height:1.8;color:var(--starlight);margin-bottom:2rem;}
+.pdf-stats{display:flex;align-items:center;justify-content:center;gap:2.5rem;flex-wrap:wrap;margin-bottom:2.2rem;}
+.pdf-stat{display:flex;flex-direction:column;align-items:center;gap:0.25rem;}
+.pdf-stat-val{font-family:'Orbitron',monospace;font-weight:700;font-size:1.1rem;color:var(--teal);}
+.pdf-stat-label{font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);}
+.pdf-btn{display:inline-flex;align-items:center;gap:0.7rem;background:linear-gradient(135deg,var(--pulsar),var(--teal));color:var(--void);padding:1.1rem 2.8rem;font-family:'Orbitron',monospace;font-weight:700;font-size:0.63rem;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;box-shadow:0 0 28px rgba(123,47,255,0.45);clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);transition:all 0.3s;}
+.pdf-btn:hover{box-shadow:0 0 48px rgba(123,47,255,0.7);transform:translateY(-2px);}
+.pdf-note{font-size:0.62rem;color:var(--muted);margin-top:1rem;letter-spacing:0.04em;}
+.gate-section{position:relative;z-index:1;background:linear-gradient(180deg,var(--void) 0%,rgba(6,13,46,0.95) 100%);border-top:1px solid var(--border);padding:6rem 2rem;text-align:center;}
+.gate-inner{max-width:700px;margin:0 auto;}
+.gate-tag{font-family:'Orbitron',monospace;font-size:0.55rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--pulsar);margin-bottom:1.2rem;}
+.gate-title{font-family:'Orbitron',monospace;font-weight:900;font-size:clamp(1.4rem,3vw,2.2rem);line-height:1.2;margin-bottom:1rem;}
+.gate-title .hl{color:var(--teal);}
+.gate-desc{font-family:'Lora',serif;font-size:0.95rem;line-height:1.8;color:var(--starlight);margin-bottom:2.5rem;}
+.modules-preview{display:flex;flex-direction:column;gap:0.5rem;margin-bottom:3rem;text-align:left;}
+.mp-item{display:flex;align-items:center;gap:1rem;padding:0.75rem 1.1rem;background:rgba(123,47,255,0.06);border:1px solid var(--border-p);}
+.mp-num{font-family:'Orbitron',monospace;font-size:0.58rem;color:var(--pulsar);min-width:26px;}
+.mp-title{font-size:0.78rem;color:var(--starlight);}
+.mp-lock{margin-left:auto;font-size:0.65rem;color:var(--muted);font-family:'Orbitron',monospace;letter-spacing:0.05em;}
+.mp-item.unlocked{border-color:rgba(0,212,255,0.2);background:rgba(0,212,255,0.04);}
+.mp-item.unlocked .mp-num{color:var(--teal);}
+.mp-item.unlocked .mp-title{color:var(--stellar);}
+.mp-item.unlocked .mp-lock{color:var(--teal);}
+.mp-item.next{border-color:rgba(0,212,255,0.4);background:rgba(0,212,255,0.07);}
+.mp-item.next .mp-num{color:var(--teal);}
+.mp-item.next .mp-title{color:var(--stellar);font-weight:600;}
+.mp-item.next .mp-lock{color:var(--gold);}
+.unlock-cta-block{padding:2rem;border:1px solid rgba(0,212,255,0.25);background:linear-gradient(180deg,rgba(0,212,255,0.04),rgba(123,47,255,0.04));margin-bottom:2rem;}
+.unlock-cta-eyebrow{font-family:'Orbitron',monospace;font-size:0.5rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--teal);margin-bottom:0.7rem;}
+.unlock-cta-title{font-family:'Orbitron',monospace;font-weight:900;font-size:1.1rem;color:var(--stellar);margin-bottom:0.5rem;letter-spacing:0.04em;}
+.unlock-cta-desc{font-family:'Lora',serif;font-size:0.85rem;line-height:1.65;color:var(--starlight);margin-bottom:1.4rem;}
+.unlock-btn{display:inline-flex;align-items:center;gap:0.7rem;background:linear-gradient(135deg,var(--teal),var(--pulsar));color:var(--void);padding:1.1rem 2.5rem;font-family:'Orbitron',monospace;font-weight:700;font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;cursor:none;border:none;box-shadow:0 0 28px rgba(0,212,255,0.4);clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:all 0.3s;}
+.unlock-btn:hover{box-shadow:0 0 48px rgba(123,47,255,0.6);transform:translateY(-2px);}
+.unlock-arrow{font-family:'Orbitron',monospace;font-weight:900;font-size:0.85rem;}
+.gate-note{font-size:0.66rem;color:var(--muted);margin-top:1rem;}
+.modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(6px);z-index:9999;align-items:center;justify-content:center;padding:2rem;}
+.modal-overlay.active{display:flex;}
+.modal-box{background:var(--deep);border:1px solid rgba(0,212,255,0.3);padding:2.5rem;max-width:480px;width:100%;position:relative;box-shadow:0 0 60px rgba(0,212,255,0.15);}
+.modal-close{position:absolute;top:1rem;right:1.2rem;background:none;border:none;color:var(--muted);font-size:1.5rem;cursor:pointer;transition:color 0.2s;}
+.modal-close:hover{color:var(--teal);}
+.modal-title{font-family:'Orbitron',monospace;font-weight:700;font-size:1rem;color:var(--stellar);margin-bottom:0.6rem;letter-spacing:0.04em;}
+.modal-desc{font-family:'Lora',serif;font-size:0.85rem;color:var(--starlight);margin-bottom:1.5rem;line-height:1.6;}
+.gate-form{display:flex;flex-direction:column;gap:1rem;}
+.gate-input{background:rgba(6,13,46,0.9);border:1px solid var(--border-p);color:var(--stellar);padding:1rem 1.2rem;font-family:'Raleway',sans-serif;font-size:0.88rem;outline:none;width:100%;transition:border-color 0.2s;}
+.gate-input:focus{border-color:var(--pulsar);}
+.gate-btn{background:linear-gradient(135deg,var(--pulsar),var(--teal));color:var(--void);border:none;padding:1.1rem 2.5rem;font-family:'Orbitron',monospace;font-weight:700;font-size:0.63rem;letter-spacing:0.15em;text-transform:uppercase;cursor:none;transition:all 0.3s;box-shadow:0 0 24px rgba(123,47,255,0.4);clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);}
+.gate-btn:hover{box-shadow:0 0 40px rgba(123,47,255,0.6);transform:translateY(-2px);}
+#gate-success{display:none;padding:2rem;border:1px solid rgba(0,212,255,0.3);background:rgba(0,212,255,0.04);margin-top:2rem;}
+#gate-success .gs-title{font-family:'Orbitron',monospace;font-weight:700;color:var(--teal);margin-bottom:0.5rem;font-size:0.9rem;letter-spacing:0.05em;}
+#gate-success p{font-family:'Lora',serif;font-size:0.88rem;color:var(--starlight);}
+footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:2rem 3rem;display:flex;align-items:center;justify-content:space-between;background:rgba(0,1,10,0.98);flex-wrap:wrap;gap:1rem;}
+.footer-logo{font-family:'Orbitron',monospace;font-weight:900;font-size:0.85rem;color:var(--stellar);}
+.footer-logo span{color:var(--teal);}
+.footer-copy{font-size:0.6rem;color:var(--muted);}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity 0.65s ease,transform 0.65s ease;}
+.reveal.visible{opacity:1;transform:none;}
+@media(max-width:768px){
+  nav{padding:1rem 1.5rem;}
+  .content-wrap{padding:4rem 1.2rem 2rem;}
+  .pdf-inline{flex-direction:column;gap:1rem;}
+  .pdf-stats{gap:1.5rem;}
+  footer{flex-direction:column;padding:1.5rem;}
+  .insight-strip{flex-direction:column;gap:0.5rem;}
+  .brand-logo-img{width:36px;height:36px;}
+  .intro-strip{padding:3rem 1.5rem;}
+}
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+<div class="progress-bar" id="progress"></div>
+<canvas id="universe"></canvas>
+
+<nav>
+  <a href="index.html" class="nav-logo"><img src="/diarka-logo-header-180w.png" alt="Diarka Quantum Logo" class="brand-logo-img">Diarka<span>Quantum</span></a>
+  <div class="nav-module-label">Module 02 of 07</div>
+  <a href="index.html#education" class="nav-back">Back to Course</a>
+</nav>
+
+<div class="module-hero">
+  <div class="module-badge">Module 2 — Diarka Quantum Education Series</div>
+  <div class="module-number">02</div>
+  <h1 class="module-title">Qubits, <span class="hl">Superposition</span> &amp; <span class="hl2">Entanglement</span></h1>
+  <p class="module-subtitle">The three ideas that turn ordinary computers into quantum machines — explained from first principles.</p>
+  <div class="module-meta">
+    <div class="meta-item">Brief overview: <span>10 Chapters</span></div>
+    <div class="meta-item">Read time: <span>~12 min</span></div>
+    <div class="meta-item">Level: <span>Beginner — Intermediate</span></div>
+    <div class="meta-item">PDF Edition: <span>34 pages</span></div>
+  </div>
+</div>
+
+<div class="intro-strip">
+  <div class="intro-inner">
+    <div class="intro-eyebrow">What This Module Covers</div>
+    <h2 class="intro-title">From a Bit on Your Laptop to a Qubit in a Lab</h2>
+    <p class="intro-body">
+      Module 1 ended at the wall classical computing has hit. <strong>Module 2 is the door beyond it.</strong>
+      Across 10 chapters we go from the difference between a bit and a qubit, through the mathematics of
+      <em>Dirac notation</em>, the geometry of the <em>Bloch sphere</em>, and the three foundational phenomena —
+      <strong>superposition, measurement, and entanglement</strong> — that make quantum computers possible.
+      We cover the <strong>double-slit experiment</strong> that proved superposition is real, the <strong>2022 Nobel
+      Prize-winning Bell test experiments</strong> that proved entanglement is real, and how today's quantum
+      hardware actually uses these principles to perform real computations. By the end, you will not just
+      know what these words mean — you will understand why they matter.
+    </p>
+  </div>
+</div>
+
+<div class="pdf-inline">
+  <div class="pdf-inline-text">
+    This page is a <strong>brief overview</strong> of each chapter. For the full 34-page deep-dive — with diagrams,
+    proven evidence, and Bell state code examples — download the free PDF edition.
+  </div>
+  <a href="diarka-quantum-module-2.pdf" download="Diarka-Quantum-Module-2.pdf" class="pdf-inline-btn">Download Full PDF — Free</a>
+</div>
+
+<div class="content-wrap">
+
+  <div class="chapter-nav reveal">
+    <div class="chapter-nav-title">In This Module — 10 Chapters</div>
+    <div class="chapter-list">
+      <a href="#ch1" class="chapter-link"><span class="ch-num">01</span>From Bits to Qubits — A New Kind of Information</a>
+      <a href="#ch2" class="chapter-link"><span class="ch-num">02</span>The Mathematics of a Qubit — Dirac Notation Made Simple</a>
+      <a href="#ch3" class="chapter-link"><span class="ch-num">03</span>The Bloch Sphere — Visualising the Quantum State</a>
+      <a href="#ch4" class="chapter-link"><span class="ch-num">04</span>Superposition — Being in Two States at Once</a>
+      <a href="#ch5" class="chapter-link"><span class="ch-num">05</span>Measurement — Where Quantum Strangeness Becomes Real</a>
+      <a href="#ch6" class="chapter-link"><span class="ch-num">06</span>The Double-Slit Experiment — The Evidence That Started It All</a>
+      <a href="#ch7" class="chapter-link"><span class="ch-num">07</span>Entanglement — The Strangest Correlation in Nature</a>
+      <a href="#ch8" class="chapter-link"><span class="ch-num">08</span>Bell's Theorem &amp; the 2022 Nobel Prize</a>
+      <a href="#ch9" class="chapter-link"><span class="ch-num">09</span>Qubits in Action — How Real Quantum Computers Use These Principles</a>
+      <a href="#ch10" class="chapter-link"><span class="ch-num">10</span>Why This Matters — The Foundation of Everything That Comes Next</a>
+    </div>
+  </div>
+
+  <div class="chapter reveal" id="ch1">
+    <div class="chapter-header"><div class="ch-tag">Chapter 01</div><h2 class="ch-title">From Bits to <span class="hl">Qubits</span></h2></div>
+    <p class="ch-brief">A classical bit is the simplest object in computing — always exactly 0 or 1, never anything in between. Every algorithm, every operating system, every app you use is built on this assumption. <strong>A qubit breaks that assumption.</strong> A qubit can also exist in any combination of |0⟩ and |1⟩ at the same time — not switching rapidly, not "we don't know which", but genuinely both at once until measured. This phenomenon is called <em>superposition</em>, and it is the first of three ideas that change everything. Different quantum computers use different physical qubits — superconducting circuits, trapped ions, neutral atoms, photons. The physics differs. The mathematics is the same.</p>
+    <div class="insight-strip"><div class="insight-label">Key Insight</div><div class="insight-body">Quantum computers are <strong>not</strong> faster classical computers. They are a fundamentally different kind of machine, suited to a small but important class of problems. Knowing which problems benefit from quantum and which don't is the core skill of quantum literacy.</div></div>
+    <div class="quiz-block">
+      <div class="quiz-header">Quick Check — Test Your Understanding</div>
+      <div class="quiz-item"><div class="quiz-q">1. What is the fundamental difference between a bit and a qubit?</div>
+        <div class="quiz-options" id="q1a-opts">
+          <div class="quiz-option" onclick="answerQ('q1a','A','B')"><span class="quiz-opt-label">A</span>A qubit can store more data because it has more memory than a bit</div>
+          <div class="quiz-option" onclick="answerQ('q1a','B','B')"><span class="quiz-opt-label">B</span>A qubit can exist in a combination of 0 and 1 at the same time, while a bit can only ever be one or the other</div>
+          <div class="quiz-option" onclick="answerQ('q1a','C','B')"><span class="quiz-opt-label">C</span>A qubit operates faster than a bit because it uses quantum signals instead of electrical ones</div>
+        </div>
+        <div class="quiz-answer" id="q1a-ans"><strong>Correct — B.</strong> A bit is always 0 or 1. A qubit can exist as a combination of |0⟩ and |1⟩ at the same time — a superposition. This is not about more memory or faster signals; it is about an entirely different kind of state space.</div>
+      </div>
+      <div class="quiz-divider"></div>
+      <div class="quiz-item"><div class="quiz-q">2. Which of the following are real physical implementations of qubits used in actual quantum computers today?</div>
+        <div class="quiz-options" id="q1b-opts">
+          <div class="quiz-option" onclick="answerQ('q1b','A','C')"><span class="quiz-opt-label">A</span>Silicon transistors and electrical capacitors</div>
+          <div class="quiz-option" onclick="answerQ('q1b','B','C')"><span class="quiz-opt-label">B</span>Magnetic disks and optical fibres</div>
+          <div class="quiz-option" onclick="answerQ('q1b','C','C')"><span class="quiz-opt-label">C</span>Superconducting circuits, trapped ions, neutral atoms, and photons</div>
+        </div>
+        <div class="quiz-answer" id="q1b-ans"><strong>Correct — C.</strong> The four major physical platforms are superconducting circuits (IBM, Google, Rigetti), trapped ions (IonQ, Quantinuum), neutral atoms (QuEra, Pasqal), and photons (PsiQuantum, Xanadu). Different physics, identical mathematics.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>Dirac Notation</span></div>
+
+  <div class="chapter reveal" id="ch2">
+    <div class="chapter-header"><div class="ch-tag">Chapter 02</div><h2 class="ch-title">Dirac Notation <span class="hl">Made Simple</span></h2></div>
+    <p class="ch-brief">Quantum mechanics has its own notation. When you first see <strong>|ψ⟩ = α|0⟩ + β|1⟩</strong>, it looks intimidating — but it is actually elegant. The symbol |something⟩ is called a <em>ket</em> — a container for a quantum state. |0⟩ is read "ket zero". |ψ⟩ is "ket psi" — the quantum equivalent of the algebraic <em>x</em>. The general qubit state |ψ⟩ = α|0⟩ + β|1⟩ tells us a qubit is a combination of |0⟩ and |1⟩ with amplitudes α and β. The rule is: <strong>|α|² + |β|² = 1</strong>. The squared amplitudes are the probabilities of measuring each outcome — and probabilities must sum to 1. Master this and you can read any quantum computing paper.</p>
+    <div class="insight-strip"><div class="insight-label">Key Insight</div><div class="insight-body">The notation is just a <strong>label system</strong>. Don't let the symbols intimidate you — |0⟩ is a name like "apple". The interesting work is in what the names <strong>combine into</strong>: addition, scaling, transformation. Kets are nouns; what we do with them is the verbs.</div></div>
+    <div class="quiz-block">
+      <div class="quiz-header">Quick Check — Test Your Understanding</div>
+      <div class="quiz-item"><div class="quiz-q">1. In the qubit state |ψ⟩ = α|0⟩ + β|1⟩, what does |α|² represent?</div>
+        <div class="quiz-options" id="q2a-opts">
+          <div class="quiz-option" onclick="answerQ('q2a','A','B')"><span class="quiz-opt-label">A</span>The energy of the qubit when it is in state |0⟩</div>
+          <div class="quiz-option" onclick="answerQ('q2a','B','B')"><span class="quiz-opt-label">B</span>The probability of measuring the qubit and getting outcome 0</div>
+          <div class="quiz-option" onclick="answerQ('q2a','C','B')"><span class="quiz-opt-label">C</span>The amount of time the qubit spends in state |0⟩</div>
+        </div>
+        <div class="quiz-answer" id="q2a-ans"><strong>Correct — B.</strong> |α|² is the probability of measuring the qubit in state |0⟩. Similarly, |β|² is the probability of measuring |1⟩. The rule |α|² + |β|² = 1 is the normalisation condition — probabilities of all outcomes must sum to 1.</div>
+      </div>
+      <div class="quiz-divider"></div>
+      <div class="quiz-item"><div class="quiz-q">2. What does the state |+⟩ = (|0⟩ + |1⟩)/√2 represent?</div>
+        <div class="quiz-options" id="q2b-opts">
+          <div class="quiz-option" onclick="answerQ('q2b','A','C')"><span class="quiz-opt-label">A</span>A qubit that is definitely in state |0⟩</div>
+          <div class="quiz-option" onclick="answerQ('q2b','B','C')"><span class="quiz-opt-label">B</span>A qubit oscillating rapidly between |0⟩ and |1⟩</div>
+          <div class="quiz-option" onclick="answerQ('q2b','C','C')"><span class="quiz-opt-label">C</span>An equal superposition — measuring it gives 0 or 1 with 50% probability each</div>
+        </div>
+        <div class="quiz-answer" id="q2b-ans"><strong>Correct — C.</strong> The state |+⟩ is an equal superposition. The factor 1/√2 ensures normalisation: (1/√2)² + (1/√2)² = 1/2 + 1/2 = 1. When measured, you get 0 or 1 with equal probability.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>The Bloch Sphere</span></div>
+
+  <div class="chapter reveal" id="ch3">
+    <div class="chapter-header"><div class="ch-tag">Chapter 03</div><h2 class="ch-title">The Bloch Sphere — <span class="hl">Visualising the Quantum State</span></h2></div>
+    <p class="ch-brief">Equations are useful. Pictures are sometimes more useful. Felix Bloch — 1952 Nobel laureate — devised a geometric picture of a qubit's state that has stuck for 80 years. <strong>Imagine a sphere.</strong> The north pole is the state |0⟩. The south pole is |1⟩. <strong>Every other possible state of a qubit corresponds to some point on the surface of this sphere.</strong> Two angles describe any such point — like latitude and longitude. The angle θ controls measurement probabilities. The angle φ encodes <em>phase</em> — invisible to a single measurement, but crucial when quantum states later interfere. The Bloch sphere is not just a picture: it is how working quantum scientists actually think.</p>
+    <div class="insight-strip"><div class="insight-label">Key Insight</div><div class="insight-body">The Bloch sphere works for <strong>one qubit only</strong>. Two qubits cannot be drawn on a sphere — their joint state lives in a 4-dimensional complex space we have no good visual for. This is one of the reasons quantum computing is hard: past one qubit, our brains have to rely on the maths.</div></div>
+    <div class="quiz-block">
+      <div class="quiz-header">Quick Check — Test Your Understanding</div>
+      <div class="quiz-item"><div class="quiz-q">1. On the Bloch sphere, where does the state |0⟩ sit?</div>
+        <div class="quiz-options" id="q3a-opts">
+          <div class="quiz-option" onclick="answerQ('q3a','A','A')"><span class="quiz-opt-label">A</span>At the north pole</div>
+          <div class="quiz-option" onclick="answerQ('q3a','B','A')"><span class="quiz-opt-label">B</span>On the equator</div>
+          <div class="quiz-option" onclick="answerQ('q3a','C','A')"><span class="quiz-opt-label">C</span>At the centre of the sphere</div>
+        </div>
+        <div class="quiz-answer" id="q3a-ans"><strong>Correct — A.</strong> By convention, |0⟩ sits at the north pole and |1⟩ at the south pole. Equal superpositions like |+⟩ and |−⟩ sit on the equator.</div>
+      </div>
+      <div class="quiz-divider"></div>
+      <div class="quiz-item"><div class="quiz-q">2. Why can the Bloch sphere only represent a single qubit, not two or more?</div>
+        <div class="quiz-options" id="q3b-opts">
+          <div class="quiz-option" onclick="answerQ('q3b','A','C')"><span class="quiz-opt-label">A</span>Because the laws of physics only allow geometric pictures of one qubit at a time</div>
+          <div class="quiz-option" onclick="answerQ('q3b','B','C')"><span class="quiz-opt-label">B</span>Because two qubits do not have a quantum state — only individual qubits do</div>
+          <div class="quiz-option" onclick="answerQ('q3b','C','C')"><span class="quiz-opt-label">C</span>Because the joint state of two qubits lives in a 4-dimensional complex space, which cannot be drawn on a 3D sphere</div>
+        </div>
+        <div class="quiz-answer" id="q3b-ans"><strong>Correct — C.</strong> Two qubits have a 4-dimensional complex state space, three qubits have 8 dimensions, and so on. A 2D sphere surface is only enough geometric room for one qubit. This is one reason quantum computing is conceptually difficult — past one qubit, intuition has to give way to maths.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>Superposition</span></div>
+
+  <div class="chapter reveal" id="ch4">
+    <div class="chapter-header"><div class="ch-tag">Chapter 04</div><h2 class="ch-title">Superposition — <span class="hl">Being in Two States at Once</span></h2></div>
+    <p class="ch-brief">Superposition is the principle that a quantum system can exist in multiple states simultaneously, until measured. The "spinning coin" metaphor is useful for first intuition — but it understates what is going on. A spinning coin <em>has</em> a definite outcome we are simply ignorant of. <strong>A qubit in superposition is genuinely both at once</strong>, in proportions defined by α and β, until measurement. This is not philosophy — the 2022 Nobel Prize was awarded for experiments that ruled out "hidden variables" theories. Each additional qubit doubles the simultaneous state space: 10 qubits represent 1,024 states; 300 qubits represent more states than there are atoms in the observable universe.</p>
+    <div class="insight-strip"><div class="insight-label">Key Insight</div><div class="insight-body">Superposition is <strong>not</strong> infinite parallelism. A 300-qubit quantum computer cannot compute all 2³⁰⁰ answers in parallel and pick the right one. Measurement collapses the state to a single outcome. To get the right answer, algorithms must use <strong>interference</strong> to amplify correct answers and cancel wrong ones — the topic of Module 4.</div></div>
+    <div class="quiz-block">
+      <div class="quiz-header">Quick Check — Test Your Understanding</div>
+      <div class="quiz-item"><div class="quiz-q">1. How is quantum superposition different from a spinning coin?</div>
+        <div class="quiz-options" id="q4a-opts">
+          <div class="quiz-option" onclick="answerQ('q4a','A','B')"><span class="quiz-opt-label">A</span>A spinning coin spins faster than a qubit can superpose</div>
+          <div class="quiz-option" onclick="answerQ('q4a','B','B')"><span class="quiz-opt-label">B</span>A spinning coin has a definite outcome we don't know yet; a qubit in superposition genuinely has no definite outcome until measured</div>
+          <div class="quiz-option" onclick="answerQ('q4a','C','B')"><span class="quiz-opt-label">C</span>There is no real difference — the coin metaphor is exact</div>
+        </div>
+        <div class="quiz-answer" id="q4a-ans"><strong>Correct — B.</strong> Bell test experiments — recognised by the 2022 Nobel Prize — definitively ruled out "hidden variables" theories. A qubit in superposition does not have a hidden definite value; the superposition itself is the reality until measurement.</div>
+      </div>
+      <div class="quiz-divider"></div>
+      <div class="quiz-item"><div class="quiz-q">2. How many simultaneous basis states do 10 qubits in superposition represent?</div>
+        <div class="quiz-options" id="q4b-opts">
+          <div class="quiz-option" onclick="answerQ('q4b','A','C')"><span class="quiz-opt-label">A</span>10</div>
+          <div class="quiz-option" onclick="answerQ('q4b','B','C')"><span class="quiz-opt-label">B</span>100</div>
+          <div class="quiz-option" onclick="answerQ('q4b','C','C')"><span class="quiz-opt-label">C</span>1,024</div>
+        </div>
+        <div class="quiz-answer" id="q4b-ans"><strong>Correct — C.</strong> n qubits represent 2ⁿ basis states simultaneously. 2¹⁰ = 1,024. 2³⁰⁰ exceeds the estimated number of atoms in the observable universe — which is why this exponential scaling is the source of quantum computing's potential power.</div>
+      </div>
+      <div class="quiz-divider"></div>
+      <div class="quiz-item"><div class="quiz-q">3. What destroys superposition in a real quantum computer?</div>
+        <div class="quiz-options" id="q4c-opts">
+          <div class="quiz-option" onclick="answerQ('q4c','A','A')"><span class="quiz-opt-label">A</span>Any unwanted interaction with the environment — heat, stray photons, vibrations</div>
+          <div class="quiz-option" onclick="answerQ('q4c','B','A')"><span class="quiz-opt-label">B</span>Running too many gates — eventually the qubits get tired</div>
+          <div class="quiz-option" onclick="answerQ('q4c','C','A')"><span class="quiz-opt-label">C</span>Software errors in the quantum circuit code</div>
+        </div>
+        <div class="quiz-answer" id="q4c-ans"><strong>Correct — A.</strong> The phenomenon is called decoherence — any interaction with the environment irreversibly destroys the quantum state. This is why quantum computers are kept at near absolute zero, in vacuum, and shielded from electromagnetic noise. Decoherence is the central engineering challenge of quantum computing.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>Measurement</span></div>
+
+  <div class="chapter reveal" id="ch5">
+    <div class="chapter-header"><div class="ch-tag">Chapter 05</div><h2 class="ch-title">Measurement — <span class="hl">Where Quantum Strangeness Becomes Real</span></h2></div>
+    <p class="ch-brief">Superposition is invisible — it lives inside the quantum state. The only way to interact with a qubit is to measure it. When you measure a qubit in state α|0⟩ + β|1⟩, two things happen at once: <strong>(1)</strong> you get a definite classical answer, 0 or 1, with probability |α|² and |β|² respectively (this is the <em>Born rule</em>, awarded the 1954 Nobel Prize); and <strong>(2)</strong> the qubit's state collapses to match the answer. The original superposition is gone, irreversibly. Quantum algorithms exploit this carefully: they set up a useful superposition, use gates to amplify the right answer's amplitude, then measure. <strong>Quantum advantage lives between the input and the output, not in either endpoint.</strong></p>
+    <div class="insight-strip"><div class="insight-label">Key Insight</div><div class="insight-body">The randomness in quantum measurement is <strong>not "we don't know"</strong> — it is fundamental. Even with complete knowledge of the qubit's state, the next measurement outcome is genuinely unpredictable. Einstein hated this. Bohr defended it. Decades of experiment have proven Bohr right.</div></div>
+    <div class="quiz-block">
+      <div class="quiz-header">Quick Check — Test Your Understanding</div>
+      <div class="quiz-item"><div class="quiz-q">1. What happens to a qubit's superposition when you measure it?</div>
+        <div class="quiz-options" id="q5a-opts">
+          <div class="quiz-option" onclick="answerQ('q5a','A','C')"><span class="quiz-opt-label">A</span>Nothing — measurement is purely passive observation</div>
+          <div class="quiz-option" onclick="answerQ('q5a','B','C')"><span class="quiz-opt-label">B</span>The superposition gets stronger because measurement adds energy</div>
+          <div class="quiz-option" onclick="answerQ('q5a','C','C')"><span class="quiz-opt-label">C</span>The superposition collapses irreversibly to the measured outcome</div>
+        </div>
+        <div class="quiz-answer" id="q5a-ans"><strong>Correct — C.</strong> Measurement is an active operation that destroys superposition. After measurement, the qubit is in a definite state matching the result. If you measure again immediately, you get the same answer with certainty — the superposition cannot be recovered.</div>
+      </div>
+      <div class="quiz-divider"></div>
+      <div class="quiz-item"><div class="quiz-q">2. If a qubit is in state (3/5)|0⟩ + (4/5)|1⟩, what is the probability of measuring 1?</div>
+        <div class="quiz-options" id="q5b-opts">
+          <div class="quiz-option" onclick="answerQ('q5b','A','C')"><span class="quiz-opt-label">A</span>4/5 = 80%</div>
+          <div class="quiz-option" onclick="answerQ('q5b','B','C')"><span class="quiz-opt-label">B</span>1/2 = 50%</div>
+          <div class="quiz-option" onclick="answerQ('q5b','C','C')"><span class="quiz-opt-label">C</span>(4/5)² = 16/25 = 64%</div>
+        </div>
+        <div class="quiz-answer" id="q5b-ans"><strong>Correct — C.</strong> The Born rule: the probability of an outcome is the squared magnitude of its amplitude. |β|² = (4/5)² = 16/25 = 64%. Many people guess 80% (the amplitude itself) — but it's the squared amplitude that gives the probability.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>The Double-Slit Experiment</span></div>
+
+  <div class="chapter reveal" id="ch6">
+    <div class="chapter-header"><div class="ch-tag">Chapter 06</div><h2 class="ch-title">The Double-Slit Experiment — <span class="hl">The Evidence That Started It All</span></h2></div>
+    <p class="ch-brief">In 1801, Thomas Young fired light through two parallel slits and saw an interference pattern — alternating bright and dark bands. This convinced physicists light is a wave. Then Einstein showed in 1905 that light is also particles (photons), winning the 1921 Nobel Prize. Geoffrey Taylor's killer 1909 experiment fired <strong>one photon at a time</strong> through the apparatus for three months. Each individual photon, somehow, was <em>interfering with itself</em> — passing through both slits at once. <strong>This is superposition, observed.</strong> When physicists added detectors to "watch" which slit each photon went through, the interference pattern disappeared. The mere act of measuring destroyed the superposition. This experiment has been replicated thousands of times — and extended to electrons, neutrons, atoms, and even 2,000-atom molecules.</p>
+    <div class="insight-strip"><div class="insight-label">Key Insight</div><div class="insight-body">Richard Feynman called the double-slit experiment <strong>"a phenomenon which has in it the heart of quantum mechanics"</strong>. He claimed any quantum mystery could be reduced to a version of this one experiment. The mathematical structure of every quantum algorithm — interference between alternative computational paths — is the same as the interference between alternative photon paths in this experiment.</div></div>
+    <div class="quiz-block">
+      <div class="quiz-header">Quick Check — Test Your Understanding</div>
+      <div class="quiz-item"><div class="quiz-q">1. Why is Geoffrey Taylor's 1909 experiment important?</div>
+        <div class="quiz-options" id="q6a-opts">
+          <div class="quiz-option" onclick="answerQ('q6a','A','B')"><span class="quiz-opt-label">A</span>It was the first experiment to use lasers to study light</div>
+          <div class="quiz-option" onclick="answerQ('q6a','B','B')"><span class="quiz-opt-label">B</span>It showed that even single photons fired one at a time produce an interference pattern — meaning each individual photon goes through both slits at once</div>
+          <div class="quiz-option" onclick="answerQ('q6a','C','B')"><span class="quiz-opt-label">C</span>It proved that light cannot be a particle, only a wave</div>
+        </div>
+        <div class="quiz-answer" id="q6a-ans"><strong>Correct — B.</strong> Taylor reduced the light intensity so far that only one photon was in the apparatus at a time, then ran the experiment for three months. The interference pattern still emerged. There was no other photon for each one to interfere with — so each one had to be interfering with itself, taking both paths at once.</div>
+      </div>
+      <div class="quiz-divider"></div>
+      <div class="quiz-item"><div class="quiz-q">2. What happens to the interference pattern when you put a "which-path" detector at the slits?</div>
+        <div class="quiz-options" id="q6b-opts">
+          <div class="quiz-option" onclick="answerQ('q6b','A','B')"><span class="quiz-opt-label">A</span>The pattern becomes brighter because the detector adds energy</div>
+          <div class="quiz-option" onclick="answerQ('q6b','B','B')"><span class="quiz-opt-label">B</span>The interference pattern disappears — photons land in two stripes like classical particles</div>
+          <div class="quiz-option" onclick="answerQ('q6b','C','B')"><span class="quiz-opt-label">C</span>The pattern stays the same — measurement at the slits doesn't affect the screen</div>
+        </div>
+        <div class="quiz-answer" id="q6b-ans"><strong>Correct — B.</strong> Measuring which slit the photon went through destroys the superposition before the photon reaches the screen. Without superposition, no self-interference. Without self-interference, no bright/dark bands. The same collapse-on-measurement principle applies here.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>Entanglement</span></div>
+
+  <div class="chapter reveal" id="ch7">
+    <div class="chapter-header"><div class="ch-tag">Chapter 07</div><h2 class="ch-title">Entanglement — <span class="hl">The Strangest Correlation in Nature</span></h2></div>
+    <p class="ch-brief">Superposition is what one qubit can do. <strong>Entanglement is what two or more qubits can do together.</strong> Einstein called it "spooky action at a distance" — and meant it as criticism. Take two qubits, prepare them in the Bell state <strong>|Φ⁺⟩ = (|00⟩ + |11⟩)/√2</strong> — a superposition where they are either both 0 or both 1, never one of each. The qubits remain entangled across any distance — demonstrated experimentally over hundreds of kilometres via China's Micius satellite in 2017. When Alice measures her qubit and gets 0, Bob's qubit becomes |0⟩ instantly, even on Mars. <strong>This is not faster-than-light communication</strong> — but it is a correlation that defies classical explanation. Without entanglement, n qubits would be no more powerful than n separate qubits.</p>
+    <div class="insight-strip"><div class="insight-label">Key Insight</div><div class="insight-body">Two entangled qubits do <strong>not have individual states at all</strong>. The joint state is the whole reality. Asking "what is Alice's qubit doing?" separately from Bob's is like asking "where is the Eiffel Tower?" separately from where Paris is — the question only makes sense for the system as a whole.</div></div>
+    <div class="quiz-block">
+      <div class="quiz-header">Quick Check — Test Your Understanding</div>
+      <div class="quiz-item"><div class="quiz-q">1. In the Bell state |Φ⁺⟩ = (|00⟩ + |11⟩)/√2, what does Alice see if she measures her qubit and gets 0?</div>
+        <div class="quiz-options" id="q7a-opts">
+          <div class="quiz-option" onclick="answerQ('q7a','A','C')"><span class="quiz-opt-label">A</span>Bob's qubit is now in a random state — could be 0 or 1</div>
+          <div class="quiz-option" onclick="answerQ('q7a','B','C')"><span class="quiz-opt-label">B</span>Bob's qubit is now definitely |1⟩ — opposite of Alice's</div>
+          <div class="quiz-option" onclick="answerQ('q7a','C','C')"><span class="quiz-opt-label">C</span>Bob's qubit is now definitely |0⟩ — same as Alice's, regardless of distance</div>
+        </div>
+        <div class="quiz-answer" id="q7a-ans"><strong>Correct — C.</strong> The Bell state |Φ⁺⟩ is a superposition where both qubits are 0 or both are 1, with equal probability. The moment Alice measures and gets 0, the joint state collapses to |00⟩, so Bob's qubit must be |0⟩ too. Distance is irrelevant.</div>
+      </div>
+      <div class="quiz-divider"></div>
+      <div class="quiz-item"><div class="quiz-q">2. Why isn't entanglement faster-than-light communication?</div>
+        <div class="quiz-options" id="q7b-opts">
+          <div class="quiz-option" onclick="answerQ('q7b','A','C')"><span class="quiz-opt-label">A</span>Because entanglement only works at very short distances, not across space</div>
+          <div class="quiz-option" onclick="answerQ('q7b','B','C')"><span class="quiz-opt-label">B</span>Because the speed of entanglement is exactly the speed of light, not faster</div>
+          <div class="quiz-option" onclick="answerQ('q7b','C','C')"><span class="quiz-opt-label">C</span>Because Alice cannot control what outcome she measures — her result is genuinely random — so she cannot use entanglement to send Bob a chosen message</div>
+        </div>
+        <div class="quiz-answer" id="q7b-ans"><strong>Correct — C.</strong> Alice gets 0 or 1 randomly. Bob, on his side, also sees random outcomes. Only when they later compare notes (over a normal classical channel limited by the speed of light) do they discover the correlation. Information cannot be sent faster than light — but pre-established correlation can persist across any distance.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>Bell's Theorem</span></div>
+
+  <div class="chapter reveal" id="ch8">
+    <div class="chapter-header"><div class="ch-tag">Chapter 08</div><h2 class="ch-title">Bell's Theorem &amp; the <span class="hl">2022 Nobel Prize</span></h2></div>
+    <p class="ch-brief">Einstein never accepted entanglement. In a famous 1935 paper, he argued quantum mechanics must be incomplete — there must be hidden variables, properties qubits "really have" that we have not measured. For 29 years the debate was unresolved: both views predicted the same statistics. Then in 1964, John Stewart Bell at CERN proved an inequality that <strong>any local hidden-variables theory must satisfy</strong>, but that quantum mechanics violates. Experiments by Clauser (1972), Aspect (1982), Zeilinger (1998), and three groups simultaneously in 2015 (closing every loophole) have all confirmed Bell's inequality is violated — every time. <strong>The 2022 Nobel Prize in Physics</strong> was awarded to Aspect, Clauser, and Zeilinger for this work. The official citation: "for experiments with entangled photons, establishing the violation of Bell inequalities and pioneering quantum information science."</p>
+    <div class="insight-strip"><div class="insight-label">Key Insight</div><div class="insight-body">Three things are now established beyond reasonable doubt: <strong>(1)</strong> entanglement is real, not pre-shared agreement; <strong>(2)</strong> quantum measurement outcomes are intrinsically random — not random because we lack information, but random as a fundamental feature of nature; <strong>(3)</strong> the universe is not "locally realistic". Quantum mechanics is settled physics, not interpretation.</div></div>
+    <div class="quiz-block">
+      <div class="quiz-header">Quick Check — Test Your Understanding</div>
+      <div class="quiz-item"><div class="quiz-q">1. What did John Bell prove in 1964?</div>
+        <div class="quiz-options" id="q8a-opts">
+          <div class="quiz-option" onclick="answerQ('q8a','A','B')"><span class="quiz-opt-label">A</span>That quantum computers can break RSA encryption</div>
+          <div class="quiz-option" onclick="answerQ('q8a','B','B')"><span class="quiz-opt-label">B</span>That hidden-variables theories and quantum mechanics make different predictions in specific experimental setups — so the question can be settled by experiment</div>
+          <div class="quiz-option" onclick="answerQ('q8a','C','B')"><span class="quiz-opt-label">C</span>That entanglement can be used to send signals faster than light</div>
+        </div>
+        <div class="quiz-answer" id="q8a-ans"><strong>Correct — B.</strong> Before Bell, both Einstein's hidden-variables view and Bohr's quantum view predicted the same statistical results — there was no way to tell them apart. Bell's brilliance was finding a specific experiment where they disagree. This turned a philosophical debate into an experimental question.</div>
+      </div>
+      <div class="quiz-divider"></div>
+      <div class="quiz-item"><div class="quiz-q">2. Why does the 2022 Nobel Prize matter for quantum computing?</div>
+        <div class="quiz-options" id="q8b-opts">
+          <div class="quiz-option" onclick="answerQ('q8b','A','C')"><span class="quiz-opt-label">A</span>It announced the first commercially viable quantum computer</div>
+          <div class="quiz-option" onclick="answerQ('q8b','B','C')"><span class="quiz-opt-label">B</span>It was awarded to engineers at IBM and Google for building quantum hardware</div>
+          <div class="quiz-option" onclick="answerQ('q8b','C','C')"><span class="quiz-opt-label">C</span>It confirmed that the entanglement quantum computers depend on is real and not just an interpretation — it is settled physics</div>
+        </div>
+        <div class="quiz-answer" id="q8b-ans"><strong>Correct — C.</strong> The Royal Swedish Academy's official statement: the work demonstrated that "quantum mechanics cannot be replaced by a theory that uses hidden variables." Aspect, Clauser, and Zeilinger were honoured for proving the strangeness real — which means quantum computers built on these principles are built on solid ground.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>Qubits in Action</span></div>
+
+  <div class="chapter reveal" id="ch9">
+    <div class="chapter-header"><div class="ch-tag">Chapter 09</div><h2 class="ch-title">Qubits in Action — <span class="hl">How Real Quantum Computers Work</span></h2></div>
+    <p class="ch-brief">Three gates account for the vast majority of operations in introductory quantum algorithms: <strong>Pauli-X</strong> (the quantum NOT — flips |0⟩ ↔ |1⟩), <strong>Hadamard (H)</strong> (the workhorse of superposition — sends |0⟩ to (|0⟩+|1⟩)/√2), and <strong>CNOT</strong> (the workhorse of entanglement — flips a target qubit if a control qubit is |1⟩). Two gates, applied in sequence, are enough to create the entangled Bell state from scratch: start with |00⟩, apply H to qubit 0, then apply CNOT. The result is (|00⟩ + |11⟩)/√2 — the entangled Bell state from Chapter 7. In Qiskit (IBM's Python framework), this is just five lines of code. <strong>You can run this code today on real quantum hardware via IBM Quantum's free cloud access.</strong></p>
+    <div class="insight-strip"><div class="insight-label">Key Insight</div><div class="insight-body">Every quantum algorithm follows the same structure: <strong>(1)</strong> initialise qubits in a known state; <strong>(2)</strong> use Hadamards to create superposition; <strong>(3)</strong> use CNOTs and other gates to create entanglement and encode the problem; <strong>(4)</strong> measure to extract a classical answer. Quantum advantage lives between steps 1 and 4 — never in either endpoint.</div></div>
+    <div class="quiz-block">
+      <div class="quiz-header">Quick Check — Test Your Understanding</div>
+      <div class="quiz-item"><div class="quiz-q">1. What does the Hadamard gate (H) do to a qubit in state |0⟩?</div>
+        <div class="quiz-options" id="q9a-opts">
+          <div class="quiz-option" onclick="answerQ('q9a','A','B')"><span class="quiz-opt-label">A</span>Flips it to |1⟩</div>
+          <div class="quiz-option" onclick="answerQ('q9a','B','B')"><span class="quiz-opt-label">B</span>Puts it into the equal superposition (|0⟩ + |1⟩)/√2</div>
+          <div class="quiz-option" onclick="answerQ('q9a','C','B')"><span class="quiz-opt-label">C</span>Measures it and outputs a classical bit</div>
+        </div>
+        <div class="quiz-answer" id="q9a-ans"><strong>Correct — B.</strong> The Hadamard gate creates superposition. Apply H to |0⟩ and you get (|0⟩+|1⟩)/√2. Apply H again and you get back to |0⟩ — Hadamard is its own inverse, which is convenient for designing reversible quantum circuits.</div>
+      </div>
+      <div class="quiz-divider"></div>
+      <div class="quiz-item"><div class="quiz-q">2. To create the Bell state (|00⟩ + |11⟩)/√2 from |00⟩, which gates do you apply?</div>
+        <div class="quiz-options" id="q9b-opts">
+          <div class="quiz-option" onclick="answerQ('q9b','A','B')"><span class="quiz-opt-label">A</span>CNOT first, then Hadamard on both qubits</div>
+          <div class="quiz-option" onclick="answerQ('q9b','B','B')"><span class="quiz-opt-label">B</span>Hadamard on qubit 0, then CNOT with qubit 0 as control and qubit 1 as target</div>
+          <div class="quiz-option" onclick="answerQ('q9b','C','B')"><span class="quiz-opt-label">C</span>Three Hadamard gates applied to both qubits in sequence</div>
+        </div>
+        <div class="quiz-answer" id="q9b-ans"><strong>Correct — B.</strong> H on qubit 0 turns |00⟩ into (|00⟩ + |10⟩)/√2 — superposition on the first qubit. CNOT then flips the target whenever the control is 1, turning |10⟩ into |11⟩. The result is (|00⟩ + |11⟩)/√2 — the Bell state. Two gates, one entangled pair.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>Why This Matters</span></div>
+
+  <div class="chapter reveal" id="ch10">
+    <div class="chapter-header"><div class="ch-tag">Chapter 10</div><h2 class="ch-title">Why This Matters — <span class="hl">The Foundation of Everything That Comes Next</span></h2></div>
+    <p class="ch-brief">Every commercial application of quantum computing relies on the principles we have covered. <strong>Quantum cryptography</strong> works because measurement disturbs the quantum state — eavesdropping is detectable. <strong>Quantum sensing</strong> uses superposition and entanglement to detect tiny signals at the theoretical limits of physics. <strong>Quantum simulation</strong> for drug discovery and materials science works because quantum systems naturally simulate other quantum systems. <strong>Optimisation algorithms (QAOA)</strong> use superposition and interference to search exponential solution spaces. <strong>Shor's algorithm</strong> uses superposition, entanglement, and interference to factor large numbers — breaking RSA. <strong>Quantum machine learning (QML)</strong> uses kernel methods that access feature spaces classical ML cannot. There are no exceptions: every quantum advantage emerges from these three foundational principles. Now you know the foundation.</p>
+    <div class="insight-strip"><div class="insight-label">The Leadership Opportunity</div><div class="insight-body">Most senior decision-makers in mid-market businesses do not yet understand qubits. They will need to in 5-10 years. <strong>You are now ahead of that curve.</strong> Whether you build a career, a consultancy, or a quantum-aware product, you carry knowledge that most professionals do not yet have — and that, by 2030, most will need.</div></div>
+    <div class="quiz-block">
+      <div class="quiz-header">Quick Check — Test Your Understanding</div>
+      <div class="quiz-item"><div class="quiz-q">1. Which of the following is NOT a real commercial application of quantum computing?</div>
+        <div class="quiz-options" id="q10a-opts">
+          <div class="quiz-option" onclick="answerQ('q10a','A','C')"><span class="quiz-opt-label">A</span>Drug discovery via quantum simulation of molecules</div>
+          <div class="quiz-option" onclick="answerQ('q10a','B','C')"><span class="quiz-opt-label">B</span>Detecting eavesdropping via quantum cryptography (QKD)</div>
+          <div class="quiz-option" onclick="answerQ('q10a','C','C')"><span class="quiz-opt-label">C</span>Replacing all classical computers for everyday tasks like web browsing and video streaming</div>
+        </div>
+        <div class="quiz-answer" id="q10a-ans"><strong>Correct — C.</strong> Quantum computers will not replace classical computers for general tasks. They are suited to specific problem classes — optimisation, simulation of quantum systems, cryptanalysis, certain machine learning tasks. Knowing which problems benefit from quantum is the core skill of quantum literacy.</div>
+      </div>
+      <div class="quiz-divider"></div>
+      <div class="quiz-item"><div class="quiz-q">2. Which three foundational principles underlie every quantum application?</div>
+        <div class="quiz-options" id="q10b-opts">
+          <div class="quiz-option" onclick="answerQ('q10b','A','C')"><span class="quiz-opt-label">A</span>Speed, parallelism, and miniaturisation</div>
+          <div class="quiz-option" onclick="answerQ('q10b','B','C')"><span class="quiz-opt-label">B</span>Encryption, compression, and bandwidth</div>
+          <div class="quiz-option" onclick="answerQ('q10b','C','C')"><span class="quiz-opt-label">C</span>Superposition, measurement, and entanglement</div>
+        </div>
+        <div class="quiz-answer" id="q10b-ans"><strong>Correct — C.</strong> Every commercial quantum advantage emerges from some combination of superposition, measurement, and entanglement — the three principles you have just learned. The remaining modules of this course build on this foundation.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="pdf-download">
+  <div class="pdf-inner">
+    <div class="pdf-eyebrow">◈ Deep Dive Edition — Full Research Document</div>
+    <h2 class="pdf-title">Read the Complete Module 2 — Free PDF</h2>
+    <p class="pdf-desc">This page covered the essentials of each chapter. The full PDF edition goes 34 pages deep — Bloch sphere diagrams, the double-slit experiment in detail, the entanglement story, the 2022 Nobel Prize timeline, the full Bell state circuit walkthrough with code, and every chapter expanded to research depth. No email required.</p>
+    <div class="pdf-stats">
+      <div class="pdf-stat"><div class="pdf-stat-val">34</div><div class="pdf-stat-label">Pages</div></div>
+      <div class="pdf-stat"><div class="pdf-stat-val">10</div><div class="pdf-stat-label">Deep Chapters</div></div>
+      <div class="pdf-stat"><div class="pdf-stat-val">9</div><div class="pdf-stat-label">Diagrams</div></div>
+      <div class="pdf-stat"><div class="pdf-stat-val">Free</div><div class="pdf-stat-label">No Sign-up</div></div>
+    </div>
+    <a href="diarka-quantum-module-2.pdf" download="Diarka-Quantum-Module-2.pdf" class="pdf-btn">Download Full PDF — Free</a>
+    <p class="pdf-note">Downloads directly to your device · No email required · © 2025 Diarka Quantum Limited</p>
+  </div>
+</div>
+
+<div class="gate-section">
+  <div class="gate-inner">
+    <div class="gate-tag">Continue Your Journey</div>
+    <h2 class="gate-title">You've Completed Module 2 — <span class="hl">Module 3 Awaits</span></h2>
+    <p class="gate-desc">You now understand the three foundational principles of quantum computing. Module 3 takes you into the physical machines that make qubits real — the global quantum hardware landscape, the five major platforms, and how to evaluate any quantum hardware announcement on its actual technical merits.</p>
+
+    <div class="modules-preview">
+      <div class="mp-item unlocked"><span class="mp-num">01</span><span class="mp-title">Why Classical Computers Hit a Fundamental Wall</span><span class="mp-lock">Complete</span></div>
+      <div class="mp-item unlocked"><span class="mp-num">02</span><span class="mp-title">Qubits, Superposition &amp; Entanglement Explained</span><span class="mp-lock">Complete</span></div>
+      <div class="mp-item next"><span class="mp-num">03</span><span class="mp-title">Quantum Hardware Landscape Today</span><span class="mp-lock">Next</span></div>
+      <div class="mp-item"><span class="mp-num">04</span><span class="mp-title">Quantum Algorithms &amp; Where Advantage is Real</span><span class="mp-lock">Locked</span></div>
+      <div class="mp-item"><span class="mp-num">05</span><span class="mp-title">AI-Quantum Convergence &amp; QML</span><span class="mp-lock">Locked</span></div>
+      <div class="mp-item"><span class="mp-num">06</span><span class="mp-title">Post-Quantum Cryptography &amp; NIST Standards</span><span class="mp-lock">Locked</span></div>
+      <div class="mp-item"><span class="mp-num">07</span><span class="mp-title">Quantum Strategy for Organisations</span><span class="mp-lock">Locked</span></div>
+    </div>
+
+    <div class="unlock-cta-block">
+      <div class="unlock-cta-eyebrow">◈ Module 03 — Coming Soon</div>
+      <div class="unlock-cta-title">Quantum Hardware Landscape Today</div>
+      <p class="unlock-cta-desc">Superconducting qubits, trapped ions, neutral atoms, photonic systems, quantum annealing — the five platforms competing to define the future of computing. Get notified the moment Module 3 launches.</p>
+      <button type="button" class="unlock-btn" onclick="openUnlockModal()">Unlock Module 3 <span class="unlock-arrow">→</span></button>
+      <div class="gate-note">Free notification — no payment required to be on the launch list.</div>
+    </div>
+
+    <div id="gate-success">
+      <div class="gs-title">You are on the list.</div>
+      <p>We will notify you at your email address the moment Module 3 launches. Welcome to the Diarka Quantum community.</p>
+    </div>
+
+    <div class="modal-overlay" id="unlock-modal">
+      <div class="modal-box">
+        <button class="modal-close" onclick="closeUnlockModal()">×</button>
+        <div class="modal-title">Unlock Module 3</div>
+        <p class="modal-desc">Enter your details and we will notify you the moment Module 3 — Quantum Hardware Landscape Today — is live. No spam, ever.</p>
+        <form class="gate-form" id="gate-form" onsubmit="handleGate(event)">
+          <input type="text" name="name" class="gate-input" placeholder="Your name" required>
+          <input type="email" name="email" class="gate-input" placeholder="Your email address" required>
+          <input type="hidden" name="source" value="Module 2 — Module 3 Unlock List">
+          <input type="text" name="_gotcha" style="display:none">
+          <button type="submit" class="gate-btn" id="gate-btn">Notify Me — Free</button>
+          <div class="gate-note" style="text-align:center;margin-top:0.4rem">No spam. No selling your data. Notification only when Module 3 is ready.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">Diarka<span>Quantum</span> Limited</div>
+  <div class="footer-copy">© 2025 Diarka Quantum Limited · Module 2 of 7 · diarkaquantum.co.uk</div>
+</footer>
+
+<script>
+const cursor=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{ mx=e.clientX; my=e.clientY; cursor.style.transform=`translate(${mx-4}px,${my-4}px)`; });
+(function loop(){ rx+=(mx-rx)*0.1; ry+=(my-ry)*0.1; ring.style.transform=`translate(${rx-14}px,${ry-14}px)`; requestAnimationFrame(loop); })();
+
+const pb=document.getElementById('progress');
+window.addEventListener('scroll',()=>{ const h=document.documentElement.scrollHeight-window.innerHeight; pb.style.width=(window.scrollY/h*100)+'%'; });
+
+const canvas=document.getElementById('universe'),ctx=canvas.getContext('2d');
+let W,H;
+function resize(){ W=canvas.width=window.innerWidth; H=canvas.height=window.innerHeight; }
+resize(); window.addEventListener('resize',resize);
+const stars=Array.from({length:200},()=>({x:Math.random(),y:Math.random(),r:Math.random()*1.2+0.2,alpha:Math.random()*0.6+0.1,tw:Math.random()*Math.PI*2,sp:Math.random()*0.015+0.003}));
+const nebulae=Array.from({length:4},()=>({x:Math.random(),y:Math.random(),r:Math.random()*180+80,col:Math.random()>0.5?'0,212,255':'123,47,255',alpha:Math.random()*0.04+0.01}));
+function drawUniverse(){
+  ctx.clearRect(0,0,W,H);
+  nebulae.forEach(n=>{ const g=ctx.createRadialGradient(n.x*W,n.y*H,0,n.x*W,n.y*H,n.r); g.addColorStop(0,`rgba(${n.col},${n.alpha})`); g.addColorStop(1,'transparent'); ctx.fillStyle=g; ctx.beginPath(); ctx.arc(n.x*W,n.y*H,n.r,0,Math.PI*2); ctx.fill(); });
+  stars.forEach(s=>{ s.tw+=s.sp; const a=s.alpha*(0.6+0.4*Math.sin(s.tw)); ctx.beginPath(); ctx.arc(s.x*W,s.y*H,s.r,0,Math.PI*2); ctx.fillStyle=`rgba(200,220,255,${a})`; ctx.fill(); });
+  requestAnimationFrame(drawUniverse);
+}
+drawUniverse();
+
+const obs=new IntersectionObserver(es=>es.forEach((e,i)=>{ if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'),i*60); obs.unobserve(e.target); } }),{threshold:0.07});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+
+function answerQ(qid,chosen,correct){
+  const opts=document.querySelectorAll('#'+qid+'-opts .quiz-option');
+  const ans=document.getElementById(qid+'-ans');
+  const labels=['A','B','C'];
+  opts.forEach((o,i)=>{
+    o.style.pointerEvents='none';
+    if(labels[i]===correct) o.classList.add('correct');
+    else if(labels[i]===chosen && chosen!==correct) o.classList.add('wrong');
+  });
+  ans.style.display='block';
+}
+
+function openUnlockModal(){
+  document.getElementById('unlock-modal').classList.add('active');
+  document.body.style.overflow='hidden';
+}
+function closeUnlockModal(){
+  document.getElementById('unlock-modal').classList.remove('active');
+  document.body.style.overflow='';
+}
+document.getElementById('unlock-modal').addEventListener('click',e=>{ if(e.target.id==='unlock-modal') closeUnlockModal(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeUnlockModal(); });
+
+async function handleGate(e){
+  e.preventDefault();
+  const form=document.getElementById('gate-form'),btn=document.getElementById('gate-btn'),suc=document.getElementById('gate-success');
+  btn.textContent='Joining...'; btn.disabled=true; btn.style.opacity='0.7';
+  try {
+    const res=await fetch('https://formspree.io/f/meenolaj',{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}});
+    if(res.ok){
+      closeUnlockModal();
+      document.querySelector('.unlock-cta-block').style.display='none';
+      suc.style.display='block';
+      suc.scrollIntoView({behavior:'smooth',block:'center'});
+    }
+    else throw new Error();
+  } catch { btn.textContent='Notify Me — Free'; btn.disabled=false; btn.style.opacity='1'; alert('Something went wrong. Please try again or email nageshj@diarkaquantum.co.uk'); }
+}
+</script>
+</body>
+</html>
