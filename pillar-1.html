@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pillar 01 — Quantum Readiness Advisory | Diarka Quantum Limited</title>
+<meta name="description" content="Diarka Quantum Pillar 1: Quantum Readiness Advisory — helping mid-market organisations assess quantum disruption, cryptographic risk, and build a strategic migration roadmap.">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Raleway:wght@300;400;500;600&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --void: #00010a;
+  --deep-space: #020818;
+  --nebula-dark: #060d2e;
+  --cosmic-blue: #0a1628;
+  --stellar: #e8f4ff;
+  --nebula-teal: #00d4ff;
+  --nebula-teal-dim: #0099bb;
+  --pulsar: #7b2fff;
+  --pulsar-dim: #5a1fcc;
+  --nova: #ff6b35;
+  --starlight: #c8d8ff;
+  --muted: #4a6080;
+  --border: rgba(0,212,255,0.1);
+  --border-purple: rgba(123,47,255,0.15);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--void); color: var(--stellar); font-family: 'Raleway', sans-serif; font-weight: 400; overflow-x: hidden; cursor: none; }
+.cursor { width: 8px; height: 8px; background: var(--nebula-teal); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; box-shadow: 0 0 10px var(--nebula-teal), 0 0 20px var(--nebula-teal); }
+.cursor-ring { width: 32px; height: 32px; border: 1px solid rgba(0,212,255,0.5); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; transition: transform 0.4s ease, width 0.3s, height 0.3s, border-color 0.3s; }
+#universe { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+:focus-visible { outline: 2px solid var(--nebula-teal); outline-offset: 3px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.2rem 3rem; display: flex; align-items: center; justify-content: space-between; background: linear-gradient(to bottom, rgba(0,1,10,0.95) 0%, transparent 100%); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,212,255,0.06); }
+.nav-logo { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 1rem; letter-spacing: 0.12em; text-decoration: none; color: var(--stellar); display: flex; align-items: center; gap: 0.6rem; }
+.brand-logo-img { width: 44px; height: 44px; object-fit: contain; display: block; flex-shrink: 0; filter: drop-shadow(0 0 8px rgba(0,212,255,0.4)); transition: filter 0.3s; }
+.nav-logo:hover .brand-logo-img { filter: drop-shadow(0 0 14px rgba(0,212,255,0.7)); }
+.nav-logo span { color: var(--nebula-teal); }
+.nav-links { display: flex; gap: 0.1rem; list-style: none; }
+.nav-links a { color: var(--starlight); text-decoration: none; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.5rem 0.65rem; transition: color 0.2s, background 0.2s; font-weight: 500; }
+.nav-links a:hover { color: var(--nebula-teal); background: rgba(0,212,255,0.05); }
+.nav-links a.active { color: var(--nebula-teal); }
+.nav-cta { background: transparent; border: 1px solid var(--nebula-teal); color: var(--nebula-teal); padding: 0.5rem 1.2rem; font-family: 'Orbitron', monospace; font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: none; transition: all 0.3s; text-decoration: none; }
+.nav-cta:hover { background: var(--nebula-teal); color: var(--void); box-shadow: 0 0 24px rgba(0,212,255,0.4); }
+
+section { position: relative; z-index: 1; }
+.section-inner { padding: 7rem 4rem; max-width: 1400px; margin: 0 auto; }
+.section-tag { font-family: 'Orbitron', monospace; font-size: 0.58rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--nebula-teal); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 1rem; }
+.section-tag::before { content: '⬡'; font-size: 0.7rem; color: var(--pulsar); }
+.section-title { font-family: 'Orbitron', monospace; font-weight: 900; font-size: clamp(1.8rem,3.5vw,2.8rem); line-height: 1.15; letter-spacing: 0.03em; margin-bottom: 1rem; text-shadow: 0 0 30px rgba(0,212,255,0.2); }
+.section-desc { color: var(--starlight); font-size: 0.88rem; line-height: 1.9; max-width: 620px; margin-bottom: 3.5rem; font-weight: 300; }
+
+.hero-section { position: relative; z-index: 1; min-height: 70vh; display: flex; flex-direction: column; justify-content: center; overflow: hidden; }
+.hero-section .section-inner { padding-top: 10rem; padding-bottom: 5rem; }
+.hero-glow { position: absolute; width: 600px; height: 400px; border-radius: 50%; background: radial-gradient(ellipse, rgba(0,212,255,0.08), rgba(123,47,255,0.04), transparent 70%); top: 15%; left: -10%; pointer-events: none; animation: hero-glow-drift 12s ease-in-out infinite alternate; }
+@keyframes hero-glow-drift { 0% { transform: translate(0,0); } 100% { transform: translate(60px,30px); } }
+.hero-eyebrow { font-family: 'Orbitron', monospace; font-size: 0.6rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--pulsar); margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.8s 0.3s forwards; }
+.hero-title { font-family: 'Orbitron', monospace; font-weight: 900; font-size: clamp(2rem,5vw,4rem); line-height: 1.08; letter-spacing: 0.04em; opacity: 0; animation: fadeUp 0.9s 0.5s forwards; text-shadow: 0 0 40px rgba(0,212,255,0.3); margin-bottom: 1.2rem; }
+.hero-title .teal { color: var(--nebula-teal); }
+.hero-positioning { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(1rem,1.6vw,1.3rem); color: var(--starlight); max-width: 720px; opacity: 0; animation: fadeUp 0.9s 0.7s forwards; line-height: 1.5; margin-bottom: 1.5rem; }
+.hero-positioning em { color: var(--nebula-teal); font-style: italic; }
+.hero-body { font-size: 0.88rem; line-height: 1.85; color: var(--starlight); max-width: 700px; opacity: 0; animation: fadeUp 0.9s 0.85s forwards; font-weight: 300; }
+.hero-body .pause-note { display: block; margin-top: 1rem; font-size: 0.75rem; color: var(--muted); font-style: italic; }
+.hero-actions { margin-top: 2.5rem; display: flex; gap: 1.5rem; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.9s 1s forwards; }
+
+.btn-cosmos { background: linear-gradient(135deg, var(--pulsar), var(--nebula-teal)); color: var(--void); padding: 1rem 2.5rem; font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; cursor: none; transition: all 0.3s; box-shadow: 0 0 30px rgba(123,47,255,0.4); clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%); display: inline-block; border: none; }
+.btn-cosmos:hover { box-shadow: 0 0 50px rgba(123,47,255,0.6); transform: translateY(-3px); }
+.btn-void { border: 1px solid rgba(0,212,255,0.4); color: var(--nebula-teal); padding: 1rem 2.5rem; font-family: 'Orbitron', monospace; font-weight: 600; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; cursor: none; transition: all 0.3s; clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%); display: inline-block; background: transparent; }
+.btn-void:hover { background: rgba(0,212,255,0.08); box-shadow: 0 0 30px rgba(0,212,255,0.2); }
+.btn-teal-outline { background: transparent; border: 1px solid var(--border); color: var(--nebula-teal); padding: 0.5rem 1.2rem; font-family: 'Orbitron', monospace; font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: none; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; }
+.btn-teal-outline:hover { border-color: var(--nebula-teal); background: rgba(0,212,255,0.05); }
+
+.services-grid { display: grid; gap: 2px; background: var(--border); margin-top: 3rem; }
+.service-card { background: var(--deep-space); padding: 2.5rem; position: relative; overflow: hidden; transition: background 0.3s; }
+.service-card:hover { background: rgba(6,13,46,0.95); }
+.service-card::before { content: ''; position: absolute; top: 0; left: 0; width: 0; height: 3px; background: linear-gradient(90deg, var(--pulsar), var(--nebula-teal)); transition: width 0.5s ease; }
+.service-card:hover::before { width: 100%; }
+.service-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
+.service-name { font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.92rem; color: var(--stellar); letter-spacing: 0.04em; }
+.service-meta { display: flex; gap: 0.8rem; align-items: center; flex-wrap: wrap; }
+.badge { font-family: 'Orbitron', monospace; font-size: 0.52rem; letter-spacing: 0.12em; padding: 0.28rem 0.65rem; text-transform: uppercase; }
+.badge-discovery { border: 1px solid var(--border); color: var(--nebula-teal); }
+.badge-pilot { border: 1px solid var(--border-purple); color: var(--pulsar); }
+.badge-production { border: 1px solid rgba(0,212,255,0.3); color: var(--nebula-teal); background: rgba(0,212,255,0.05); }
+.timeline-tag { font-family: 'Orbitron', monospace; font-size: 0.52rem; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; }
+.effort-bar { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.2rem; }
+.effort-label { font-family: 'Orbitron', monospace; font-size: 0.5rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); min-width: 44px; }
+.effort-track { flex: 1; max-width: 180px; height: 4px; background: rgba(0,212,255,0.08); border: 1px solid var(--border); overflow: hidden; }
+.effort-fill { height: 100%; background: linear-gradient(90deg, var(--pulsar), var(--nebula-teal)); box-shadow: 0 0 8px rgba(0,212,255,0.4); }
+.service-desc { font-size: 0.8rem; line-height: 1.8; color: var(--starlight); font-weight: 300; margin-bottom: 1.5rem; }
+.deliverables-tag { font-family: 'Orbitron', monospace; font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem; }
+.deliverables-list { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+.deliverables-list li { display: flex; align-items: center; gap: 0.8rem; font-size: 0.77rem; color: var(--starlight); font-weight: 300; }
+.deliverables-list li::before { content: '◈'; color: var(--nebula-teal); font-size: 0.55rem; flex-shrink: 0; }
+
+.learn-more-btn { background: transparent; border: 1px solid var(--border); color: var(--nebula-teal); padding: 0.5rem 1rem; font-family: 'Orbitron', monospace; font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: none; transition: all 0.2s; margin-top: 1.5rem; display: inline-flex; align-items: center; gap: 0.5rem; }
+.learn-more-btn:hover { border-color: var(--nebula-teal); background: rgba(0,212,255,0.05); }
+.learn-more-btn .chevron { display: inline-block; transition: transform 0.25s; font-size: 0.6em; }
+.learn-more-btn[aria-expanded="true"] .chevron { transform: rotate(90deg); }
+.learn-more-btn[aria-expanded="true"] { border-color: var(--pulsar); color: var(--pulsar); background: rgba(123,47,255,0.08); }
+.learn-more-panel { overflow: hidden; max-height: 0; transition: max-height 0.45s ease; }
+.learn-more-content { background: rgba(6,13,46,0.7); border: 1px solid var(--border); border-top: none; padding: 2.5rem; margin-top: 1.5rem; }
+.learn-more-content h4 { font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.72rem; color: var(--nebula-teal); letter-spacing: 0.08em; margin-bottom: 0.8rem; margin-top: 2rem; text-transform: uppercase; }
+.learn-more-content h4:first-child { margin-top: 0; }
+.learn-more-content ol { padding-left: 1.3em; color: var(--starlight); font-size: 0.78rem; line-height: 1.75; font-weight: 300; }
+.learn-more-content ol li { margin-bottom: 0.5rem; }
+.learn-more-content ol li::marker { color: var(--pulsar); }
+.artifacts-list { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+.artifacts-list li { display: flex; align-items: center; gap: 0.8rem; font-size: 0.78rem; color: var(--starlight); font-weight: 300; }
+.artifacts-list li::before { content: '◇'; color: var(--pulsar); flex-shrink: 0; font-size: 0.6rem; }
+
+.cta-banner { margin-top: 4rem; padding: 3rem; border: 1px solid var(--border-purple); background: linear-gradient(135deg, rgba(123,47,255,0.05), rgba(0,212,255,0.03)); position: relative; overflow: hidden; text-align: center; }
+.cta-banner::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--pulsar), var(--nebula-teal), var(--pulsar)); }
+.cta-banner p { font-size: 0.88rem; line-height: 1.8; color: var(--starlight); font-weight: 300; max-width: 560px; margin: 0 auto 2rem; }
+
+.resources-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 3rem; }
+.resource-card { background: rgba(6,13,46,0.8); border: 1px solid var(--border); padding: 2rem; display: flex; flex-direction: column; position: relative; overflow: hidden; transition: border-color 0.3s, transform 0.3s; }
+.resource-card:hover { border-color: rgba(0,212,255,0.3); transform: translateY(-4px); }
+.resource-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--nebula-teal), transparent); opacity: 0; transition: opacity 0.3s; }
+.resource-card:hover::after { opacity: 1; }
+.resource-symbol { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 1.4rem; color: var(--nebula-teal); margin-bottom: 1rem; text-shadow: 0 0 12px rgba(0,212,255,0.4); }
+.resource-title { font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.82rem; color: var(--stellar); margin-bottom: 0.6rem; letter-spacing: 0.04em; }
+.resource-desc { font-size: 0.77rem; line-height: 1.75; color: var(--starlight); font-weight: 300; flex: 1; margin-bottom: 1.5rem; }
+
+.next-steps-timeline { position: relative; margin-top: 4rem; padding-left: 40px; }
+.next-steps-timeline::before { content: ''; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 1px; background: linear-gradient(180deg, var(--nebula-teal), var(--pulsar), transparent); }
+.phase-item { position: relative; margin-bottom: 2.5rem; }
+.phase-item:last-child { margin-bottom: 0; }
+.phase-item::before { content: ''; position: absolute; left: -37px; top: 6px; width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--nebula-teal); background: var(--void); box-shadow: 0 0 12px rgba(0,212,255,0.4); }
+.phase-title { font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.82rem; color: var(--stellar); margin-bottom: 0.5rem; letter-spacing: 0.04em; }
+.phase-desc { font-size: 0.78rem; line-height: 1.75; color: var(--starlight); font-weight: 300; }
+
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,1,10,0.85); backdrop-filter: blur(8px); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 2rem; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
+.modal-overlay.is-open { opacity: 1; visibility: visible; }
+.modal { background: var(--deep-space); border: 1px solid var(--border); max-width: 560px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 3rem; position: relative; transform: translateY(12px); transition: transform 0.3s; }
+.modal-overlay.is-open .modal { transform: translateY(0); }
+.modal::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--pulsar), var(--nebula-teal)); }
+.modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem; }
+.modal-header h2 { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 1.1rem; letter-spacing: 0.05em; }
+.modal-close { background: transparent; border: 1px solid var(--border); color: var(--muted); width: 32px; height: 32px; font-size: 1.1rem; cursor: none; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: border-color 0.2s, color 0.2s; }
+.modal-close:hover { border-color: var(--nebula-teal); color: var(--nebula-teal); }
+.form-group { margin-bottom: 1.2rem; }
+.form-label { font-family: 'Orbitron', monospace; font-size: 0.56rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 0.4rem; }
+.form-label .req { color: var(--nova); margin-left: 2px; }
+.form-input, .form-select { background: rgba(6,13,46,0.8); border: 1px solid var(--border); color: var(--stellar); padding: 0.85rem 1rem; font-family: 'Raleway', sans-serif; font-size: 0.82rem; outline: none; width: 100%; transition: border-color 0.2s, box-shadow 0.2s; }
+.form-input:focus, .form-select:focus { border-color: var(--nebula-teal); box-shadow: 0 0 12px rgba(0,212,255,0.1); }
+.form-select option { background: var(--deep-space); }
+.form-input.is-error { border-color: var(--nova); }
+.form-error { font-family: 'Orbitron', monospace; font-size: 0.5rem; color: var(--nova); margin-top: 0.3rem; display: none; letter-spacing: 0.08em; }
+.form-error.is-visible { display: block; }
+.option-group { display: grid; gap: 0.5rem; }
+.option-item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.78rem; color: var(--starlight); cursor: none; font-weight: 300; }
+.option-item input { accent-color: var(--nebula-teal); width: 14px; height: 14px; cursor: none; }
+.radio-row { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+.form-btn { background: linear-gradient(135deg, var(--pulsar), var(--nebula-teal)); color: var(--void); border: none; padding: 1rem 2.5rem; font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: none; transition: all 0.3s; box-shadow: 0 0 20px rgba(123,47,255,0.3); clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%); width: 100%; }
+.form-btn:hover { box-shadow: 0 0 40px rgba(123,47,255,0.5); transform: translateY(-2px); }
+.confirmation { text-align: center; padding: 1rem 0; }
+.confirmation-icon { width: 52px; height: 52px; border-radius: 50%; background: radial-gradient(circle, rgba(0,212,255,0.3), rgba(123,47,255,0.2)); border: 1px solid var(--nebula-teal); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-family: 'Orbitron', monospace; font-weight: 900; font-size: 1.2rem; color: var(--nebula-teal); box-shadow: 0 0 20px rgba(0,212,255,0.4); }
+.confirmation h3 { font-family: 'Orbitron', monospace; font-size: 1rem; font-weight: 700; margin-bottom: 0.8rem; letter-spacing: 0.05em; }
+.confirmation p { color: var(--starlight); font-size: 0.8rem; font-weight: 300; line-height: 1.7; }
+.confirmation-summary { background: rgba(6,13,46,0.7); border: 1px solid var(--border); padding: 1.5rem; text-align: left; margin-top: 1.5rem; }
+.confirmation-summary dt { font-family: 'Orbitron', monospace; font-size: 0.5rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-top: 1rem; }
+.confirmation-summary dt:first-child { margin-top: 0; }
+.confirmation-summary dd { font-size: 0.82rem; color: var(--stellar); margin-top: 0.2rem; }
+
+footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 2.5rem 4rem; display: flex; align-items: center; justify-content: space-between; background: rgba(0,1,10,0.95); flex-wrap: wrap; gap: 1.5rem; }
+.footer-logo { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 0.9rem; letter-spacing: 0.1em; }
+.footer-logo span { color: var(--nebula-teal); }
+.footer-reg { font-size: 0.6rem; color: var(--muted); margin-top: 0.3rem; }
+.footer-mid { text-align: center; }
+.footer-mid .email-link { font-family: 'Orbitron', monospace; font-size: 0.65rem; color: var(--nebula-teal); letter-spacing: 0.08em; text-decoration: none; }
+.footer-mid .email-link:hover { text-decoration: underline; }
+.footer-mid .disclaimer { font-size: 0.55rem; color: var(--muted); max-width: 380px; line-height: 1.5; margin-top: 0.5rem; }
+.footer-links { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+.footer-links a { font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: var(--nebula-teal); }
+.footer-copy { font-size: 0.6rem; color: var(--muted); }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+.reveal { opacity:0; transform:translateY(28px); transition:opacity 0.8s ease,transform 0.8s ease; }
+.reveal.visible { opacity:1; transform:none; }
+
+@media (max-width:900px) {
+  nav { padding: 1.2rem 1.5rem; }
+  .nav-links { display: none; }
+  .hero-section .section-inner { padding: 8rem 1.5rem 3rem; }
+  .section-inner { padding: 5rem 1.5rem; }
+  .resources-grid { grid-template-columns: 1fr; }
+  .radio-row { flex-direction: column; gap: 0.5rem; }
+  .modal { padding: 2rem; }
+  footer { flex-direction: column; text-align: center; padding: 2rem; }
+  .footer-links { justify-content: center; }
+}
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+<canvas id="universe"></canvas>
+
+<nav>
+  <a href="index.html" class="nav-logo"><img src="/diarka-logo-header-180w.png" alt="Diarka Quantum Logo" class="brand-logo-img">Diarka<span>Quantum</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#bridge">The Bridge</a></li>
+    <li><a href="#services" class="active">Pillar 01</a></li>
+    <li><a href="#resources">Resources</a></li>
+    <li><a href="#next-steps">Next Steps</a></li>
+    <li><a href="index.html#about">About</a></li>
+  </ul>
+  <a href="#" class="nav-cta" id="nav-cta-btn">Start Assessment</a>
+</nav>
+
+<section class="hero-section">
+  <div class="hero-glow"></div>
+  <div class="section-inner">
+    <div class="hero-eyebrow">Pillar 01 of 03</div>
+    <h1 class="hero-title">Quantum <span class="teal">Readiness</span><br>Advisory</h1>
+    <p class="hero-positioning">Assess. Prepare. Secure your competitive position <em>before the quantum transition arrives</em>.</p>
+    <p class="hero-body">Quantum computing will fundamentally reshape cryptography, data security, and competitive dynamics across every industry. Pillar 1 of the Diarka Quantum framework helps mid-market organisations understand where quantum disruption will hit first, what is at risk today, and how to build a pragmatic, phased roadmap toward quantum-safe operations — before competitors and adversaries move first.<span class="pause-note">Note: Pillar 3 (Quantum Education modules) is currently paused while Pillar 1 advisory services are prioritised.</span></p>
+    <div class="hero-actions">
+      <button type="button" class="btn-cosmos" id="hero-assessment-btn">Start Assessment →</button>
+      <a href="#services" class="btn-void">Explore Services</a>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" style="background: linear-gradient(180deg, var(--void) 0%, var(--nebula-dark) 100%);">
+  <div class="section-inner">
+    <div class="section-tag">What We Deliver</div>
+    <h2 class="section-title reveal">Component Services</h2>
+    <p class="section-desc reveal">Seven structured services that take your organisation from zero quantum awareness to a fully documented, board-approved quantum readiness position — with actionable migration plans and policy changes.</p>
+    <div class="services-grid reveal">
+
+      <article class="service-card">
+        <div class="service-header"><h3 class="service-name">Readiness Assessment</h3><div class="service-meta"><span class="badge badge-discovery">Discovery</span><span class="timeline-tag">2 – 4 Weeks</span></div></div>
+        <div class="effort-bar"><span class="effort-label">Effort</span><div class="effort-track"><div class="effort-fill" style="width:25%"></div></div></div>
+        <p class="service-desc">A structured evaluation of your organisation's current exposure to quantum-era threats and opportunities. We assess cryptographic dependencies, data lifecycles, vendor postures, and internal awareness to produce a clear baseline of where you stand — and where the gaps are. The assessment provides a scored maturity profile across five key dimensions with minimal disruption to operations.</p>
+        <div class="deliverables-tag">Key Deliverables</div>
+        <ul class="deliverables-list"><li>Quantum Readiness Maturity Scorecard</li><li>Gap analysis report with prioritised risk areas</li><li>Executive summary for board-level briefing</li><li>Stakeholder interview findings</li></ul>
+        <button class="learn-more-btn" aria-expanded="false" aria-controls="lm-readiness" data-target="lm-readiness" type="button">Learn More <span class="chevron" aria-hidden="true">&#9654;</span></button>
+        <div class="learn-more-panel" id="lm-readiness" role="region" aria-label="Readiness Assessment methodology">
+          <div class="learn-more-content">
+            <h4>Methodology</h4>
+            <ol><li>Kickoff workshop to define scope, key stakeholders, and critical systems.</li><li>Structured interviews with IT, security, data, and operations leads.</li><li>Automated scan of publicly visible cryptographic configurations (TLS, certificates, key lengths).</li><li>Maturity scoring across five dimensions: cryptographic posture, data sensitivity, vendor readiness, regulatory awareness, and organisational capability.</li><li>Findings consolidation and executive report drafting.</li><li>Presentation of results to leadership with Q&amp;A session.</li></ol>
+            <h4>Example Artifacts</h4>
+            <ul class="artifacts-list"><li>Quantum Readiness Maturity Scorecard (five-dimension radar chart with narrative)</li><li>Stakeholder interview template (standardised question bank)</li><li>Executive briefing slide deck (10–12 slides, non-technical language)</li></ul>
+            <h4>Recommended Approaches</h4>
+            <ul class="artifacts-list"><li>Structured maturity models adapted from industry frameworks</li><li>Automated certificate and protocol scanning tools</li><li>Facilitated workshop formats for cross-functional alignment</li></ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="service-card">
+        <div class="service-header"><h3 class="service-name">Risk Analysis</h3><div class="service-meta"><span class="badge badge-discovery">Discovery</span><span class="timeline-tag">2 – 4 Weeks</span></div></div>
+        <div class="effort-bar"><span class="effort-label">Effort</span><div class="effort-track"><div class="effort-fill" style="width:55%"></div></div></div>
+        <p class="service-desc">A threat-driven analysis focused on the "harvest now, decrypt later" paradigm and how quantum-capable adversaries may already be stockpiling your encrypted data for future decryption. We map data flows, classify sensitivity tiers, model threat timelines, and quantify business impact to produce a risk register that your CISO and board can act on immediately. Critical for financial services, healthcare, defence supply chains, and regulated industries.</p>
+        <div class="deliverables-tag">Key Deliverables</div>
+        <ul class="deliverables-list"><li>Quantum-specific risk register (likelihood × impact matrix)</li><li>Data sensitivity classification map</li><li>Threat timeline model (estimated years to cryptographic relevance)</li><li>Board-ready risk briefing document</li></ul>
+        <button class="learn-more-btn" aria-expanded="false" aria-controls="lm-risk" data-target="lm-risk" type="button">Learn More <span class="chevron" aria-hidden="true">&#9654;</span></button>
+        <div class="learn-more-panel" id="lm-risk" role="region" aria-label="Risk Analysis methodology">
+          <div class="learn-more-content">
+            <h4>Methodology</h4>
+            <ol><li>Data flow mapping: identify where sensitive data is created, transmitted, stored, and archived.</li><li>Sensitivity tiering: classify data by regulatory requirement, commercial sensitivity, and shelf-life.</li><li>Threat modelling: estimate adversary capability timelines using public research benchmarks and national quantum strategy publications.</li><li>Impact quantification: model business, legal, and reputational consequences of key compromise scenarios.</li><li>Risk register compilation with prioritised remediation recommendations.</li></ol>
+            <h4>Example Artifacts</h4>
+            <ul class="artifacts-list"><li>Risk register template (categorised by threat vector, impact, likelihood, and owner)</li><li>Data flow sensitivity map (visual diagram with classification overlays)</li><li>Threat timeline projection chart</li></ul>
+            <h4>Recommended Approaches</h4>
+            <ul class="artifacts-list"><li>Standard risk assessment frameworks adapted for quantum-specific threat vectors</li><li>Publicly available quantum development timeline estimates from national research bodies</li><li>Data classification taxonomies aligned with regulatory standards</li></ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="service-card">
+        <div class="service-header"><h3 class="service-name">Cryptographic Inventory</h3><div class="service-meta"><span class="badge badge-pilot">Pilot</span><span class="timeline-tag">3 – 6 Weeks</span></div></div>
+        <div class="effort-bar"><span class="effort-label">Effort</span><div class="effort-track"><div class="effort-fill" style="width:55%"></div></div></div>
+        <p class="service-desc">A comprehensive audit of every cryptographic algorithm, protocol, key length, certificate, and library in active use across your technology estate. Most organisations have no centralised record of their cryptographic dependencies — making quantum migration planning impossible. This inventory creates that single source of truth, identifies quantum-vulnerable components, and prioritises them for migration.</p>
+        <div class="deliverables-tag">Key Deliverables</div>
+        <ul class="deliverables-list"><li>Complete cryptographic asset register</li><li>Quantum-vulnerability classification (safe / at risk / critical)</li><li>Dependency map linking cryptographic components to business systems</li><li>Prioritised remediation schedule</li></ul>
+        <button class="learn-more-btn" aria-expanded="false" aria-controls="lm-crypto" data-target="lm-crypto" type="button">Learn More <span class="chevron" aria-hidden="true">&#9654;</span></button>
+        <div class="learn-more-panel" id="lm-crypto" role="region" aria-label="Cryptographic Inventory methodology">
+          <div class="learn-more-content">
+            <h4>Methodology</h4>
+            <ol><li>Scope definition: identify all systems, applications, and infrastructure (cloud, on-premise, hybrid).</li><li>Automated discovery: deploy scanning tools to detect TLS configurations, certificate authorities, key stores, and embedded cryptographic libraries.</li><li>Manual review: interview application and infrastructure teams to capture non-discoverable dependencies (hardcoded keys, legacy integrations, firmware-level crypto).</li><li>Classification: tag each component as quantum-safe, at-risk, or critically vulnerable based on algorithm type and key length.</li><li>Dependency mapping: link each cryptographic component to the business systems and data flows it protects.</li><li>Deliver a prioritised register with recommended migration sequencing.</li></ol>
+            <h4>Example Artifacts</h4>
+            <ul class="artifacts-list"><li>Cryptographic asset register spreadsheet (algorithm, key length, system, owner, risk classification)</li><li>Visual dependency map (cryptographic components linked to business applications)</li><li>Scan configuration template for common infrastructure types</li></ul>
+            <h4>Recommended Approaches</h4>
+            <ul class="artifacts-list"><li>Automated certificate and protocol scanning utilities</li><li>Source code analysis for embedded cryptographic library usage</li><li>Infrastructure configuration review checklists</li></ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="service-card">
+        <div class="service-header"><h3 class="service-name">Migration Planning</h3><div class="service-meta"><span class="badge badge-pilot">Pilot</span><span class="timeline-tag">1 – 3 Months</span></div></div>
+        <div class="effort-bar"><span class="effort-label">Effort</span><div class="effort-track"><div class="effort-fill" style="width:85%"></div></div></div>
+        <p class="service-desc">Once risks and cryptographic dependencies are mapped, this service builds a phased, actionable roadmap for transitioning to quantum-safe cryptography. The plan accounts for technical complexity, business continuity constraints, vendor timelines, and regulatory requirements. It sequences migrations to protect the highest-risk assets first while maintaining operational stability.</p>
+        <div class="deliverables-tag">Key Deliverables</div>
+        <ul class="deliverables-list"><li>Phased migration roadmap (12–36 month horizon)</li><li>System-by-system migration playbooks</li><li>Vendor engagement and procurement guidance</li><li>Budget estimation and resource planning model</li><li>Rollback and contingency procedures</li></ul>
+      </article>
+
+      <article class="service-card">
+        <div class="service-header"><h3 class="service-name">Pilot Projects</h3><div class="service-meta"><span class="badge badge-pilot">Pilot</span><span class="timeline-tag">1 – 3 Months</span></div></div>
+        <div class="effort-bar"><span class="effort-label">Effort</span><div class="effort-track"><div class="effort-fill" style="width:55%"></div></div></div>
+        <p class="service-desc">Controlled, low-risk implementations of post-quantum cryptographic algorithms within a defined segment of your environment. Pilots validate migration assumptions, surface integration challenges, measure performance impacts, and build internal confidence before broader rollout. Each pilot includes success criteria, monitoring, and a documented lessons-learned process.</p>
+        <div class="deliverables-tag">Key Deliverables</div>
+        <ul class="deliverables-list"><li>Pilot scope and success criteria document</li><li>Implementation journal with technical findings</li><li>Performance benchmarking report (latency, throughput, compatibility)</li><li>Lessons-learned summary and rollout readiness assessment</li></ul>
+      </article>
+
+      <article class="service-card">
+        <div class="service-header"><h3 class="service-name">Policy Recommendations</h3><div class="service-meta"><span class="badge badge-production">Production</span><span class="timeline-tag">2 – 4 Weeks</span></div></div>
+        <div class="effort-bar"><span class="effort-label">Effort</span><div class="effort-track"><div class="effort-fill" style="width:25%"></div></div></div>
+        <p class="service-desc">Actionable policy guidance that embeds quantum readiness into your organisation's governance, procurement, and security frameworks. This service delivers specific, implementable policy language — procurement requirements for quantum-safe standards, data retention policy updates, incident response addenda, and vendor assessment criteria that can be adopted immediately.</p>
+        <div class="deliverables-tag">Key Deliverables</div>
+        <ul class="deliverables-list"><li>Quantum-aware security policy addenda</li><li>Procurement language for quantum-safe vendor requirements</li><li>Data retention and archival policy updates</li><li>Regulatory alignment checklist</li></ul>
+      </article>
+
+      <article class="service-card">
+        <div class="service-header"><h3 class="service-name">Stakeholder Engagement</h3><div class="service-meta"><span class="badge badge-production">Production</span><span class="timeline-tag">Ongoing</span></div></div>
+        <div class="effort-bar"><span class="effort-label">Effort</span><div class="effort-track"><div class="effort-fill" style="width:25%"></div></div></div>
+        <p class="service-desc">Quantum readiness is not a purely technical initiative — it requires buy-in across leadership, procurement, legal, compliance, and operations. This service provides tailored briefings, workshops, and communication materials designed for different internal audiences, translating complex quantum threats into clear, relevant business language that drives informed decision-making and budget allocation.</p>
+        <div class="deliverables-tag">Key Deliverables</div>
+        <ul class="deliverables-list"><li>Board-level briefing deck (non-technical, outcome-focused)</li><li>Technical deep-dive for security and engineering teams</li><li>Internal awareness campaign materials</li><li>Quarterly progress reporting template</li></ul>
+      </article>
+
+    </div>
+    <div class="cta-banner reveal">
+      <p>Ready to understand your organisation's quantum exposure? Begin with a no-obligation readiness conversation.</p>
+      <button class="btn-cosmos" id="cta-assessment-btn" type="button">Start Assessment →</button>
+    </div>
+  </div>
+</section>
+
+<!-- RESOURCES -->
+<section id="resources" style="background: var(--void);">
+  <div class="section-inner">
+    <div class="section-tag">Downloads</div>
+    <h2 class="section-title reveal">Sample Templates &amp; Resources</h2>
+    <p class="section-desc reveal">Synthetic templates to help you self-audit or prepare before engaging advisory support. All files are generated client-side — no data is transmitted.</p>
+    <div class="resources-grid reveal">
+      <div class="resource-card">
+        <div class="resource-symbol">☐</div>
+        <div class="resource-title">Assessment Checklist</div>
+        <p class="resource-desc">A structured checklist covering the key areas evaluated during a Quantum Readiness Assessment. Use it to self-audit before engaging advisory support.</p>
+        <button class="btn-teal-outline" type="button" data-download="checklist">↓ Download CSV</button>
+      </div>
+      <div class="resource-card">
+        <div class="resource-symbol">⊕</div>
+        <div class="resource-title">Risk Register Template</div>
+        <p class="resource-desc">A blank risk register template formatted for quantum-specific threat vectors, with columns for likelihood, impact, data sensitivity, and remediation owner.</p>
+        <button class="btn-teal-outline" type="button" data-download="risk-register">↓ Download CSV</button>
+      </div>
+      <div class="resource-card">
+        <div class="resource-symbol">⟶</div>
+        <div class="resource-title">Migration Roadmap Sample</div>
+        <p class="resource-desc">A sample phased migration roadmap showing how a typical mid-market organisation might sequence its transition to quantum-safe cryptography over 24 months.</p>
+        <button class="btn-teal-outline" type="button" data-download="roadmap">↓ Download TXT</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEXT STEPS -->
+<section id="next-steps" style="background: linear-gradient(180deg, var(--void) 0%, var(--nebula-dark) 100%);">
+  <div class="section-inner">
+    <div class="section-tag">What Comes Next</div>
+    <h2 class="section-title reveal">From Readiness to Integration</h2>
+    <p class="section-desc reveal">A phased checklist showing the recommended path from Pillar 1 outcomes into Pillar 2 (AI &amp; Quantum Integration) work.</p>
+    <div class="next-steps-timeline reveal">
+      <div class="phase-item">
+        <div class="phase-title">Phase 1 — Complete Readiness Assessment</div>
+        <div class="phase-desc">Establish your quantum maturity baseline, identify critical gaps, and secure executive buy-in for the transition programme.</div>
+      </div>
+      <div class="phase-item">
+        <div class="phase-title">Phase 2 — Execute Cryptographic Inventory &amp; Risk Register</div>
+        <div class="phase-desc">Build the detailed technical foundation: know exactly what algorithms you depend on, where your data is most exposed, and what the business impact looks like.</div>
+      </div>
+      <div class="phase-item">
+        <div class="phase-title">Phase 3 — Run Pilot Migration</div>
+        <div class="phase-desc">Select a bounded, low-risk system and implement post-quantum cryptographic standards. Measure performance, document integration findings, and validate your migration playbook.</div>
+      </div>
+      <div class="phase-item">
+        <div class="phase-title">Phase 4 — Embed Policy &amp; Governance</div>
+        <div class="phase-desc">Update procurement, data retention, and security policies with quantum-safe requirements. Establish ongoing monitoring and reporting rhythms.</div>
+      </div>
+      <div class="phase-item">
+        <div class="phase-title">Phase 5 — Transition to Pillar 2 (AI &amp; Quantum Integration)</div>
+        <div class="phase-desc">With quantum-safe foundations in place, explore how quantum computing capabilities — combined with AI — can drive competitive advantage in optimisation, modelling, and machine learning within your domain.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ASSESSMENT MODAL -->
+<div class="modal-overlay" id="assessment-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="modal-title">Start Your Assessment</h2>
+      <button class="modal-close" id="modal-close-btn" aria-label="Close assessment form" type="button">&times;</button>
+    </div>
+    <div id="form-view">
+      <div class="form-group">
+        <label class="form-label" for="org-name">Organisation Name <span class="req" aria-label="required">*</span></label>
+        <input class="form-input" id="org-name" type="text" required autocomplete="organization">
+        <p class="form-error" id="org-name-error">Please enter your organisation name.</p>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="contact-name">Primary Contact Name <span class="req" aria-label="required">*</span></label>
+        <input class="form-input" id="contact-name" type="text" required autocomplete="name">
+        <p class="form-error" id="contact-name-error">Please enter a contact name.</p>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="contact-email">Contact Email <span class="req" aria-label="required">*</span></label>
+        <input class="form-input" id="contact-email" type="email" required autocomplete="email">
+        <p class="form-error" id="contact-email-error">Please enter a valid email address.</p>
+      </div>
+      <div class="form-group">
+        <fieldset style="border:none;">
+          <legend class="form-label">Estimated Environment Size</legend>
+          <div class="radio-row">
+            <label class="option-item"><input type="radio" name="env-size" value="small" checked> Small (under 500 users)</label>
+            <label class="option-item"><input type="radio" name="env-size" value="medium"> Medium (500 – 5,000)</label>
+            <label class="option-item"><input type="radio" name="env-size" value="large"> Large (5,000+)</label>
+          </div>
+        </fieldset>
+      </div>
+      <div class="form-group">
+        <fieldset style="border:none;">
+          <legend class="form-label">Key Concerns (select all that apply)</legend>
+          <div class="option-group">
+            <label class="option-item"><input type="checkbox" name="concerns" value="cryptography"> Cryptography &amp; key management</label>
+            <label class="option-item"><input type="checkbox" name="concerns" value="data-integrity"> Data integrity &amp; confidentiality</label>
+            <label class="option-item"><input type="checkbox" name="concerns" value="operational-risk"> Operational risk &amp; continuity</label>
+            <label class="option-item"><input type="checkbox" name="concerns" value="vendor-readiness"> Vendor &amp; supply chain readiness</label>
+            <label class="option-item"><input type="checkbox" name="concerns" value="regulatory"> Regulatory compliance</label>
+          </div>
+        </fieldset>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="followup-method">Preferred Follow-up Method</label>
+        <select class="form-select" id="followup-method">
+          <option value="email">Email</option>
+          <option value="phone">Phone call</option>
+          <option value="virtual">Virtual meeting</option>
+        </select>
+      </div>
+      <button class="form-btn" id="submit-assessment-btn" type="button">Submit Assessment Request</button>
+    </div>
+    <div id="confirmation-view" style="display:none;">
+      <div class="confirmation">
+        <div class="confirmation-icon" aria-hidden="true">✓</div>
+        <h3>Assessment Request Received</h3>
+        <p>Thank you. Below is a summary of the information you provided. A member of the Diarka Quantum team will follow up using your preferred method.</p>
+        <dl class="confirmation-summary" id="confirmation-summary"></dl>
+        <br>
+        <button class="btn-void" id="modal-done-btn" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">Diarka<span>Quantum</span> Limited</div>
+    <div class="footer-reg">Registered in England &amp; Wales · Quantum Readiness Advisory</div>
+  </div>
+  <div class="footer-mid">
+    <a href="mailto:nageshj@diarkaquantum.co.uk" class="email-link">nageshj@diarkaquantum.co.uk</a>
+    <p class="disclaimer">This page is provided for informational purposes only. All service descriptions are indicative and subject to scoping. Diarka Quantum Limited accepts no liability for decisions made based on this content. Designed to meet WCAG 2.1 Level AA guidelines.</p>
+  </div>
+  <div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="#services">Services</a>
+      <a href="#resources">Resources</a>
+      <a href="#next-steps">Next Steps</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <div class="footer-copy" style="margin-top:0.5rem;">© 2025 Diarka Quantum Limited. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+'use strict';
+
+/* CURSOR */
+var cursor=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+var mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',function(e){ mx=e.clientX; my=e.clientY; cursor.style.transform='translate('+(mx-4)+'px,'+(my-4)+'px)'; });
+(function loop(){ rx+=(mx-rx)*0.1; ry+=(my-ry)*0.1; ring.style.transform='translate('+(rx-16)+'px,'+(ry-16)+'px)'; requestAnimationFrame(loop); })();
+document.querySelectorAll('a,button').forEach(function(el){
+  el.addEventListener('mouseenter',function(){ ring.style.width='52px'; ring.style.height='52px'; ring.style.borderColor='rgba(123,47,255,0.6)'; });
+  el.addEventListener('mouseleave',function(){ ring.style.width='32px'; ring.style.height='32px'; ring.style.borderColor='rgba(0,212,255,0.5)'; });
+});
+
+/* STARFIELD */
+var canvas=document.getElementById('universe'),ctx=canvas.getContext('2d');
+var W,H;
+function resize(){ W=canvas.width=window.innerWidth; H=canvas.height=window.innerHeight; }
+resize(); window.addEventListener('resize',resize);
+var stars=[];
+for(var i=0;i<350;i++) stars.push({x:Math.random(),y:Math.random(),r:Math.random()*1.4+0.2,alpha:Math.random()*0.8+0.2,tw:Math.random()*Math.PI*2,sp:Math.random()*0.02+0.004});
+var nebulae=[];
+for(var j=0;j<6;j++) nebulae.push({x:Math.random(),y:Math.random(),r:Math.random()*220+80,col:Math.random()>0.5?'0,212,255':'123,47,255',alpha:Math.random()*0.05+0.01});
+var shooters=[];
+setInterval(function(){ if(shooters.length<3) shooters.push({x:Math.random()*W,y:Math.random()*H*0.5,vx:Math.random()*4+2,vy:Math.random()*2+1,life:1,len:Math.random()*80+40}); },2800);
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  nebulae.forEach(function(n){ var g=ctx.createRadialGradient(n.x*W,n.y*H,0,n.x*W,n.y*H,n.r); g.addColorStop(0,'rgba('+n.col+','+n.alpha+')'); g.addColorStop(1,'transparent'); ctx.fillStyle=g; ctx.beginPath(); ctx.arc(n.x*W,n.y*H,n.r,0,Math.PI*2); ctx.fill(); });
+  stars.forEach(function(s){ s.tw+=s.sp; var a=s.alpha*(0.6+0.4*Math.sin(s.tw)); ctx.beginPath(); ctx.arc(s.x*W,s.y*H,s.r,0,Math.PI*2); ctx.fillStyle=s.r>0.9?'rgba(180,220,255,'+a+')':'rgba(255,255,255,'+a+')'; ctx.fill(); });
+  shooters=shooters.filter(function(s){ return s.life>0; });
+  shooters.forEach(function(s){ ctx.beginPath(); ctx.moveTo(s.x,s.y); ctx.lineTo(s.x-s.vx*s.len*s.life,s.y-s.vy*s.len*s.life); var g=ctx.createLinearGradient(s.x,s.y,s.x-s.vx*s.len,s.y-s.vy*s.len); g.addColorStop(0,'rgba(0,212,255,'+s.life+')'); g.addColorStop(1,'transparent'); ctx.strokeStyle=g; ctx.lineWidth=1.5; ctx.stroke(); s.x+=s.vx; s.y+=s.vy; s.life-=0.011; });
+  requestAnimationFrame(draw);
+}
+draw();
+
+/* SCROLL REVEAL */
+var obs=new IntersectionObserver(function(entries){ entries.forEach(function(e,i){ if(e.isIntersecting){ setTimeout(function(){ e.target.classList.add('visible'); },i*60); obs.unobserve(e.target); } }); },{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(function(r){ obs.observe(r); });
+
+/* LEARN MORE PANELS */
+document.querySelectorAll('.learn-more-btn').forEach(function(btn){
+  var panel=document.getElementById(btn.getAttribute('data-target'));
+  if(!panel) return;
+  panel.style.maxHeight='0';
+  btn.addEventListener('click',function(){
+    var expanded=btn.getAttribute('aria-expanded')==='true';
+    btn.setAttribute('aria-expanded',String(!expanded));
+    panel.style.maxHeight=expanded?'0':panel.scrollHeight+'px';
+  });
+});
+
+/* MODAL */
+var overlay=document.getElementById('assessment-modal');
+var modal=overlay.querySelector('.modal');
+var formView=document.getElementById('form-view');
+var confirmView=document.getElementById('confirmation-view');
+var previousFocus=null;
+
+function openModal(){
+  previousFocus=document.activeElement;
+  overlay.classList.add('is-open');
+  overlay.setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+  formView.style.display='';
+  confirmView.style.display='none';
+  var f=modal.querySelector('input,select,button'); if(f) f.focus();
+}
+function closeModal(){
+  overlay.classList.remove('is-open');
+  overlay.setAttribute('aria-hidden','true');
+  document.body.style.overflow='';
+  if(previousFocus) previousFocus.focus();
+}
+
+document.getElementById('hero-assessment-btn').addEventListener('click',openModal);
+document.getElementById('cta-assessment-btn').addEventListener('click',openModal);
+document.getElementById('nav-cta-btn').addEventListener('click',function(e){ e.preventDefault(); openModal(); });
+document.getElementById('modal-close-btn').addEventListener('click',closeModal);
+document.getElementById('modal-done-btn').addEventListener('click',closeModal);
+overlay.addEventListener('click',function(e){ if(e.target===overlay) closeModal(); });
+document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&overlay.classList.contains('is-open')) closeModal(); });
+
+/* Focus trap */
+overlay.addEventListener('keydown',function(e){
+  if(e.key!=='Tab') return;
+  var focusable=modal.querySelectorAll('input,select,button,[tabindex]:not([tabindex="-1"])');
+  if(!focusable.length) return;
+  var first=focusable[0],last=focusable[focusable.length-1];
+  if(e.shiftKey){ if(document.activeElement===first){ e.preventDefault(); last.focus(); } }
+  else { if(document.activeElement===last){ e.preventDefault(); first.focus(); } }
+});
+
+/* FORM VALIDATION */
+function showErr(id,eid){ document.getElementById(id).classList.add('is-error'); document.getElementById(eid).classList.add('is-visible'); }
+function clearErr(id,eid){ document.getElementById(id).classList.remove('is-error'); document.getElementById(eid).classList.remove('is-visible'); }
+function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+function esc(s){ var d=document.createElement('div'); d.appendChild(document.createTextNode(s)); return d.innerHTML; }
+
+document.getElementById('submit-assessment-btn').addEventListener('click',function(){
+  var valid=true;
+  var org=document.getElementById('org-name').value.trim();
+  var name=document.getElementById('contact-name').value.trim();
+  var email=document.getElementById('contact-email').value.trim();
+  clearErr('org-name','org-name-error'); clearErr('contact-name','contact-name-error'); clearErr('contact-email','contact-email-error');
+  if(!org){ showErr('org-name','org-name-error'); valid=false; }
+  if(!name){ showErr('contact-name','contact-name-error'); valid=false; }
+  if(!email||!validEmail(email)){ showErr('contact-email','contact-email-error'); valid=false; }
+  if(!valid){ var f=modal.querySelector('.is-error'); if(f) f.focus(); return; }
+
+  var env=document.querySelector('input[name="env-size"]:checked');
+  var envLabel=env?env.parentElement.textContent.trim():'Not specified';
+  var concerns=[];
+  document.querySelectorAll('input[name="concerns"]:checked').forEach(function(cb){ concerns.push(cb.parentElement.textContent.trim()); });
+  var followup=document.getElementById('followup-method');
+  var followupLabel=followup.options[followup.selectedIndex].text;
+
+  document.getElementById('confirmation-summary').innerHTML=
+    '<dt>Organisation</dt><dd>'+esc(org)+'</dd>'+
+    '<dt>Contact</dt><dd>'+esc(name)+' — '+esc(email)+'</dd>'+
+    '<dt>Environment Size</dt><dd>'+esc(envLabel)+'</dd>'+
+    '<dt>Key Concerns</dt><dd>'+(concerns.length?esc(concerns.join(', ')):'None selected')+'</dd>'+
+    '<dt>Preferred Follow-up</dt><dd>'+esc(followupLabel)+'</dd>';
+  formView.style.display='none';
+  confirmView.style.display='';
+  document.getElementById('modal-done-btn').focus();
+});
+
+/* DOWNLOADABLE RESOURCES */
+var downloads={
+  'checklist':{filename:'quantum-readiness-checklist.csv',mime:'text/csv',content:'Category,Check Item,Status,Notes\nCryptography,Inventory of all encryption algorithms in use,Not Started,\nCryptography,Identify quantum-vulnerable algorithms (RSA / ECC / DH),Not Started,\nCryptography,Document key lengths and certificate expiry dates,Not Started,\nCryptography,Assess TLS configurations across public-facing services,Not Started,\nData Security,Classify data by sensitivity tier (public / internal / confidential / restricted),Not Started,\nData Security,Map data flows between systems and external parties,Not Started,\nData Security,Identify data with long confidentiality requirements (>10 years),Not Started,\nData Security,Assess archival and backup encryption standards,Not Started,\nVendor Readiness,Catalogue key technology vendors and their quantum roadmaps,Not Started,\nVendor Readiness,Include quantum-safe requirements in procurement criteria,Not Started,\nGovernance,Review security policies for quantum-specific language,Not Started,\nGovernance,Assign quantum readiness ownership (CISO / CTO / other),Not Started,\nGovernance,Establish a quantum readiness reporting cadence,Not Started,\nAwareness,Brief board and executive leadership on quantum risk,Not Started,\nAwareness,Train security and engineering teams on post-quantum standards,Not Started,\n'},
+  'risk-register':{filename:'quantum-risk-register-template.csv',mime:'text/csv',content:'Risk ID,Threat Vector,Description,Affected Systems,Data Sensitivity,Likelihood (1-5),Impact (1-5),Risk Score,Remediation Action,Owner,Target Date,Status\nQR-001,Harvest Now Decrypt Later,Adversary captures encrypted traffic for future quantum decryption,External-facing APIs and web services,Confidential,3,5,15,Migrate to hybrid PQC+classical TLS,CISO,,Not Started\nQR-002,Key Compromise,RSA-2048 keys become breakable by cryptographically relevant quantum computer,Certificate infrastructure,Restricted,2,5,10,Rotate to PQC-safe key lengths and algorithms,Infrastructure Lead,,Not Started\nQR-003,Vendor Lag,Critical SaaS vendor has no quantum migration roadmap,Cloud ERP platform,Internal,3,4,12,Engage vendor on PQC roadmap; assess alternatives,Procurement,,Not Started\nQR-004,Regulatory Non-Compliance,New quantum-related regulatory requirements emerge before organisation is prepared,All regulated systems,Confidential,3,4,12,Monitor regulatory landscape; draft compliance plan,Compliance Lead,,Not Started\nQR-005,Legacy Systems,Embedded cryptography in legacy systems cannot be updated,On-premise legacy applications,Internal,4,3,12,Isolate and encapsulate; plan decommission or replacement,Engineering Lead,,Not Started\n'},
+  'roadmap':{filename:'quantum-migration-roadmap-sample.txt',mime:'text/plain',content:'QUANTUM-SAFE MIGRATION ROADMAP — SAMPLE (24-MONTH HORIZON)\n=========================================================\n\nPHASE 1: DISCOVERY & BASELINE (Months 1-3)\n  - Complete quantum readiness assessment and maturity scoring.\n  - Conduct full cryptographic inventory across all environments.\n  - Produce risk register with prioritised threat vectors.\n  - Deliver executive briefing and secure programme sponsorship.\n\nPHASE 2: PLANNING & QUICK WINS (Months 4-6)\n  - Finalise phased migration roadmap with system-level playbooks.\n  - Update procurement policies to require quantum-safe standards.\n  - Implement certificate hygiene improvements.\n  - Engage critical vendors on their PQC timelines.\n\nPHASE 3: PILOT IMPLEMENTATION (Months 7-12)\n  - Select 1-2 bounded systems for post-quantum cryptography pilot.\n  - Implement hybrid classical/PQC TLS on pilot systems.\n  - Benchmark performance (latency, throughput, compatibility).\n  - Document lessons learned and refine migration playbooks.\n\nPHASE 4: BROADER ROLLOUT (Months 13-20)\n  - Sequence migration across remaining systems by risk priority.\n  - Conduct ongoing monitoring of quantum development timelines.\n  - Update data retention and archival policies.\n  - Train operations teams on PQC certificate management.\n\nPHASE 5: GOVERNANCE & CONTINUOUS IMPROVEMENT (Months 21-24)\n  - Embed quantum readiness into annual security review cycle.\n  - Establish quarterly reporting to leadership.\n  - Reassess threat timelines and adjust roadmap.\n  - Evaluate readiness for Pillar 2 opportunities.\n\n---\nPrepared by Diarka Quantum Limited.\n'}
+};
+document.querySelectorAll('[data-download]').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var f=downloads[btn.getAttribute('data-download')];
+    if(!f) return;
+    var blob=new Blob([f.content],{type:f.mime});
+    var url=URL.createObjectURL(blob);
+    var a=document.createElement('a'); a.href=url; a.download=f.filename;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+});
+
+})();
+</script>
+</body>
+</html>
