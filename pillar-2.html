@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pillar 02 — AI &amp; Quantum Integration | Diarka Quantum Limited</title>
+<meta name="description" content="Diarka Quantum Pillar 2: AI &amp; Quantum Integration — active research and prototyping at the intersection of artificial intelligence and quantum computing for mid-market organisations.">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Raleway:wght@300;400;500;600&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --void: #00010a;
+  --deep-space: #020818;
+  --nebula-dark: #060d2e;
+  --cosmic-blue: #0a1628;
+  --stellar: #e8f4ff;
+  --nebula-teal: #00d4ff;
+  --nebula-teal-dim: #0099bb;
+  --pulsar: #7b2fff;
+  --pulsar-dim: #5a1fcc;
+  --nova: #ff6b35;
+  --starlight: #c8d8ff;
+  --muted: #4a6080;
+  --border: rgba(0,212,255,0.1);
+  --border-purple: rgba(123,47,255,0.15);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--void); color: var(--stellar); font-family: 'Raleway', sans-serif; font-weight: 400; overflow-x: hidden; cursor: none; }
+.cursor { width: 8px; height: 8px; background: var(--nebula-teal); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; box-shadow: 0 0 10px var(--nebula-teal), 0 0 20px var(--nebula-teal); }
+.cursor-ring { width: 32px; height: 32px; border: 1px solid rgba(0,212,255,0.5); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; transition: transform 0.4s ease, width 0.3s, height 0.3s, border-color 0.3s; }
+#universe { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+:focus-visible { outline: 2px solid var(--nebula-teal); outline-offset: 3px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+/* NAV */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.2rem 3rem; display: flex; align-items: center; justify-content: space-between; background: linear-gradient(to bottom, rgba(0,1,10,0.95) 0%, transparent 100%); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,212,255,0.06); }
+.nav-logo { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 1rem; letter-spacing: 0.12em; text-decoration: none; color: var(--stellar); display: flex; align-items: center; gap: 0.6rem; }
+.brand-logo-img { width: 44px; height: 44px; object-fit: contain; display: block; flex-shrink: 0; filter: drop-shadow(0 0 8px rgba(0,212,255,0.4)); transition: filter 0.3s; }
+.nav-logo:hover .brand-logo-img { filter: drop-shadow(0 0 14px rgba(0,212,255,0.7)); }
+.nav-logo span { color: var(--nebula-teal); }
+.nav-links { display: flex; gap: 0.1rem; list-style: none; }
+.nav-links a { color: var(--starlight); text-decoration: none; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.5rem 0.65rem; transition: color 0.2s, background 0.2s; font-weight: 500; }
+.nav-links a:hover { color: var(--nebula-teal); background: rgba(0,212,255,0.05); }
+.nav-links a.active { color: var(--nebula-teal); }
+.nav-cta { background: transparent; border: 1px solid var(--nebula-teal); color: var(--nebula-teal); padding: 0.5rem 1.2rem; font-family: 'Orbitron', monospace; font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: none; transition: all 0.3s; text-decoration: none; }
+.nav-cta:hover { background: var(--nebula-teal); color: var(--void); box-shadow: 0 0 24px rgba(0,212,255,0.4); }
+
+section { position: relative; z-index: 1; }
+.section-inner { max-width: 1400px; margin: 0 auto; }
+.section-tag { font-family: 'Orbitron', monospace; font-size: 0.58rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--nebula-teal); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 1rem; }
+.section-tag::before { content: ''; width: 24px; height: 1px; background: var(--pulsar); }
+
+/* HERO — SPLIT LAYOUT */
+.hero-section { position: relative; z-index: 1; min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; overflow: hidden; }
+.hero-left { padding: 12rem 4rem 5rem; display: flex; flex-direction: column; justify-content: center; position: relative; }
+.hero-right { position: relative; display: flex; align-items: center; justify-content: center; }
+.hero-right-inner { position: relative; width: 100%; height: 100%; }
+.hero-glow { position: absolute; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(ellipse, rgba(123,47,255,0.12), rgba(0,212,255,0.06), transparent 70%); top: 20%; right: -20%; pointer-events: none; animation: hero-glow-drift 12s ease-in-out infinite alternate; }
+@keyframes hero-glow-drift { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(-40px,30px) scale(1.1); } }
+.hero-eyebrow { font-family: 'Orbitron', monospace; font-size: 0.6rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--pulsar); margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.8s 0.3s forwards; }
+.hero-title { font-family: 'Orbitron', monospace; font-weight: 900; font-size: clamp(2rem,4.5vw,3.6rem); line-height: 1.08; letter-spacing: 0.04em; opacity: 0; animation: fadeUp 0.9s 0.5s forwards; text-shadow: 0 0 40px rgba(123,47,255,0.3); margin-bottom: 1.2rem; }
+.hero-title .teal { color: var(--nebula-teal); }
+.hero-title .purple { color: var(--pulsar); }
+.hero-positioning { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(1rem,1.5vw,1.25rem); color: var(--starlight); max-width: 580px; opacity: 0; animation: fadeUp 0.9s 0.7s forwards; line-height: 1.5; margin-bottom: 1.5rem; }
+.hero-positioning em { color: var(--nebula-teal); font-style: italic; }
+.hero-body { font-size: 0.85rem; line-height: 1.85; color: var(--starlight); max-width: 560px; opacity: 0; animation: fadeUp 0.9s 0.85s forwards; font-weight: 300; }
+.hero-actions { margin-top: 2.5rem; display: flex; gap: 1.5rem; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.9s 1s forwards; }
+
+/* CONVERGENCE DIAGRAM — right panel */
+.convergence-diagram { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 340px; height: 340px; opacity: 0; animation: fadeIn 1.2s 0.8s forwards; }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+.conv-ring { position: absolute; border-radius: 50%; border: 1px solid; }
+.conv-ring-outer { width: 340px; height: 340px; top: 0; left: 0; border-color: rgba(0,212,255,0.15); animation: ring-rotate 60s linear infinite; }
+.conv-ring-mid { width: 240px; height: 240px; top: 50px; left: 50px; border-color: rgba(123,47,255,0.2); animation: ring-rotate 40s linear infinite reverse; }
+.conv-ring-inner { width: 140px; height: 140px; top: 100px; left: 100px; border-color: rgba(0,212,255,0.25); animation: ring-rotate 25s linear infinite; }
+@keyframes ring-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.conv-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 70px; height: 70px; border-radius: 50%; background: radial-gradient(circle, rgba(123,47,255,0.4), rgba(0,212,255,0.2), transparent); border: 1px solid rgba(0,212,255,0.3); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 40px rgba(123,47,255,0.3), 0 0 80px rgba(0,212,255,0.1); animation: pulse-core 3s ease-in-out infinite; }
+@keyframes pulse-core { 0%,100% { box-shadow: 0 0 40px rgba(123,47,255,0.3), 0 0 80px rgba(0,212,255,0.1); } 50% { box-shadow: 0 0 60px rgba(123,47,255,0.5), 0 0 120px rgba(0,212,255,0.2); } }
+.conv-center-text { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 0.6rem; color: var(--stellar); letter-spacing: 0.15em; text-align: center; line-height: 1.3; }
+.conv-node { position: absolute; width: 10px; height: 10px; border-radius: 50%; box-shadow: 0 0 12px currentColor; }
+.conv-node-ai-1 { top: -5px; left: 50%; transform: translateX(-50%); background: var(--nebula-teal); color: var(--nebula-teal); }
+.conv-node-ai-2 { top: 50%; right: -5px; transform: translateY(-50%); background: var(--nebula-teal); color: var(--nebula-teal); }
+.conv-node-q-1 { bottom: -5px; left: 50%; transform: translateX(-50%); background: var(--pulsar); color: var(--pulsar); }
+.conv-node-q-2 { top: 50%; left: -5px; transform: translateY(-50%); background: var(--pulsar); color: var(--pulsar); }
+.conv-label { position: absolute; font-family: 'Orbitron', monospace; font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap; }
+.conv-label-ai { top: -30px; left: 50%; transform: translateX(-50%); color: var(--nebula-teal); }
+.conv-label-q { bottom: -30px; left: 50%; transform: translateX(-50%); color: var(--pulsar); }
+
+/* BUTTONS */
+.btn-cosmos { background: linear-gradient(135deg, var(--pulsar), var(--nebula-teal)); color: var(--void); padding: 1rem 2.5rem; font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; cursor: none; transition: all 0.3s; box-shadow: 0 0 30px rgba(123,47,255,0.4); clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%); display: inline-block; border: none; }
+.btn-cosmos:hover { box-shadow: 0 0 50px rgba(123,47,255,0.6); transform: translateY(-3px); }
+.btn-void { border: 1px solid rgba(0,212,255,0.4); color: var(--nebula-teal); padding: 1rem 2.5rem; font-family: 'Orbitron', monospace; font-weight: 600; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; cursor: none; transition: all 0.3s; clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%); display: inline-block; background: transparent; }
+.btn-void:hover { background: rgba(0,212,255,0.08); box-shadow: 0 0 30px rgba(0,212,255,0.2); }
+.btn-teal-outline { background: transparent; border: 1px solid var(--border); color: var(--nebula-teal); padding: 0.5rem 1.2rem; font-family: 'Orbitron', monospace; font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: none; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+.btn-teal-outline:hover { border-color: var(--nebula-teal); background: rgba(0,212,255,0.05); }
+
+/* CONTEXT SECTION — THE WHY */
+.context-section { padding: 7rem 4rem; }
+.context-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: 3rem; }
+.context-block { padding: 3rem; border: 1px solid var(--border); position: relative; }
+.context-block:nth-child(1) { border-right: none; }
+.context-block:nth-child(3) { border-right: none; border-top: none; }
+.context-block:nth-child(4) { border-top: none; }
+.context-number { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 2.5rem; color: rgba(123,47,255,0.15); position: absolute; top: 1rem; right: 1.5rem; line-height: 1; }
+.context-heading { font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.78rem; letter-spacing: 0.06em; color: var(--nebula-teal); margin-bottom: 1rem; }
+.context-text { font-size: 0.8rem; line-height: 1.85; color: var(--starlight); font-weight: 300; }
+.context-text strong { color: var(--stellar); font-weight: 500; }
+
+/* SERVICES — HORIZONTAL STRIP LAYOUT */
+.services-section { padding: 7rem 4rem; }
+.service-strip { display: grid; grid-template-columns: 60px 1fr; gap: 0; margin-bottom: 2px; background: var(--deep-space); position: relative; overflow: hidden; transition: background 0.3s; }
+.service-strip:hover { background: rgba(6,13,46,0.95); }
+.service-strip::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, var(--pulsar), var(--nebula-teal), transparent); opacity: 0.3; }
+.service-num-col { display: flex; align-items: flex-start; justify-content: center; padding-top: 2.5rem; border-right: 1px solid var(--border); position: relative; }
+.service-num { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 0.7rem; color: var(--pulsar); letter-spacing: 0.1em; }
+.service-content { padding: 2.5rem 2.5rem 2.5rem 2rem; }
+.service-top-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.service-name { font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.92rem; color: var(--stellar); letter-spacing: 0.04em; }
+.service-meta { display: flex; gap: 0.8rem; align-items: center; flex-wrap: wrap; }
+.badge { font-family: 'Orbitron', monospace; font-size: 0.52rem; letter-spacing: 0.12em; padding: 0.28rem 0.65rem; text-transform: uppercase; }
+.badge-research { border: 1px solid var(--border-purple); color: var(--pulsar); }
+.badge-prototype { border: 1px solid rgba(0,212,255,0.3); color: var(--nebula-teal); background: rgba(0,212,255,0.05); }
+.badge-advisory { border: 1px solid var(--border); color: var(--nebula-teal); }
+.badge-applied { border: 1px solid rgba(123,47,255,0.3); color: var(--pulsar); background: rgba(123,47,255,0.05); }
+.timeline-tag { font-family: 'Orbitron', monospace; font-size: 0.52rem; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; }
+.service-body { display: grid; grid-template-columns: 1.4fr 1fr; gap: 2.5rem; margin-top: 0.5rem; }
+.service-desc { font-size: 0.8rem; line-height: 1.8; color: var(--starlight); font-weight: 300; }
+.deliverables-tag { font-family: 'Orbitron', monospace; font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem; }
+.deliverables-list { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+.deliverables-list li { display: flex; align-items: baseline; gap: 0.8rem; font-size: 0.77rem; color: var(--starlight); font-weight: 300; }
+.deliverables-list li::before { content: '+'; color: var(--nebula-teal); font-family: 'Orbitron', monospace; font-size: 0.6rem; flex-shrink: 0; font-weight: 700; }
+.effort-bar { display: flex; align-items: center; gap: 0.8rem; margin-top: 1.2rem; }
+.effort-label { font-family: 'Orbitron', monospace; font-size: 0.5rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); min-width: 44px; }
+.effort-track { flex: 1; max-width: 160px; height: 3px; background: rgba(0,212,255,0.08); border: 1px solid var(--border); overflow: hidden; }
+.effort-fill { height: 100%; background: linear-gradient(90deg, var(--pulsar), var(--nebula-teal)); box-shadow: 0 0 8px rgba(0,212,255,0.4); }
+
+/* EXPAND PANEL */
+.expand-btn { background: transparent; border: 1px solid var(--border); color: var(--nebula-teal); padding: 0.45rem 0.9rem; font-family: 'Orbitron', monospace; font-size: 0.5rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: none; transition: all 0.2s; margin-top: 1.2rem; display: inline-flex; align-items: center; gap: 0.5rem; }
+.expand-btn:hover { border-color: var(--nebula-teal); background: rgba(0,212,255,0.05); }
+.expand-btn .chevron { display: inline-block; transition: transform 0.25s; font-size: 0.55em; }
+.expand-btn[aria-expanded="true"] .chevron { transform: rotate(90deg); }
+.expand-btn[aria-expanded="true"] { border-color: var(--pulsar); color: var(--pulsar); background: rgba(123,47,255,0.08); }
+.expand-panel { overflow: hidden; max-height: 0; transition: max-height 0.5s ease; }
+.expand-content { padding: 2.5rem 0 1rem; }
+.expand-content-inner { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2rem; }
+.expand-col h4 { font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.65rem; color: var(--nebula-teal); letter-spacing: 0.08em; margin-bottom: 0.8rem; text-transform: uppercase; }
+.expand-col ol { padding-left: 1.2em; color: var(--starlight); font-size: 0.76rem; line-height: 1.75; font-weight: 300; }
+.expand-col ol li { margin-bottom: 0.4rem; }
+.expand-col ol li::marker { color: var(--pulsar); }
+.expand-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.35rem; }
+.expand-col ul li { display: flex; align-items: baseline; gap: 0.6rem; font-size: 0.76rem; color: var(--starlight); font-weight: 300; }
+.expand-col ul li::before { content: '~'; color: var(--pulsar); font-family: 'Orbitron', monospace; font-size: 0.55rem; flex-shrink: 0; }
+
+/* INDUSTRY SECTION */
+.industry-section { padding: 7rem 4rem; }
+.industry-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--border); margin-top: 3rem; }
+.industry-cell { background: var(--deep-space); padding: 2rem 1.5rem; position: relative; transition: background 0.3s; }
+.industry-cell:hover { background: rgba(6,13,46,0.95); }
+.industry-icon { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 1.2rem; color: var(--pulsar); margin-bottom: 0.8rem; opacity: 0.6; }
+.industry-name { font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.72rem; color: var(--stellar); letter-spacing: 0.04em; margin-bottom: 0.6rem; }
+.industry-use-case { font-size: 0.72rem; line-height: 1.7; color: var(--starlight); font-weight: 300; margin-bottom: 0.5rem; }
+.industry-technique { font-family: 'Orbitron', monospace; font-size: 0.48rem; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; margin-top: 0.8rem; }
+
+/* NISQ REALITY */
+.nisq-section { padding: 7rem 4rem; }
+.nisq-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 4rem; margin-top: 3rem; align-items: start; }
+.nisq-sidebar { position: sticky; top: 8rem; }
+.nisq-sidebar-title { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 1.6rem; line-height: 1.2; letter-spacing: 0.03em; margin-bottom: 1rem; }
+.nisq-sidebar-title .teal { color: var(--nebula-teal); }
+.nisq-sidebar-body { font-size: 0.82rem; line-height: 1.85; color: var(--starlight); font-weight: 300; }
+.nisq-cards { display: flex; flex-direction: column; gap: 1.5rem; }
+.nisq-card { border-left: 3px solid var(--pulsar); padding: 1.8rem 2rem; background: rgba(6,13,46,0.6); position: relative; transition: border-color 0.3s, background 0.3s; }
+.nisq-card:hover { border-color: var(--nebula-teal); background: rgba(6,13,46,0.9); }
+.nisq-card-title { font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.78rem; color: var(--stellar); margin-bottom: 0.6rem; letter-spacing: 0.04em; }
+.nisq-card-text { font-size: 0.78rem; line-height: 1.8; color: var(--starlight); font-weight: 300; }
+
+/* RESOURCES — OFFSET GRID */
+.resources-section { padding: 7rem 4rem; }
+.resources-offset { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 3rem; }
+.resource-card { background: rgba(6,13,46,0.8); border: 1px solid var(--border); padding: 2rem; display: flex; flex-direction: column; position: relative; overflow: hidden; transition: border-color 0.3s, transform 0.3s; }
+.resource-card:nth-child(2) { transform: translateY(2rem); }
+.resource-card:hover { border-color: rgba(0,212,255,0.3); transform: translateY(-4px); }
+.resource-card:nth-child(2):hover { transform: translateY(calc(2rem - 4px)); }
+.resource-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--nebula-teal), transparent); opacity: 0; transition: opacity 0.3s; }
+.resource-card:hover::after { opacity: 1; }
+.resource-symbol { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 0.7rem; color: var(--pulsar); margin-bottom: 0.8rem; letter-spacing: 0.3em; }
+.resource-title { font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.82rem; color: var(--stellar); margin-bottom: 0.6rem; letter-spacing: 0.04em; }
+.resource-desc { font-size: 0.77rem; line-height: 1.75; color: var(--starlight); font-weight: 300; flex: 1; margin-bottom: 1.5rem; }
+
+/* NEXT STEPS — HORIZONTAL PHASED */
+.next-section { padding: 7rem 4rem; }
+.phases-row { display: grid; grid-template-columns: repeat(6,1fr); gap: 1px; background: var(--border); margin-top: 3rem; }
+.phase-col { background: var(--deep-space); padding: 2rem 1.2rem; position: relative; transition: background 0.3s; }
+.phase-col:hover { background: rgba(6,13,46,0.95); }
+.phase-col::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--pulsar), var(--nebula-teal)); transform: scaleX(0); transform-origin: left; transition: transform 0.5s ease; }
+.phase-col:hover::before { transform: scaleX(1); }
+.phase-num { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 1.8rem; color: rgba(123,47,255,0.2); margin-bottom: 0.8rem; line-height: 1; }
+.phase-title { font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.62rem; color: var(--nebula-teal); margin-bottom: 0.6rem; letter-spacing: 0.04em; line-height: 1.4; }
+.phase-desc { font-size: 0.7rem; line-height: 1.7; color: var(--starlight); font-weight: 300; }
+
+/* CTA BANNER */
+.cta-banner { margin-top: 4rem; padding: 3rem; border: 1px solid var(--border-purple); background: linear-gradient(135deg, rgba(123,47,255,0.05), rgba(0,212,255,0.03)); position: relative; overflow: hidden; text-align: center; }
+.cta-banner::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--pulsar), var(--nebula-teal), var(--pulsar)); }
+.cta-banner p { font-size: 0.88rem; line-height: 1.8; color: var(--starlight); font-weight: 300; max-width: 560px; margin: 0 auto 2rem; }
+
+/* SECTION TITLES */
+.section-title { font-family: 'Orbitron', monospace; font-weight: 900; font-size: clamp(1.8rem,3.5vw,2.8rem); line-height: 1.15; letter-spacing: 0.03em; margin-bottom: 1rem; text-shadow: 0 0 30px rgba(0,212,255,0.2); }
+.section-desc { color: var(--starlight); font-size: 0.88rem; line-height: 1.9; max-width: 620px; margin-bottom: 1rem; font-weight: 300; }
+
+/* MODAL */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,1,10,0.85); backdrop-filter: blur(8px); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 2rem; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
+.modal-overlay.is-open { opacity: 1; visibility: visible; }
+.modal { background: var(--deep-space); border: 1px solid var(--border); max-width: 560px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 3rem; position: relative; transform: translateY(12px); transition: transform 0.3s; }
+.modal-overlay.is-open .modal { transform: translateY(0); }
+.modal::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--pulsar), var(--nebula-teal)); }
+.modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem; }
+.modal-header h2 { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 1.1rem; letter-spacing: 0.05em; }
+.modal-close { background: transparent; border: 1px solid var(--border); color: var(--muted); width: 32px; height: 32px; font-size: 1.1rem; cursor: none; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: border-color 0.2s, color 0.2s; }
+.modal-close:hover { border-color: var(--nebula-teal); color: var(--nebula-teal); }
+.form-group { margin-bottom: 1.2rem; }
+.form-label { font-family: 'Orbitron', monospace; font-size: 0.56rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 0.4rem; }
+.form-label .req { color: var(--nova); margin-left: 2px; }
+.form-input, .form-select { background: rgba(6,13,46,0.8); border: 1px solid var(--border); color: var(--stellar); padding: 0.85rem 1rem; font-family: 'Raleway', sans-serif; font-size: 0.82rem; outline: none; width: 100%; transition: border-color 0.2s, box-shadow 0.2s; }
+.form-input:focus, .form-select:focus { border-color: var(--nebula-teal); box-shadow: 0 0 12px rgba(0,212,255,0.1); }
+.form-select option { background: var(--deep-space); }
+.form-input.is-error { border-color: var(--nova); }
+.form-error { font-family: 'Orbitron', monospace; font-size: 0.5rem; color: var(--nova); margin-top: 0.3rem; display: none; letter-spacing: 0.08em; }
+.form-error.is-visible { display: block; }
+.option-group { display: grid; gap: 0.5rem; }
+.option-item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.78rem; color: var(--starlight); cursor: none; font-weight: 300; }
+.option-item input { accent-color: var(--nebula-teal); width: 14px; height: 14px; cursor: none; }
+.radio-row { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+.form-btn { background: linear-gradient(135deg, var(--pulsar), var(--nebula-teal)); color: var(--void); border: none; padding: 1rem 2.5rem; font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: none; transition: all 0.3s; box-shadow: 0 0 20px rgba(123,47,255,0.3); clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%); width: 100%; }
+.form-btn:hover { box-shadow: 0 0 40px rgba(123,47,255,0.5); transform: translateY(-2px); }
+.confirmation { text-align: center; padding: 1rem 0; }
+.confirmation-icon { width: 52px; height: 52px; border-radius: 50%; background: radial-gradient(circle, rgba(0,212,255,0.3), rgba(123,47,255,0.2)); border: 1px solid var(--nebula-teal); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-family: 'Orbitron', monospace; font-weight: 900; font-size: 1.2rem; color: var(--nebula-teal); box-shadow: 0 0 20px rgba(0,212,255,0.4); }
+.confirmation h3 { font-family: 'Orbitron', monospace; font-size: 1rem; font-weight: 700; margin-bottom: 0.8rem; letter-spacing: 0.05em; }
+.confirmation p { color: var(--starlight); font-size: 0.8rem; font-weight: 300; line-height: 1.7; }
+.confirmation-summary { background: rgba(6,13,46,0.7); border: 1px solid var(--border); padding: 1.5rem; text-align: left; margin-top: 1.5rem; }
+.confirmation-summary dt { font-family: 'Orbitron', monospace; font-size: 0.5rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-top: 1rem; }
+.confirmation-summary dt:first-child { margin-top: 0; }
+.confirmation-summary dd { font-size: 0.82rem; color: var(--stellar); margin-top: 0.2rem; }
+
+/* FOOTER */
+footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 2.5rem 4rem; display: flex; align-items: center; justify-content: space-between; background: rgba(0,1,10,0.95); flex-wrap: wrap; gap: 1.5rem; }
+.footer-logo { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 0.9rem; letter-spacing: 0.1em; }
+.footer-logo span { color: var(--nebula-teal); }
+.footer-reg { font-size: 0.6rem; color: var(--muted); margin-top: 0.3rem; }
+.footer-mid { text-align: center; }
+.footer-mid .email-link { font-family: 'Orbitron', monospace; font-size: 0.65rem; color: var(--nebula-teal); letter-spacing: 0.08em; text-decoration: none; }
+.footer-mid .email-link:hover { text-decoration: underline; }
+.footer-mid .disclaimer { font-size: 0.55rem; color: var(--muted); max-width: 380px; line-height: 1.5; margin-top: 0.5rem; }
+.footer-links { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+.footer-links a { font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: var(--nebula-teal); }
+.footer-copy { font-size: 0.6rem; color: var(--muted); }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+.reveal { opacity:0; transform:translateY(28px); transition:opacity 0.8s ease,transform 0.8s ease; }
+.reveal.visible { opacity:1; transform:none; }
+
+@media (max-width:1100px) {
+.hero-section { grid-template-columns: 1fr; }
+.hero-right { min-height: 350px; }
+.service-body { grid-template-columns: 1fr; }
+.expand-content-inner { grid-template-columns: 1fr; }
+.industry-grid { grid-template-columns: repeat(2,1fr); }
+.nisq-layout { grid-template-columns: 1fr; }
+.nisq-sidebar { position: static; }
+.phases-row { grid-template-columns: repeat(3,1fr); }
+}
+@media (max-width:900px) {
+nav { padding: 1.2rem 1.5rem; }
+.nav-links { display: none; }
+.hero-left { padding: 8rem 1.5rem 3rem; }
+.context-section, .services-section, .industry-section, .nisq-section, .resources-section, .next-section { padding: 5rem 1.5rem; }
+.context-grid { grid-template-columns: 1fr; }
+.context-block { border-right: none !important; }
+.context-block:nth-child(n+2) { border-top: none; }
+.service-strip { grid-template-columns: 1fr; }
+.service-num-col { display: none; }
+.industry-grid { grid-template-columns: 1fr; }
+.resources-offset { grid-template-columns: 1fr; }
+.resource-card:nth-child(2) { transform: none; }
+.resource-card:nth-child(2):hover { transform: translateY(-4px); }
+.phases-row { grid-template-columns: 1fr; }
+.radio-row { flex-direction: column; gap: 0.5rem; }
+.modal { padding: 2rem; }
+footer { flex-direction: column; text-align: center; padding: 2rem; }
+.footer-links { justify-content: center; }
+}
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+<canvas id="universe"></canvas>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo"><img src="/diarka-logo-header-180w.png" alt="Diarka Quantum Logo" class="brand-logo-img">Diarka<span>Quantum</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#bridge">The Bridge</a></li>
+    <li><a href="pillar-1.html">Pillar 01</a></li>
+    <li><a href="#services" class="active">Pillar 02</a></li>
+    <li><a href="#resources">Resources</a></li>
+    <li><a href="#next-steps">Next Steps</a></li>
+    <li><a href="index.html#about">About</a></li>
+  </ul>
+  <a href="#" class="nav-cta" id="nav-cta-btn">Start Discovery</a>
+</nav>
+
+<!-- HERO — SPLIT LAYOUT -->
+<section class="hero-section">
+  <div class="hero-glow"></div>
+  <div class="hero-left">
+    <div class="hero-eyebrow">Pillar 02 of 03</div>
+    <h1 class="hero-title">AI &amp; <span class="teal">Quantum</span><br><span class="purple">Integration</span></h1>
+    <p class="hero-positioning">Where two transformative technologies converge — <em>turning quantum-safe foundations into quantum-powered competitive advantage</em>.</p>
+    <p class="hero-body">Artificial intelligence and quantum computing are no longer parallel trajectories. The organisations that learn to harness their convergence — quantum-enhanced machine learning, hybrid optimisation, quantum-informed AI architectures — will define the next era of competitive advantage. Pillar 2 of the Diarka Quantum framework helps mid-market organisations identify, prototype, and validate the AI-quantum use cases most relevant to their domain, translating frontier research into pragmatic business value.</p>
+    <div class="hero-actions">
+      <button type="button" class="btn-cosmos" id="hero-discovery-btn">Start Discovery</button>
+      <a href="#services" class="btn-void">Explore Services</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-inner">
+      <div class="convergence-diagram">
+        <div class="conv-ring conv-ring-outer">
+          <div class="conv-node conv-node-ai-1"></div>
+          <div class="conv-node conv-node-ai-2"></div>
+          <div class="conv-node conv-node-q-1"></div>
+          <div class="conv-node conv-node-q-2"></div>
+        </div>
+        <div class="conv-ring conv-ring-mid"></div>
+        <div class="conv-ring conv-ring-inner"></div>
+        <div class="conv-center">
+          <div class="conv-center-text">AI<br>x<br>QC</div>
+        </div>
+        <div class="conv-label conv-label-ai">Artificial Intelligence</div>
+        <div class="conv-label conv-label-q">Quantum Computing</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE WHY — CONTEXT GRID -->
+<section style="background: linear-gradient(180deg, var(--void) 0%, var(--nebula-dark) 50%, var(--void) 100%);">
+  <div class="section-inner context-section">
+    <div class="section-tag reveal">The Convergence Thesis</div>
+    <h2 class="section-title reveal">Why AI and Quantum Computing<br>Are Converging Now</h2>
+    <p class="section-desc reveal">Four structural forces are driving the intersection of AI and quantum computing from theoretical possibility toward practical reality.</p>
+    <div class="context-grid reveal">
+      <div class="context-block">
+        <div class="context-number">01</div>
+        <div class="context-heading">Classical Compute Walls</div>
+        <div class="context-text">AI model training costs are doubling every six to ten months. Transformer architectures, large language models, and reinforcement learning systems are approaching the physical and economic limits of classical hardware scaling. Quantum computing offers fundamentally different computational primitives — <strong>superposition, entanglement, and interference</strong> — that can address specific computational bottlenecks where classical parallelism fails. The question is no longer whether quantum will supplement classical AI infrastructure, but which workloads will cross over first.</div>
+      </div>
+      <div class="context-block">
+        <div class="context-number">02</div>
+        <div class="context-heading">Quantum Algorithm Maturity</div>
+        <div class="context-text">Variational quantum algorithms — hybrid methods that use parameterised quantum circuits optimised by classical computers — have matured significantly. <strong>Variational Quantum Eigensolver (VQE), Quantum Approximate Optimisation Algorithm (QAOA), and quantum kernel methods</strong> are now implementable on current-generation hardware. While error rates remain a constraint, these algorithms represent a practical bridge between today's noisy quantum processors and the fault-tolerant machines of the future.</div>
+      </div>
+      <div class="context-block">
+        <div class="context-number">03</div>
+        <div class="context-heading">Cloud Quantum Access</div>
+        <div class="context-text">Organisations no longer need to build or operate quantum hardware. <strong>IBM Quantum Network, Amazon Braket, Azure Quantum, and Google Quantum AI</strong> provide cloud access to quantum processors with increasing qubit counts, improving coherence times, and production-grade APIs. This democratisation means mid-market organisations can experiment with quantum-enhanced AI without capital expenditure — running variational circuits alongside their existing cloud ML infrastructure.</div>
+      </div>
+      <div class="context-block">
+        <div class="context-number">04</div>
+        <div class="context-heading">Competitive Pressure</div>
+        <div class="context-text">Early movers in financial services, pharmaceuticals, logistics, and materials science are already running quantum AI pilots. <strong>The window for strategic positioning is narrowing.</strong> Organisations that build quantum AI literacy, identify their highest-value use cases, and establish hybrid architecture foundations now will be positioned to capture advantage when hardware capabilities cross critical thresholds.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES — HORIZONTAL STRIPS -->
+<section id="services" style="background: var(--void);">
+  <div class="section-inner services-section">
+    <div class="section-tag reveal">What We Deliver</div>
+    <h2 class="section-title reveal">Integration Services</h2>
+    <p class="section-desc reveal">Seven structured services that take your organisation from quantum-readiness into active AI-quantum integration — identifying high-value use cases, building proof-of-concept prototypes, and establishing a production pathway for quantum-enhanced intelligence.</p>
+
+    <!-- SERVICE 01 -->
+    <div class="service-strip reveal">
+      <div class="service-num-col"><span class="service-num">01</span></div>
+      <div class="service-content">
+        <div class="service-top-row">
+          <h3 class="service-name">AI-Quantum Opportunity Mapping</h3>
+          <div class="service-meta"><span class="badge badge-research">Research</span><span class="timeline-tag">3 - 5 Weeks</span></div>
+        </div>
+        <div class="service-body">
+          <div>
+            <p class="service-desc">A systematic assessment of where quantum computing could enhance, accelerate, or fundamentally transform your existing AI and data capabilities. We analyse your current machine learning workloads, optimisation problems, and data pipelines against the known quantum advantage domains — identifying use cases where quantum-classical hybrid approaches could deliver measurable uplift within a realistic timeframe. The assessment evaluates computational complexity classes, data encoding feasibility, algorithm-to-hardware fit, and the economic threshold at which quantum execution becomes cost-competitive with classical alternatives.</p>
+            <button class="expand-btn" aria-expanded="false" aria-controls="ex-01" data-target="ex-01" type="button">Methodology &amp; Artifacts <span class="chevron" aria-hidden="true">&#9654;</span></button>
+            <div class="expand-panel" id="ex-01" role="region">
+              <div class="expand-content">
+                <div class="expand-content-inner">
+                  <div class="expand-col">
+                    <h4>Methodology</h4>
+                    <ol>
+                      <li>Discovery workshops with data science, engineering, and domain leads to catalogue existing AI/ML workloads and computational pain points.</li>
+                      <li>Map each workload against quantum advantage domains: combinatorial optimisation, sampling and simulation, linear algebra acceleration, and variational learning.</li>
+                      <li>Assess computational bottlenecks — identify where classical hardware hits scaling limits that quantum approaches could address.</li>
+                      <li>Evaluate data encoding feasibility: determine whether problem data can be efficiently mapped to quantum feature spaces without exponential overhead.</li>
+                      <li>Score opportunities using a feasibility-impact-timeline framework, factoring in data readiness, algorithm maturity, hardware availability, and competitive differentiation potential.</li>
+                      <li>Executive presentation with strategic recommendations and a proposed exploration roadmap.</li>
+                    </ol>
+                  </div>
+                  <div class="expand-col">
+                    <h4>Example Artifacts</h4>
+                    <ul>
+                      <li>AI workload catalogue (model type, data volume, compute cost, scaling constraints)</li>
+                      <li>Quantum advantage alignment matrix (use case vs. quantum domain mapping)</li>
+                      <li>Opportunity scoring rubric with weighting criteria</li>
+                      <li>Computational complexity analysis per workload</li>
+                      <li>Data encoding feasibility assessment</li>
+                    </ul>
+                  </div>
+                  <div class="expand-col">
+                    <h4>Approaches &amp; Frameworks</h4>
+                    <ul>
+                      <li>Structured technology scouting and use case discovery methodologies</li>
+                      <li>Published quantum advantage benchmarks from IBM, Google, and academic research programmes</li>
+                      <li>Industry-specific case study analysis for relevant sector applications</li>
+                      <li>Computational complexity classification (BQP, QMA, NP) for problem mapping</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="service-right">
+            <div class="deliverables-tag">Key Deliverables</div>
+            <ul class="deliverables-list">
+              <li>AI-Quantum Opportunity Register (ranked by feasibility, impact, and time-to-value)</li>
+              <li>Current-state AI capability assessment</li>
+              <li>Quantum advantage domain alignment matrix</li>
+              <li>Computational complexity mapping per workload</li>
+              <li>Executive opportunity briefing with recommended focus areas</li>
+            </ul>
+            <div class="effort-bar"><span class="effort-label">Effort</span><div class="effort-track"><div class="effort-fill" style="width:30%"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SERVICE 02 -->
+    <div class="service-strip reveal">
+      <div class="service-num-col"><span class="service-num">02</span></div>
+      <div class="service-content">
+        <div class="service-top-row">
+          <h3 class="service-name">Quantum Machine Learning Prototyping</h3>
+          <div class="service-meta"><span class="badge badge-prototype">Prototype</span><span class="timeline-tag">6 - 12 Weeks</span></div>
+        </div>
+        <div class="service-body">
+          <div>
+            <p class="service-desc">Hands-on development of quantum machine learning (QML) prototypes tailored to your highest-priority use cases. Using variational quantum circuits, quantum kernel methods, and hybrid classical-quantum architectures, we build and benchmark proof-of-concept models against your existing classical baselines. Each prototype answers a specific question: does quantum provide a measurable advantage for this problem at this scale? We implement multiple encoding strategies — amplitude encoding for dense data, angle encoding for feature-rich tabular data, and basis encoding for categorical features — to determine which quantum representation best captures the problem structure. Prototypes run on quantum simulators for rapid iteration and, where results warrant it, on real quantum hardware via cloud platforms to measure noise impact and error propagation.</p>
+            <button class="expand-btn" aria-expanded="false" aria-controls="ex-02" data-target="ex-02" type="button">Methodology &amp; Artifacts <span class="chevron" aria-hidden="true">&#9654;</span></button>
+            <div class="expand-panel" id="ex-02" role="region">
+              <div class="expand-content">
+                <div class="expand-content-inner">
+                  <div class="expand-col">
+                    <h4>Methodology</h4>
+                    <ol>
+                      <li>Problem formalisation: translate the business use case into a well-defined learning task with clear success metrics (accuracy, F1, AUC-ROC, convergence speed).</li>
+                      <li>Data preparation: encode classical data into quantum-compatible feature spaces using amplitude, angle, or basis encoding strategies.</li>
+                      <li>Circuit design: build parameterised quantum circuits (ansatze) appropriate to the problem — variational quantum classifiers, quantum convolutional architectures, or quantum reservoir computing approaches.</li>
+                      <li>Hybrid training: implement classical-quantum training loops using gradient-based (parameter-shift rule) and gradient-free (COBYLA, SPSA) optimisers, with barren plateau detection.</li>
+                      <li>Benchmarking: run head-to-head comparisons against equivalent classical models on identical datasets.</li>
+                      <li>Hardware execution: run validated circuits on IBM Quantum or Amazon Braket hardware, analysing noise impact through zero-noise extrapolation and probabilistic error cancellation.</li>
+                      <li>Documentation: comprehensive technical report with reproducible code, results, and error analysis.</li>
+                    </ol>
+                  </div>
+                  <div class="expand-col">
+                    <h4>Example Artifacts</h4>
+                    <ul>
+                      <li>Qiskit/PennyLane code repository with documented quantum circuits and training pipelines</li>
+                      <li>Benchmark comparison dashboard (accuracy curves, loss landscapes, execution time profiles)</li>
+                      <li>Noise impact analysis from real hardware execution with error mitigation results</li>
+                      <li>Data encoding comparison report (circuit depth vs. expressibility trade-offs)</li>
+                      <li>Barren plateau analysis for ansatz selection</li>
+                    </ul>
+                  </div>
+                  <div class="expand-col">
+                    <h4>Approaches &amp; Frameworks</h4>
+                    <ul>
+                      <li>Variational quantum classifiers (VQC) and quantum neural networks</li>
+                      <li>Quantum kernel methods using ZZ and IQP feature maps</li>
+                      <li>PennyLane, Qiskit Machine Learning, and TensorFlow Quantum frameworks</li>
+                      <li>Parameter-shift rule for analytical gradient computation</li>
+                      <li>Zero-noise extrapolation (ZNE) and probabilistic error cancellation (PEC)</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="service-right">
+            <div class="deliverables-tag">Key Deliverables</div>
+            <ul class="deliverables-list">
+              <li>Working QML prototype with documented architecture and code repository</li>
+              <li>Classical vs. quantum performance benchmark report</li>
+              <li>Hardware and simulator execution logs with error analysis</li>
+              <li>Data encoding strategy comparison</li>
+              <li>Scalability assessment and production pathway analysis</li>
+            </ul>
+            <div class="effort-bar"><span class="effort-label">Effort</span><div class="effort-track"><div class="effort-fill" style="width:75%"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SERVICE 03 -->
+    <div class="service-strip reveal">
+      <div class="service-num-col"><span class="service-num">03</span></div>
+      <div class="service-content">
+        <div class="service-top-row">
+          <h3 class="service-name">Quantum Optimisation for AI Workflows</h3>
+          <div class="service-meta"><span class="badge badge-prototype">Prototype</span><span class="timeline-tag">6 - 10 Weeks</span></div>
+        </div>
+        <div class="service-body">
+          <div>
+            <p class="service-desc">Many AI and operational workflows contain embedded optimisation problems — hyperparameter tuning, neural architecture search, feature selection, resource scheduling, portfolio construction, logistics routing — where the combinatorial search space overwhelms classical solvers. This service applies quantum and quantum-inspired optimisation techniques to these bottlenecks. We formalise your optimisation challenge as a Quadratic Unconstrained Binary Optimisation (QUBO) or Ising model, implement solutions using QAOA circuits and variational methods on gate-based hardware as well as quantum annealing approaches, and run systematic scaling analyses to project the crossover point where quantum execution surpasses classical alternatives.</p>
+            <button class="expand-btn" aria-expanded="false" aria-controls="ex-03" data-target="ex-03" type="button">Methodology &amp; Artifacts <span class="chevron" aria-hidden="true">&#9654;</span></button>
+            <div class="expand-panel" id="ex-03" role="region">
+              <div class="expand-content">
+                <div class="expand-content-inner">
+                  <div class="expand-col">
+                    <h4>Methodology</h4>
+                    <ol>
+                      <li>Problem isolation: identify the specific optimisation bottleneck, including constraint structure and objective function.</li>
+                      <li>Mathematical formalisation: express the problem as a QUBO or Ising model, handling inequality constraints through penalty terms and slack variables.</li>
+                      <li>Gate-based implementation: build QAOA and VQE circuits with problem-aware ansatz selection, mixer design, and circuit depth optimisation.</li>
+                      <li>Annealing implementation: formulate for quantum annealing platforms, with chain embedding optimisation for hardware connectivity constraints.</li>
+                      <li>Classical baseline: implement equivalent solutions using simulated annealing, genetic algorithms, mixed-integer programming, and tensor network methods.</li>
+                      <li>Scaling analysis: run both quantum and classical solvers on identical problem instances at increasing scale.</li>
+                    </ol>
+                  </div>
+                  <div class="expand-col">
+                    <h4>Example Artifacts</h4>
+                    <ul>
+                      <li>QUBO/Ising formulation documentation with constraint encoding and penalty calibration</li>
+                      <li>Solver comparison report (solution quality vs. problem size scaling charts)</li>
+                      <li>Hardware topology impact analysis (coupling map, SWAP overhead, chain strength)</li>
+                      <li>Scaling projection model with quantum hardware requirement estimates</li>
+                    </ul>
+                  </div>
+                  <div class="expand-col">
+                    <h4>Approaches &amp; Frameworks</h4>
+                    <ul>
+                      <li>QAOA with custom mixer Hamiltonians for constrained problems</li>
+                      <li>Variational quantum eigensolver (VQE) for continuous optimisation</li>
+                      <li>D-Wave Ocean SDK for quantum annealing approaches</li>
+                      <li>Quantum-inspired tensor network methods as classical benchmarks</li>
+                      <li>Warm-starting techniques using classical pre-optimisation</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="service-right">
+            <div class="deliverables-tag">Key Deliverables</div>
+            <ul class="deliverables-list">
+              <li>QUBO/Ising model formulation with constraint encoding</li>
+              <li>Quantum vs. classical solver benchmark report</li>
+              <li>Solution quality analysis (optimality gap, convergence characteristics)</li>
+              <li>Hardware topology impact assessment</li>
+              <li>Scaling projection and crossover point estimation</li>
+            </ul>
+            <div class="effort-bar"><span class="effort-label">Effort</span><div class="effort-track"><div class="effort-fill" style="width:65%"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SERVICE 04 -->
+    <div class="service-strip reveal">
+      <div class="service-num-col"><span class="service-num">04</span></div>
+      <div class="service-content">
+        <div class="service-top-row">
+          <h3 class="service-name">Quantum Simulation &amp; Domain Modelling</h3>
+          <div class="service-meta"><span class="badge badge-research">Research</span><span class="timeline-tag">8 - 16 Weeks</span></div>
+        </div>
+        <div class="service-body">
+          <div>
+            <p class="service-desc">Quantum computers are inherently suited to simulating quantum systems — a capability with transformative implications for materials science, drug discovery, financial derivative pricing, and energy systems modelling. This service develops quantum simulation prototypes for domain-specific modelling challenges where classical simulation either fails at scale or requires prohibitive computational resources. We work with your domain experts to formulate Hamiltonians, select appropriate quantum simulation algorithms (Trotterisation, variational quantum eigensolver, quantum phase estimation), design simulation circuits, and validate results against known classical benchmarks. For financial modelling applications, we implement quantum Monte Carlo and quantum amplitude estimation techniques that can provide quadratic speedup over classical sampling methods.</p>
+          </div>
+          <div class="service-right">
+            <div class="deliverables-tag">Key Deliverables</div>
+            <ul class="deliverables-list">
+              <li>Domain-specific Hamiltonian formulation and circuit design</li>
+              <li>Simulation prototype with validated results against classical benchmarks</li>
+              <li>Accuracy and noise resilience analysis across hardware backends</li>
+              <li>Trotter error and circuit depth optimisation report</li>
+              <li>Scale-up roadmap with hardware milestone dependencies</li>
+              <li>Research publication draft (where appropriate)</li>
+            </ul>
+            <div class="effort-bar"><span class="effort-label">Effort</span><div class="effort-track"><div class="effort-fill" style="width:85%"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SERVICE 05 -->
+    <div class="service-strip reveal">
+      <div class="service-num-col"><span class="service-num">05</span></div>
+      <div class="service-content">
+        <div class="service-top-row">
+          <h3 class="service-name">Hybrid Architecture Design</h3>
+          <div class="service-meta"><span class="badge badge-applied">Applied</span><span class="timeline-tag">4 - 8 Weeks</span></div>
+        </div>
+        <div class="service-body">
+          <div>
+            <p class="service-desc">Production quantum advantage will not come from pure quantum systems — it will come from hybrid classical-quantum architectures that route specific computational subroutines to quantum processors while maintaining classical infrastructure for everything else. This service designs the integration architecture: how quantum processing units (QPUs) connect to your existing data pipelines, ML training loops, and decision systems. We specify the data encoding and decoding interfaces, circuit compilation and transpilation pipelines, job orchestration layers with intelligent routing logic, and failover mechanisms that ensure graceful degradation when quantum resources are unavailable. The architecture accounts for the reality of NISQ-era hardware: error mitigation is built into the pipeline, not bolted on afterwards.</p>
+            <button class="expand-btn" aria-expanded="false" aria-controls="ex-05" data-target="ex-05" type="button">Methodology &amp; Artifacts <span class="chevron" aria-hidden="true">&#9654;</span></button>
+            <div class="expand-panel" id="ex-05" role="region">
+              <div class="expand-content">
+                <div class="expand-content-inner">
+                  <div class="expand-col">
+                    <h4>Methodology</h4>
+                    <ol>
+                      <li>Current architecture review: document existing data pipelines, ML infrastructure, compute environments, and integration patterns.</li>
+                      <li>QPU integration point identification: determine which computational subroutines are candidates for quantum offloading based on complexity analysis.</li>
+                      <li>Interface design: specify data encoding schemes, circuit compilation pipelines (Qiskit transpiler, tket), and result post-processing workflows including error mitigation.</li>
+                      <li>Orchestration design: build job routing logic that selects quantum vs. classical execution based on problem characteristics, queue depth, cost, and confidence thresholds.</li>
+                      <li>Resilience engineering: design failover mechanisms, error handling, circuit re-execution strategies, and graceful degradation.</li>
+                      <li>Platform evaluation: systematic comparison of cloud quantum platforms against technical and commercial requirements.</li>
+                    </ol>
+                  </div>
+                  <div class="expand-col">
+                    <h4>Example Artifacts</h4>
+                    <ul>
+                      <li>System architecture diagram with classical and quantum components, data flows, and integration points</li>
+                      <li>API specification for QPU integration layer (REST/gRPC)</li>
+                      <li>Circuit compilation pipeline documentation</li>
+                      <li>Cloud platform comparison matrix (capabilities, pricing, SLAs, qubit counts, gate fidelities)</li>
+                    </ul>
+                  </div>
+                  <div class="expand-col">
+                    <h4>Approaches &amp; Frameworks</h4>
+                    <ul>
+                      <li>Microservice and serverless quantum integration patterns</li>
+                      <li>Circuit compilation using Qiskit transpiler, tket (Quantinuum), and Cirq</li>
+                      <li>Error mitigation: zero-noise extrapolation (ZNE), probabilistic error cancellation (PEC), twirled readout error extinction (TREX)</li>
+                      <li>Asynchronous job management for batch quantum workloads</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="service-right">
+            <div class="deliverables-tag">Key Deliverables</div>
+            <ul class="deliverables-list">
+              <li>Hybrid architecture blueprint (system-level design document)</li>
+              <li>QPU integration specification (APIs, data encoding, result decoding)</li>
+              <li>Orchestration layer design (job routing, queue management, fallback logic)</li>
+              <li>Error mitigation pipeline specification</li>
+              <li>Infrastructure cost model and cloud platform comparison</li>
+            </ul>
+            <div class="effort-bar"><span class="effort-label">Effort</span><div class="effort-track"><div class="effort-fill" style="width:55%"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SERVICE 06 -->
+    <div class="service-strip reveal">
+      <div class="service-num-col"><span class="service-num">06</span></div>
+      <div class="service-content">
+        <div class="service-top-row">
+          <h3 class="service-name">Quantum AI Talent &amp; Capability Building</h3>
+          <div class="service-meta"><span class="badge badge-advisory">Advisory</span><span class="timeline-tag">Ongoing</span></div>
+        </div>
+        <div class="service-body">
+          <div>
+            <p class="service-desc">The scarcest resource in the AI-quantum space is not hardware — it is people who understand both domains deeply enough to build at their intersection. This service develops your internal quantum AI capability through structured training programmes, mentored project work, and curated learning pathways. We upskill your existing data scientists and engineers rather than creating permanent dependency on external consultants. The programme begins with a skills assessment that maps each team member's existing quantum and AI proficiency, then designs personalised learning pathways that bridge specific gaps. Training is hands-on: participants work with real quantum circuits, build and debug variational algorithms, and run experiments on actual quantum hardware from their first week.</p>
+          </div>
+          <div class="service-right">
+            <div class="deliverables-tag">Key Deliverables</div>
+            <ul class="deliverables-list">
+              <li>Quantum AI skills assessment and gap analysis for your technical team</li>
+              <li>Customised learning pathway per role (data scientist, ML engineer, architect)</li>
+              <li>Hands-on workshop series with real-circuit exercises on cloud hardware</li>
+              <li>Mentored project: team-led prototype under expert guidance</li>
+              <li>Certification pathway guidance (IBM Quantum, Qiskit, PennyLane)</li>
+              <li>Ongoing knowledge transfer and community of practice support</li>
+            </ul>
+            <div class="effort-bar"><span class="effort-label">Effort</span><div class="effort-track"><div class="effort-fill" style="width:30%"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SERVICE 07 -->
+    <div class="service-strip reveal">
+      <div class="service-num-col"><span class="service-num">07</span></div>
+      <div class="service-content">
+        <div class="service-top-row">
+          <h3 class="service-name">Strategic Quantum AI Roadmap</h3>
+          <div class="service-meta"><span class="badge badge-applied">Applied</span><span class="timeline-tag">4 - 6 Weeks</span></div>
+        </div>
+        <div class="service-body">
+          <div>
+            <p class="service-desc">The capstone service that synthesises findings from opportunity mapping, prototyping, and architecture design into a board-level strategic roadmap. This living document sequences investments, defines milestones with explicit go/no-go decision criteria, aligns quantum AI initiatives with business strategy, and establishes governance for ongoing exploration. The roadmap uses a three-horizon framework — Horizon 1 (optimise existing classical AI with quantum-inspired methods, 0-12 months), Horizon 2 (deploy hybrid quantum-classical prototypes in production, 12-24 months), and Horizon 3 (position for fault-tolerant quantum advantage, 24-36 months) — with technology readiness level assessments and risk-adjusted investment scenarios at each stage.</p>
+            <button class="expand-btn" aria-expanded="false" aria-controls="ex-07" data-target="ex-07" type="button">Methodology &amp; Artifacts <span class="chevron" aria-hidden="true">&#9654;</span></button>
+            <div class="expand-panel" id="ex-07" role="region">
+              <div class="expand-content">
+                <div class="expand-content-inner">
+                  <div class="expand-col">
+                    <h4>Methodology</h4>
+                    <ol>
+                      <li>Synthesis: consolidate findings from all preceding services into a unified strategic view with validated assumptions.</li>
+                      <li>Prioritisation: rank initiatives by strategic alignment, expected ROI, technical readiness level, risk profile, and competitive differentiation potential.</li>
+                      <li>Three-horizon sequencing: build a phased investment plan across optimise (H1), extend (H2), and explore (H3) horizons with milestone dependencies.</li>
+                      <li>Governance design: establish decision frameworks, review cadences, escalation paths, and reporting structures for quantum AI investments.</li>
+                      <li>Technology watch: configure monitoring for quantum hardware milestones, algorithm breakthroughs, standards developments, and competitor activity.</li>
+                      <li>Board presentation: deliver the roadmap as an investment case with NPV scenarios, risk mitigations, and clear asks.</li>
+                    </ol>
+                  </div>
+                  <div class="expand-col">
+                    <h4>Example Artifacts</h4>
+                    <ul>
+                      <li>Strategic roadmap visualisation (Gantt-style with milestone overlays and decision gates)</li>
+                      <li>Three-horizon investment case (NPV, payback period, risk-adjusted scenarios per horizon)</li>
+                      <li>Technology readiness level (TRL) assessment per initiative</li>
+                      <li>Competitive intelligence brief on sector quantum AI activity</li>
+                    </ul>
+                  </div>
+                  <div class="expand-col">
+                    <h4>Approaches &amp; Frameworks</h4>
+                    <ul>
+                      <li>Technology readiness level (TRL) frameworks adapted for quantum AI maturity</li>
+                      <li>Stage-gate investment models with defined go/no-go decision criteria</li>
+                      <li>McKinsey three-horizons planning (H1 optimise / H2 extend / H3 explore)</li>
+                      <li>Real options analysis for quantum technology investment timing</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="service-right">
+            <div class="deliverables-tag">Key Deliverables</div>
+            <ul class="deliverables-list">
+              <li>Strategic Quantum AI Roadmap (18 - 36 month, three-horizon framework)</li>
+              <li>Investment case with phased budget model and NPV scenarios</li>
+              <li>Milestone framework with go/no-go decision points</li>
+              <li>Technology readiness level assessments per initiative</li>
+              <li>Competitive landscape and technology watch brief</li>
+              <li>Quarterly review cadence and governance structure</li>
+            </ul>
+            <div class="effort-bar"><span class="effort-label">Effort</span><div class="effort-track"><div class="effort-fill" style="width:40%"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-banner reveal">
+      <p>Ready to explore how AI and quantum computing can converge to create competitive advantage for your organisation? Begin with a discovery conversation.</p>
+      <button class="btn-cosmos" id="cta-discovery-btn" type="button">Start Discovery</button>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRY USE CASES -->
+<section style="background: linear-gradient(180deg, var(--void) 0%, var(--nebula-dark) 100%);">
+  <div class="section-inner industry-section">
+    <div class="section-tag reveal">Sector Applications</div>
+    <h2 class="section-title reveal">Industry-Specific Use Cases</h2>
+    <p class="section-desc reveal">Quantum-enhanced AI is not a horizontal technology — its value concentrates in domains where specific computational structures align with quantum advantage.</p>
+    <div class="industry-grid reveal">
+      <div class="industry-cell">
+        <div class="industry-icon">//</div>
+        <div class="industry-name">Financial Services</div>
+        <div class="industry-use-case">Portfolio optimisation under complex constraints. Credit risk modelling with correlated defaults. Derivative pricing via quantum amplitude estimation. Fraud detection through quantum kernel anomaly detection.</div>
+        <div class="industry-technique">QAOA / Quantum Monte Carlo / QML Kernels</div>
+      </div>
+      <div class="industry-cell">
+        <div class="industry-icon">++</div>
+        <div class="industry-name">Pharmaceuticals &amp; Life Sciences</div>
+        <div class="industry-use-case">Molecular simulation for drug candidate screening. Protein folding energy landscape exploration. Quantum-enhanced generative models for molecular design. Clinical trial optimisation through combinatorial scheduling.</div>
+        <div class="industry-technique">VQE / Hamiltonian Simulation / QGAN</div>
+      </div>
+      <div class="industry-cell">
+        <div class="industry-icon">&gt;&gt;</div>
+        <div class="industry-name">Logistics &amp; Supply Chain</div>
+        <div class="industry-use-case">Vehicle routing with time windows and capacity constraints. Warehouse layout optimisation. Dynamic supply chain reconfiguration under disruption scenarios. Demand forecasting with quantum-enhanced ensemble methods.</div>
+        <div class="industry-technique">QAOA / Quantum Annealing / Hybrid VRP</div>
+      </div>
+      <div class="industry-cell">
+        <div class="industry-icon">##</div>
+        <div class="industry-name">Energy &amp; Utilities</div>
+        <div class="industry-use-case">Grid load balancing and distribution optimisation. Battery chemistry simulation for next-generation storage. Carbon capture catalyst modelling. Renewable energy production forecasting with quantum-enhanced time series.</div>
+        <div class="industry-technique">VQE / Quantum Simulation / QAOA</div>
+      </div>
+      <div class="industry-cell">
+        <div class="industry-icon">::</div>
+        <div class="industry-name">Manufacturing</div>
+        <div class="industry-use-case">Production scheduling under multi-objective constraints. Materials property prediction through quantum simulation. Quality control via quantum-enhanced anomaly detection. Digital twin acceleration using hybrid quantum-classical solvers.</div>
+        <div class="industry-technique">QAOA / Quantum Kernels / VQE</div>
+      </div>
+      <div class="industry-cell">
+        <div class="industry-icon">||</div>
+        <div class="industry-name">Telecommunications</div>
+        <div class="industry-use-case">Network topology optimisation for 5G/6G deployment. Spectrum allocation under interference constraints. Quantum-enhanced signal processing for edge computing. Network traffic prediction with quantum recurrent models.</div>
+        <div class="industry-technique">QAOA / Quantum Annealing / QRNN</div>
+      </div>
+      <div class="industry-cell">
+        <div class="industry-icon">==</div>
+        <div class="industry-name">Insurance &amp; Actuarial</div>
+        <div class="industry-use-case">Catastrophe risk modelling with correlated tail events. Policyholder behaviour simulation. Reserve optimisation under regulatory constraints. Quantum-accelerated actuarial projections.</div>
+        <div class="industry-technique">Quantum Monte Carlo / QAOA / QML</div>
+      </div>
+      <div class="industry-cell">
+        <div class="industry-icon">^^</div>
+        <div class="industry-name">Defence &amp; Aerospace</div>
+        <div class="industry-use-case">Multi-sensor data fusion with quantum-enhanced classification. Mission planning under uncertainty. Satellite constellation optimisation. Quantum-resistant communications alongside quantum-enhanced sensing.</div>
+        <div class="industry-technique">QML / QAOA / Quantum Sensing</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NISQ REALITY -->
+<section style="background: var(--void);">
+  <div class="section-inner nisq-section">
+    <div class="nisq-layout reveal">
+      <div class="nisq-sidebar">
+        <div class="section-tag">Honest Assessment</div>
+        <div class="nisq-sidebar-title">The <span class="teal">NISQ-Era</span> Reality</div>
+        <p class="nisq-sidebar-body">We operate in the Noisy Intermediate-Scale Quantum era. Current quantum processors have tens to hundreds of qubits with limited coherence times, significant gate error rates, and restricted connectivity. This is not a reason to wait — it is a reason to start with eyes open. Understanding these constraints is essential to making sound investment decisions and setting realistic expectations.</p>
+      </div>
+      <div class="nisq-cards">
+        <div class="nisq-card">
+          <div class="nisq-card-title">Qubit Count and Quality Trade-offs</div>
+          <div class="nisq-card-text">Today's quantum processors range from 50 to 1,000+ qubits, but raw qubit count is misleading. What matters is the number of usable logical qubits after error correction overhead, the gate fidelity (two-qubit gate errors typically range from 0.1% to 1%), and the coherence time available for circuit execution. Our prototyping approach accounts for these constraints — we design circuits that fit within the practical execution window of current hardware and use error mitigation techniques to extract useful signal from noisy results.</div>
+        </div>
+        <div class="nisq-card">
+          <div class="nisq-card-title">Where NISQ Advantage Is Real Today</div>
+          <div class="nisq-card-text">For specific problem structures — particularly combinatorial optimisation with sparse connectivity, kernel-based machine learning on moderate-dimensional feature spaces, and quantum simulation of small molecular systems — current NISQ hardware can produce results competitive with or superior to classical approaches. The key is matching problem structure to hardware capability: not every AI problem benefits from quantum, and our assessment methodology is designed to identify the ones that do.</div>
+        </div>
+        <div class="nisq-card">
+          <div class="nisq-card-title">The Quantum-Inspired Alternative</div>
+          <div class="nisq-card-text">An important finding from quantum computing research is that the process of developing quantum algorithms often reveals new classical approaches. Quantum-inspired algorithms — tensor network methods, simulated quantum annealing, classical shadow estimation — can deliver significant performance improvements over traditional classical methods without requiring quantum hardware. Our integration services evaluate quantum-inspired alternatives alongside genuine quantum approaches, ensuring you capture value regardless of the hardware timeline.</div>
+        </div>
+        <div class="nisq-card">
+          <div class="nisq-card-title">The Fault-Tolerant Horizon</div>
+          <div class="nisq-card-text">The transition from NISQ to fault-tolerant quantum computing — where error-corrected logical qubits enable arbitrarily long computations — is the industry's defining milestone. Current estimates place this transition between 2028 and 2035, depending on the hardware platform and application requirements. Organisations that build hybrid architecture foundations and develop quantum AI expertise now will be positioned to capture exponential advantage when fault tolerance arrives. Our roadmap services explicitly plan for this transition, with decision gates tied to hardware milestones.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESOURCES -->
+<section id="resources" style="background: linear-gradient(180deg, var(--void) 0%, var(--nebula-dark) 100%);">
+  <div class="section-inner resources-section">
+    <div class="section-tag reveal">Downloads</div>
+    <h2 class="section-title reveal">Templates &amp; Resources</h2>
+    <p class="section-desc reveal">Synthetic templates to help you evaluate AI-quantum opportunities or prepare before engaging integration support. All files are generated client-side — no data is transmitted.</p>
+    <div class="resources-offset reveal">
+      <div class="resource-card">
+        <div class="resource-symbol">[01]</div>
+        <div class="resource-title">Opportunity Scoring Matrix</div>
+        <p class="resource-desc">A structured template for scoring AI-quantum use case opportunities across feasibility, impact, data readiness, time-to-value, and competitive differentiation dimensions.</p>
+        <button class="btn-teal-outline" type="button" data-download="scoring">Download CSV</button>
+      </div>
+      <div class="resource-card">
+        <div class="resource-symbol">[02]</div>
+        <div class="resource-title">Hybrid Architecture Checklist</div>
+        <p class="resource-desc">A comprehensive checklist of architectural considerations for integrating quantum processing into existing classical AI and data infrastructure, covering data encoding, orchestration, resilience, and platform selection.</p>
+        <button class="btn-teal-outline" type="button" data-download="architecture">Download CSV</button>
+      </div>
+      <div class="resource-card">
+        <div class="resource-symbol">[03]</div>
+        <div class="resource-title">QML Benchmark Template</div>
+        <p class="resource-desc">A template for structuring rigorous quantum vs. classical machine learning benchmarks, including metrics, dataset specifications, encoding parameters, and hardware noise profiles.</p>
+        <button class="btn-teal-outline" type="button" data-download="benchmark">Download CSV</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEXT STEPS — HORIZONTAL PHASES -->
+<section id="next-steps" style="background: var(--void);">
+  <div class="section-inner next-section">
+    <div class="section-tag reveal">What Comes Next</div>
+    <h2 class="section-title reveal">From Integration to Production</h2>
+    <p class="section-desc reveal">A phased path from Pillar 2 exploration through to production quantum AI capabilities and Pillar 3 knowledge transfer.</p>
+    <div class="phases-row reveal">
+      <div class="phase-col">
+        <div class="phase-num">01</div>
+        <div class="phase-title">Opportunity Mapping</div>
+        <div class="phase-desc">Identify the highest-value AI-quantum use cases grounded in your actual workloads, data assets, and competitive landscape.</div>
+      </div>
+      <div class="phase-col">
+        <div class="phase-num">02</div>
+        <div class="phase-title">Prototype &amp; Benchmark</div>
+        <div class="phase-desc">Build QML models and quantum optimisation solvers. Run rigorous benchmarks against classical baselines to quantify genuine advantage.</div>
+      </div>
+      <div class="phase-col">
+        <div class="phase-num">03</div>
+        <div class="phase-title">Hybrid Architecture</div>
+        <div class="phase-desc">Design the integration layer connecting QPUs to classical infrastructure. Define interfaces, orchestration, error mitigation, and failover.</div>
+      </div>
+      <div class="phase-col">
+        <div class="phase-num">04</div>
+        <div class="phase-title">Build Capability</div>
+        <div class="phase-desc">Upskill data science and engineering teams through structured quantum AI training, mentored projects, and certification pathways.</div>
+      </div>
+      <div class="phase-col">
+        <div class="phase-num">05</div>
+        <div class="phase-title">Strategic Roadmap</div>
+        <div class="phase-desc">Consolidate findings into a board-level three-horizon roadmap with phased investments, milestone governance, and technology watch.</div>
+      </div>
+      <div class="phase-col">
+        <div class="phase-num">06</div>
+        <div class="phase-title">Pillar 3 Transition</div>
+        <div class="phase-desc">Extend quantum AI knowledge across the wider organisation through Pillar 3 education modules, building literacy at every level.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DISCOVERY MODAL -->
+<div class="modal-overlay" id="discovery-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="modal-title">Start Your Discovery</h2>
+      <button class="modal-close" id="modal-close-btn" aria-label="Close discovery form" type="button">&times;</button>
+    </div>
+    <div id="form-view">
+      <div class="form-group">
+        <label class="form-label" for="org-name">Organisation Name <span class="req" aria-label="required">*</span></label>
+        <input class="form-input" id="org-name" type="text" required autocomplete="organization">
+        <p class="form-error" id="org-name-error">Please enter your organisation name.</p>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="contact-name">Primary Contact Name <span class="req" aria-label="required">*</span></label>
+        <input class="form-input" id="contact-name" type="text" required autocomplete="name">
+        <p class="form-error" id="contact-name-error">Please enter a contact name.</p>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="contact-email">Contact Email <span class="req" aria-label="required">*</span></label>
+        <input class="form-input" id="contact-email" type="email" required autocomplete="email">
+        <p class="form-error" id="contact-email-error">Please enter a valid email address.</p>
+      </div>
+      <div class="form-group">
+        <fieldset style="border:none;">
+          <legend class="form-label">Current AI / ML Maturity</legend>
+          <div class="radio-row">
+            <label class="option-item"><input type="radio" name="ai-maturity" value="exploring" checked> Exploring / early stage</label>
+            <label class="option-item"><input type="radio" name="ai-maturity" value="operational"> Operational ML in production</label>
+            <label class="option-item"><input type="radio" name="ai-maturity" value="advanced"> Advanced / multi-model pipelines</label>
+          </div>
+        </fieldset>
+      </div>
+      <div class="form-group">
+        <fieldset style="border:none;">
+          <legend class="form-label">Areas of Interest (select all that apply)</legend>
+          <div class="option-group">
+            <label class="option-item"><input type="checkbox" name="interests" value="qml"> Quantum Machine Learning</label>
+            <label class="option-item"><input type="checkbox" name="interests" value="optimisation"> Quantum Optimisation</label>
+            <label class="option-item"><input type="checkbox" name="interests" value="simulation"> Quantum Simulation and Modelling</label>
+            <label class="option-item"><input type="checkbox" name="interests" value="architecture"> Hybrid Architecture Design</label>
+            <label class="option-item"><input type="checkbox" name="interests" value="talent"> Talent and Capability Building</label>
+            <label class="option-item"><input type="checkbox" name="interests" value="strategy"> Strategic Roadmap</label>
+          </div>
+        </fieldset>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="followup-method">Preferred Follow-up Method</label>
+        <select class="form-select" id="followup-method">
+          <option value="email">Email</option>
+          <option value="phone">Phone call</option>
+          <option value="virtual">Virtual meeting</option>
+        </select>
+      </div>
+      <button class="form-btn" id="submit-discovery-btn" type="button">Submit Discovery Request</button>
+    </div>
+    <div id="confirmation-view" style="display:none;">
+      <div class="confirmation">
+        <div class="confirmation-icon" aria-hidden="true">+</div>
+        <h3>Discovery Request Received</h3>
+        <p>Thank you. Below is a summary of the information you provided. A member of the Diarka Quantum team will follow up using your preferred method to discuss AI and Quantum Integration opportunities.</p>
+        <dl class="confirmation-summary" id="confirmation-summary"></dl>
+        <br>
+        <button class="btn-void" id="modal-done-btn" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">Diarka<span>Quantum</span> Limited</div>
+    <div class="footer-reg">Registered in England &amp; Wales &middot; AI &amp; Quantum Integration Advisory</div>
+  </div>
+  <div class="footer-mid">
+    <a href="mailto:nageshj@diarkaquantum.co.uk" class="email-link">nageshj@diarkaquantum.co.uk</a>
+    <p class="disclaimer">This page is provided for informational purposes only. All service descriptions are indicative and subject to scoping. Diarka Quantum Limited accepts no liability for decisions made based on this content. Designed to meet WCAG 2.1 Level AA guidelines.</p>
+  </div>
+  <div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="pillar-1.html">Pillar 01</a>
+      <a href="#services">Services</a>
+      <a href="#resources">Resources</a>
+      <a href="#next-steps">Next Steps</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <div class="footer-copy" style="margin-top:0.5rem;">&copy; 2025 Diarka Quantum Limited. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+'use strict';
+
+/* CURSOR */
+var cursor=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+var mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',function(e){ mx=e.clientX; my=e.clientY; cursor.style.transform='translate('+(mx-4)+'px,'+(my-4)+'px)'; });
+(function loop(){ rx+=(mx-rx)*0.1; ry+=(my-ry)*0.1; ring.style.transform='translate('+(rx-16)+'px,'+(ry-16)+'px)'; requestAnimationFrame(loop); })();
+document.querySelectorAll('a,button').forEach(function(el){
+  el.addEventListener('mouseenter',function(){ ring.style.width='52px'; ring.style.height='52px'; ring.style.borderColor='rgba(123,47,255,0.6)'; });
+  el.addEventListener('mouseleave',function(){ ring.style.width='32px'; ring.style.height='32px'; ring.style.borderColor='rgba(0,212,255,0.5)'; });
+});
+
+/* STARFIELD */
+var canvas=document.getElementById('universe'),ctx=canvas.getContext('2d');
+var W,H;
+function resize(){ W=canvas.width=window.innerWidth; H=canvas.height=window.innerHeight; }
+resize(); window.addEventListener('resize',resize);
+var stars=[];
+for(var i=0;i<350;i++) stars.push({x:Math.random(),y:Math.random(),r:Math.random()*1.4+0.2,alpha:Math.random()*0.8+0.2,tw:Math.random()*Math.PI*2,sp:Math.random()*0.02+0.004});
+var nebulae=[];
+for(var j=0;j<6;j++) nebulae.push({x:Math.random(),y:Math.random(),r:Math.random()*220+80,col:Math.random()>0.5?'0,212,255':'123,47,255',alpha:Math.random()*0.05+0.01});
+var shooters=[];
+setInterval(function(){ if(shooters.length<3) shooters.push({x:Math.random()*W,y:Math.random()*H*0.5,vx:Math.random()*4+2,vy:Math.random()*2+1,life:1,len:Math.random()*80+40}); },2800);
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  nebulae.forEach(function(n){ var g=ctx.createRadialGradient(n.x*W,n.y*H,0,n.x*W,n.y*H,n.r); g.addColorStop(0,'rgba('+n.col+','+n.alpha+')'); g.addColorStop(1,'transparent'); ctx.fillStyle=g; ctx.beginPath(); ctx.arc(n.x*W,n.y*H,n.r,0,Math.PI*2); ctx.fill(); });
+  stars.forEach(function(s){ s.tw+=s.sp; var a=s.alpha*(0.6+0.4*Math.sin(s.tw)); ctx.beginPath(); ctx.arc(s.x*W,s.y*H,s.r,0,Math.PI*2); ctx.fillStyle=s.r>0.9?'rgba(180,220,255,'+a+')':'rgba(255,255,255,'+a+')'; ctx.fill(); });
+  shooters=shooters.filter(function(s){ return s.life>0; });
+  shooters.forEach(function(s){ ctx.beginPath(); ctx.moveTo(s.x,s.y); ctx.lineTo(s.x-s.vx*s.len*s.life,s.y-s.vy*s.len*s.life); var g=ctx.createLinearGradient(s.x,s.y,s.x-s.vx*s.len,s.y-s.vy*s.len); g.addColorStop(0,'rgba(0,212,255,'+s.life+')'); g.addColorStop(1,'transparent'); ctx.strokeStyle=g; ctx.lineWidth=1.5; ctx.stroke(); s.x+=s.vx; s.y+=s.vy; s.life-=0.011; });
+  requestAnimationFrame(draw);
+}
+draw();
+
+/* SCROLL REVEAL */
+var obs=new IntersectionObserver(function(entries){ entries.forEach(function(e,i){ if(e.isIntersecting){ setTimeout(function(){ e.target.classList.add('visible'); },i*60); obs.unobserve(e.target); } }); },{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(function(r){ obs.observe(r); });
+
+/* EXPAND PANELS */
+document.querySelectorAll('.expand-btn').forEach(function(btn){
+  var panel=document.getElementById(btn.getAttribute('data-target'));
+  if(!panel) return;
+  panel.style.maxHeight='0';
+  btn.addEventListener('click',function(){
+    var expanded=btn.getAttribute('aria-expanded')==='true';
+    btn.setAttribute('aria-expanded',String(!expanded));
+    panel.style.maxHeight=expanded?'0':panel.scrollHeight+'px';
+  });
+});
+
+/* MODAL */
+var overlay=document.getElementById('discovery-modal');
+var modal=overlay.querySelector('.modal');
+var formView=document.getElementById('form-view');
+var confirmView=document.getElementById('confirmation-view');
+var previousFocus=null;
+
+function openModal(){
+  previousFocus=document.activeElement;
+  overlay.classList.add('is-open');
+  overlay.setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+  formView.style.display='';
+  confirmView.style.display='none';
+  var f=modal.querySelector('input,select,button'); if(f) f.focus();
+}
+function closeModal(){
+  overlay.classList.remove('is-open');
+  overlay.setAttribute('aria-hidden','true');
+  document.body.style.overflow='';
+  if(previousFocus) previousFocus.focus();
+}
+
+document.getElementById('hero-discovery-btn').addEventListener('click',openModal);
+document.getElementById('cta-discovery-btn').addEventListener('click',openModal);
+document.getElementById('nav-cta-btn').addEventListener('click',function(e){ e.preventDefault(); openModal(); });
+document.getElementById('modal-close-btn').addEventListener('click',closeModal);
+document.getElementById('modal-done-btn').addEventListener('click',closeModal);
+overlay.addEventListener('click',function(e){ if(e.target===overlay) closeModal(); });
+document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&overlay.classList.contains('is-open')) closeModal(); });
+
+/* Focus trap */
+overlay.addEventListener('keydown',function(e){
+  if(e.key!=='Tab') return;
+  var focusable=modal.querySelectorAll('input,select,button,[tabindex]:not([tabindex="-1"])');
+  if(!focusable.length) return;
+  var first=focusable[0],last=focusable[focusable.length-1];
+  if(e.shiftKey){ if(document.activeElement===first){ e.preventDefault(); last.focus(); } }
+  else { if(document.activeElement===last){ e.preventDefault(); first.focus(); } }
+});
+
+/* FORM VALIDATION */
+function showErr(id,eid){ document.getElementById(id).classList.add('is-error'); document.getElementById(eid).classList.add('is-visible'); }
+function clearErr(id,eid){ document.getElementById(id).classList.remove('is-error'); document.getElementById(eid).classList.remove('is-visible'); }
+function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+function esc(s){ var d=document.createElement('div'); d.appendChild(document.createTextNode(s)); return d.innerHTML; }
+
+document.getElementById('submit-discovery-btn').addEventListener('click',function(){
+  var valid=true;
+  var org=document.getElementById('org-name').value.trim();
+  var name=document.getElementById('contact-name').value.trim();
+  var email=document.getElementById('contact-email').value.trim();
+  clearErr('org-name','org-name-error'); clearErr('contact-name','contact-name-error'); clearErr('contact-email','contact-email-error');
+  if(!org){ showErr('org-name','org-name-error'); valid=false; }
+  if(!name){ showErr('contact-name','contact-name-error'); valid=false; }
+  if(!email||!validEmail(email)){ showErr('contact-email','contact-email-error'); valid=false; }
+  if(!valid){ var f=modal.querySelector('.is-error'); if(f) f.focus(); return; }
+
+  var maturity=document.querySelector('input[name="ai-maturity"]:checked');
+  var maturityLabel=maturity?maturity.parentElement.textContent.trim():'Not specified';
+  var interests=[];
+  document.querySelectorAll('input[name="interests"]:checked').forEach(function(cb){ interests.push(cb.parentElement.textContent.trim()); });
+  var followup=document.getElementById('followup-method');
+  var followupLabel=followup.options[followup.selectedIndex].text;
+
+  document.getElementById('confirmation-summary').innerHTML=
+    '<dt>Organisation</dt><dd>'+esc(org)+'</dd>'+
+    '<dt>Contact</dt><dd>'+esc(name)+' — '+esc(email)+'</dd>'+
+    '<dt>AI/ML Maturity</dt><dd>'+esc(maturityLabel)+'</dd>'+
+    '<dt>Areas of Interest</dt><dd>'+(interests.length?esc(interests.join(', ')):'None selected')+'</dd>'+
+    '<dt>Preferred Follow-up</dt><dd>'+esc(followupLabel)+'</dd>';
+  formView.style.display='none';
+  confirmView.style.display='';
+  document.getElementById('modal-done-btn').focus();
+});
+
+/* DOWNLOADABLE RESOURCES */
+var downloads={
+  'scoring':{filename:'ai-quantum-opportunity-scoring-matrix.csv',mime:'text/csv',content:'Use Case ID,Use Case Name,Domain,Quantum Advantage Type,Feasibility (1-5),Business Impact (1-5),Data Readiness (1-5),Time to Value (1-5),Competitive Differentiation (1-5),Weighted Score,Priority,Notes\nAQ-001,Portfolio Optimisation,Finance,Combinatorial Optimisation,4,5,4,3,4,20,High,QAOA approach; benchmark against classical MIP solver\nAQ-002,Drug Molecule Simulation,Pharma,Quantum Simulation,2,5,3,1,5,16,Medium,Requires error-corrected hardware; long-term strategic play\nAQ-003,Fraud Detection Enhancement,Finance,Quantum Kernel Methods,3,4,5,3,3,18,High,QML classifier on transaction feature space; compare with XGBoost\nAQ-004,Supply Chain Routing,Logistics,Quantum Annealing,4,4,4,4,3,19,High,QUBO formulation; D-Wave compatible; compare with OR-Tools\nAQ-005,Hyperparameter Optimisation,ML Ops,Variational Methods,3,3,5,4,2,17,Medium,VQE-inspired search over hyperparameter space\nAQ-006,Materials Property Prediction,Manufacturing,Quantum Simulation,2,4,2,1,5,14,Low,Hamiltonian simulation; exploratory phase; TRL 2-3\nAQ-007,Anomaly Detection,Cybersecurity,Quantum Kernel Methods,3,4,4,3,3,17,Medium,Quantum-enhanced feature mapping; IQP circuit encoding\n'},
+  'architecture':{filename:'hybrid-architecture-checklist.csv',mime:'text/csv',content:'Category,Check Item,Status,Owner,Notes\nData Pipeline,Data encoding scheme defined (amplitude / angle / basis),Not Started,,\nData Pipeline,Classical preprocessing pipeline documented,Not Started,,\nData Pipeline,Quantum result post-processing workflow specified,Not Started,,\nData Pipeline,Encoding overhead analysis completed (circuit depth vs data dimensionality),Not Started,,\nIntegration Layer,QPU API integration endpoints identified,Not Started,,\nIntegration Layer,Circuit compilation and transpilation pipeline configured (Qiskit / tket / Cirq),Not Started,,\nIntegration Layer,Job submission and queue management designed,Not Started,,\nIntegration Layer,Circuit optimisation level selected (gate cancellation / routing / scheduling),Not Started,,\nOrchestration,Routing logic (quantum vs classical execution) defined,Not Started,,\nOrchestration,Cost-based execution selection criteria established,Not Started,,\nOrchestration,Batch vs real-time execution patterns documented,Not Started,,\nOrchestration,Confidence threshold for quantum result acceptance defined,Not Started,,\nResilience,Failover to classical execution mechanism in place,Not Started,,\nResilience,Low-confidence result detection and re-execution logic,Not Started,,\nResilience,Error mitigation strategy selected (ZNE / PEC / TREX / M3),Not Started,,\nResilience,Circuit re-compilation strategy for hardware calibration drift,Not Started,,\nPlatform,Cloud quantum platform evaluated (IBM / Braket / Azure / Google),Not Started,,\nPlatform,Qubit count and connectivity requirements estimated,Not Started,,\nPlatform,Gate fidelity requirements documented,Not Started,,\nPlatform,SLA and availability requirements documented,Not Started,,\nSecurity,Quantum channel encryption requirements assessed,Not Started,,\nSecurity,Data residency and compliance constraints mapped,Not Started,,\nMonitoring,Quantum job telemetry and logging configured,Not Started,,\nMonitoring,Performance benchmarking dashboard designed,Not Started,,\nMonitoring,Error rate tracking and alerting thresholds set,Not Started,,\n'},
+  'benchmark':{filename:'qml-benchmark-template.csv',mime:'text/csv',content:'Benchmark ID,Model Type,Dataset,Num Features,Num Samples,Encoding Method,Num Qubits,Circuit Depth,Ansatz Type,Classical Baseline,Quantum Accuracy (%),Classical Accuracy (%),Quantum Train Time (s),Classical Train Time (s),Hardware / Simulator,Noise Model,Error Rate (%),Error Mitigation,Advantage Observed,Statistical Significance (p-value),Notes\nBM-001,Variational Classifier,Iris (subset),4,100,Angle Encoding,4,12,RealAmplitudes,SVM (RBF),,,,,,Qiskit Aer (noiseless),,,,,\nBM-002,Quantum Kernel SVM,Synthetic 2D,2,200,ZZ Feature Map,2,6,N/A,Classical SVM,,,,,,Qiskit Aer (noiseless),,,,,\nBM-003,QAOA Classifier,MNIST (binary),16,500,Amplitude Encoding,4,8,QAOA-inspired,Random Forest,,,,,,IBM Brisbane,,,,,,\nBM-004,Hybrid QNN,Custom tabular,8,1000,Angle Encoding,8,16,EfficientSU2,Dense NN (2-layer),,,,,,Amazon Braket SV1,,,,,\nBM-005,Quantum Reservoir,Time series,12,2000,Basis Encoding,12,1,Fixed random,LSTM,,,,,,Qiskit Aer (noise model),,,,,\n'}
+};
+document.querySelectorAll('[data-download]').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var f=downloads[btn.getAttribute('data-download')];
+    if(!f) return;
+    var blob=new Blob([f.content],{type:f.mime});
+    var url=URL.createObjectURL(blob);
+    var a=document.createElement('a'); a.href=url; a.download=f.filename;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+});
+
+})();
+</script>
+</body>
+</html>
