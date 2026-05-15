@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diarka Quantum Academy — Module Access Portal</title>
+<meta name="description" content="Access your purchased Diarka Quantum Academy modules. Four levels of quantum computing education — from Quantum Essentials to Quantum Research.">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png">
+<link rel="icon" type="image/png" sizes="64x64" href="/favicon-64x64.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="shortcut icon" href="/favicon.ico">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Raleway:wght@300;400;500;600&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --void: #00010a;
+  --deep-space: #020818;
+  --nebula-dark: #060d2e;
+  --cosmic-blue: #0a1628;
+  --stellar: #e8f4ff;
+  --nebula-teal: #00d4ff;
+  --nebula-teal-dim: #0099bb;
+  --pulsar: #7b2fff;
+  --pulsar-dim: #5a1fcc;
+  --nova: #ff6b35;
+  --starlight: #c8d8ff;
+  --muted: #4a6080;
+  --border: rgba(0,212,255,0.1);
+  --border-purple: rgba(123,47,255,0.15);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--void); color: var(--stellar); font-family: 'Raleway', sans-serif; font-weight: 400; overflow-x: hidden; cursor: none; min-height: 100vh; }
+
+/* CURSOR */
+.cursor { width: 8px; height: 8px; background: var(--nebula-teal); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; box-shadow: 0 0 10px var(--nebula-teal), 0 0 20px var(--nebula-teal); transform: translate(-50%,-50%); transition: transform 0.1s; }
+.cursor-ring { width: 32px; height: 32px; border: 1px solid rgba(0,212,255,0.5); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; transition: transform 0.15s ease, width 0.2s, height 0.2s; transform: translate(-50%,-50%); }
+#universe { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+
+/* NAV */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.2rem 3rem; display: flex; align-items: center; justify-content: space-between; background: linear-gradient(to bottom, rgba(0,1,10,0.95), transparent); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+.nav-logo { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 1rem; letter-spacing: 0.12em; text-decoration: none; color: var(--stellar); display: flex; align-items: center; gap: 0.75rem; }
+.brand-logo-img { width: 44px; height: 44px; object-fit: contain; display: block; flex-shrink: 0; filter: drop-shadow(0 0 8px rgba(0,212,255,0.4)); transition: filter 0.3s; }
+.nav-logo:hover .brand-logo-img { filter: drop-shadow(0 0 14px rgba(0,212,255,0.7)); }
+.nav-logo span { color: var(--nebula-teal); }
+.nav-back { background: transparent; border: 1px solid var(--border); color: var(--starlight); padding: 0.5rem 1.2rem; font-family: 'Orbitron', monospace; font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; transition: background 0.2s, box-shadow 0.2s, color 0.2s; }
+.nav-back:hover { background: rgba(0,212,255,0.06); color: var(--nebula-teal); border-color: var(--nebula-teal); }
+
+/* PAGE WRAPPER */
+.portal-wrap { position: relative; z-index: 1; padding: 8rem 4rem 6rem; max-width: 1200px; margin: 0 auto; }
+
+/* PAGE HEADER */
+.portal-header { text-align: center; margin-bottom: 4rem; opacity: 0; animation: fadeUp 0.9s 0.3s forwards; }
+.portal-eyebrow { font-family: 'Orbitron', monospace; font-size: 0.58rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--nebula-teal); margin-bottom: 1.2rem; }
+.portal-title { font-family: 'Orbitron', monospace; font-weight: 900; font-size: clamp(1.8rem, 4vw, 3rem); line-height: 1.1; letter-spacing: 0.04em; margin-bottom: 1rem; }
+.portal-title span { color: var(--nebula-teal); }
+.portal-subtitle { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(0.95rem, 1.4vw, 1.2rem); color: var(--starlight); max-width: 600px; margin: 0 auto; line-height: 1.7; }
+
+/* ACCESS NOTICE */
+.access-notice { background: rgba(6,13,46,0.8); border: 1px solid var(--border-purple); padding: 2rem 2.5rem; margin-bottom: 3.5rem; position: relative; overflow: hidden; opacity: 0; animation: fadeUp 0.9s 0.5s forwards; }
+.access-notice::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--pulsar), var(--nebula-teal)); }
+.notice-title { font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.78rem; color: var(--nebula-teal); letter-spacing: 0.06em; margin-bottom: 0.6rem; }
+.notice-text { font-size: 0.8rem; line-height: 1.8; color: var(--starlight); font-weight: 300; }
+.notice-text strong { color: var(--stellar); font-weight: 600; }
+
+/* STATUS LEGEND */
+.portal-legend { display: flex; gap: 2rem; margin-bottom: 3rem; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.9s 0.6s forwards; }
+.legend-item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--starlight); font-family: 'Orbitron', monospace; }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.dot-available { background: var(--nebula-teal); box-shadow: 0 0 8px var(--nebula-teal); }
+.dot-notify { background: var(--pulsar); box-shadow: 0 0 8px var(--pulsar); }
+.dot-soon { background: var(--muted); }
+
+/* LEVEL BLOCK */
+.portal-level { margin-bottom: 2.5rem; border: 1px solid var(--border); background: rgba(2,8,24,0.6); opacity: 0; animation: fadeUp 0.9s forwards; }
+.portal-level:nth-child(1) { animation-delay: 0.7s; }
+.portal-level:nth-child(2) { animation-delay: 0.85s; }
+.portal-level:nth-child(3) { animation-delay: 1s; }
+.portal-level:nth-child(4) { animation-delay: 1.15s; }
+
+.level-head { display: grid; grid-template-columns: auto 1fr auto; gap: 1.5rem; align-items: center; padding: 1.8rem 2.5rem; border-bottom: 1px solid var(--border); background: rgba(6,13,46,0.5); cursor: pointer; transition: background 0.2s; user-select: none; }
+.level-head:hover { background: rgba(6,13,46,0.8); }
+.level-head-num { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 1.8rem; line-height: 1; letter-spacing: 0.05em; }
+.lv1 .level-head-num { color: var(--nebula-teal); text-shadow: 0 0 20px rgba(0,212,255,0.4); }
+.lv2 .level-head-num, .lv3 .level-head-num, .lv4 .level-head-num { color: var(--muted); }
+.level-head-info { display: flex; flex-direction: column; gap: 0.3rem; }
+.level-head-name { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 0.95rem; color: var(--stellar); letter-spacing: 0.04em; }
+.lv2 .level-head-name, .lv3 .level-head-name, .lv4 .level-head-name { color: var(--muted); }
+.level-head-target { font-size: 0.7rem; color: var(--starlight); }
+.lv2 .level-head-target, .lv3 .level-head-target, .lv4 .level-head-target { color: var(--muted); }
+.level-head-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem; }
+.level-status-badge { font-family: 'Orbitron', monospace; font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.3rem 0.8rem; border: 1px solid; }
+.badge-active { color: var(--nebula-teal); border-color: rgba(0,212,255,0.3); background: rgba(0,212,255,0.05); }
+.badge-dev { color: var(--muted); border-color: rgba(74,96,128,0.3); }
+.level-toggle { font-family: 'Orbitron', monospace; font-size: 0.55rem; color: var(--muted); letter-spacing: 0.1em; }
+
+/* MODULE ROWS */
+.level-body { display: none; padding: 1.5rem 2rem; display: flex; flex-direction: column; gap: 0.7rem; }
+.portal-module { display: grid; grid-template-columns: 52px 1fr auto; gap: 1.2rem; align-items: center; padding: 1.2rem 1.5rem; border: 1px solid var(--border); background: rgba(6,13,46,0.3); transition: border-color 0.25s, background 0.25s; position: relative; }
+.pm-available { border-left: 3px solid var(--nebula-teal); }
+.pm-available:hover { border-color: rgba(0,212,255,0.35); background: rgba(6,13,46,0.7); }
+.pm-notify { border-left: 3px solid var(--pulsar); opacity: 0.9; }
+.pm-notify:hover { border-color: rgba(123,47,255,0.35); background: rgba(6,13,46,0.7); }
+.pm-soon { border-left: 3px solid var(--muted); opacity: 0.55; }
+.pm-locked { border-left: 3px solid rgba(74,96,128,0.3); opacity: 0.4; }
+.pm-num { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 0.62rem; color: var(--muted); letter-spacing: 0.1em; line-height: 1; }
+.pm-available .pm-num { color: var(--nebula-teal); }
+.pm-notify .pm-num { color: var(--pulsar); }
+.pm-title { font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.76rem; color: var(--stellar); letter-spacing: 0.02em; margin-bottom: 0.25rem; line-height: 1.3; }
+.pm-desc { font-size: 0.7rem; line-height: 1.6; color: var(--starlight); font-weight: 300; }
+.pm-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 0.45rem; min-width: 140px; }
+.pm-status { font-family: 'Orbitron', monospace; font-size: 0.48rem; letter-spacing: 0.18em; text-transform: uppercase; padding: 0.22rem 0.55rem; border: 1px solid; }
+.ps-available { color: var(--nebula-teal); border-color: rgba(0,212,255,0.3); background: rgba(0,212,255,0.05); }
+.ps-free { color: var(--nova); border-color: rgba(255,107,53,0.3); background: rgba(255,107,53,0.05); }
+.ps-notify { color: var(--pulsar); border-color: rgba(123,47,255,0.3); background: rgba(123,47,255,0.05); }
+.ps-soon { color: var(--muted); border-color: rgba(74,96,128,0.3); }
+.pm-price { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 0.95rem; color: var(--nebula-teal); line-height: 1; }
+.pm-price-free { color: var(--nova); }
+.pm-btn { font-family: 'Orbitron', monospace; font-size: 0.5rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.48rem 1rem; text-decoration: none; display: inline-block; text-align: center; transition: box-shadow 0.2s, transform 0.2s, background 0.2s; cursor: pointer; border: none; white-space: nowrap; }
+.pm-btn-read { background: linear-gradient(135deg, var(--pulsar), var(--nebula-teal)); color: var(--void); font-weight: 700; }
+.pm-btn-read:hover { box-shadow: 0 0 24px rgba(123,47,255,0.5); transform: translateY(-2px); }
+.pm-btn-buy { background: transparent; border: 1px solid var(--nebula-teal); color: var(--nebula-teal); }
+.pm-btn-buy:hover { background: rgba(0,212,255,0.08); box-shadow: 0 0 18px rgba(0,212,255,0.25); transform: translateY(-2px); }
+.pm-btn-notify { background: transparent; border: 1px solid var(--pulsar); color: var(--pulsar); }
+.pm-btn-notify:hover { background: rgba(123,47,255,0.08); }
+.pm-btn-soon { background: transparent; border: 1px solid var(--muted); color: var(--muted); cursor: not-allowed; }
+
+/* BUNDLE STRIP */
+.bundle-strip { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding: 1.2rem 2rem; border-top: 1px solid var(--border); background: rgba(6,13,46,0.4); flex-wrap: wrap; }
+.bundle-strip-text { font-size: 0.72rem; color: var(--starlight); font-weight: 300; line-height: 1.6; }
+.bundle-strip-text strong { color: var(--nebula-teal); font-weight: 600; font-family: 'Orbitron', monospace; font-size: 0.68rem; }
+
+/* LEVEL COMING SOON */
+.level-coming { padding: 2rem 2.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+.lc-text { }
+.lc-tag { font-family: 'Orbitron', monospace; font-size: 0.52rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
+.lc-title { font-size: 0.78rem; color: var(--starlight); font-weight: 300; line-height: 1.6; }
+.lc-modules { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.4rem; margin-top: 1.2rem; }
+.lc-mod { font-size: 0.68rem; color: var(--muted); padding: 0.4rem 0.6rem; border-left: 1px solid var(--border); display: flex; gap: 0.5rem; line-height: 1.4; }
+.lc-mod-num { font-family: 'Orbitron', monospace; font-size: 0.52rem; color: rgba(74,96,128,0.6); flex-shrink: 0; }
+.lc-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 0.6rem; flex-shrink: 0; }
+
+/* NOTIFY MODAL */
+.notify-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,1,10,0.92); z-index: 1000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
+.notify-box { background: var(--deep-space); border: 1px solid var(--border-purple); padding: 3rem; max-width: 460px; width: 90%; position: relative; }
+.notify-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--pulsar), var(--nebula-teal)); }
+.notify-tag { font-family: 'Orbitron', monospace; font-size: 0.52rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--pulsar); margin-bottom: 0.7rem; }
+.notify-title { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 0.88rem; color: var(--stellar); margin-bottom: 0.5rem; letter-spacing: 0.03em; line-height: 1.3; }
+.notify-desc { font-size: 0.76rem; line-height: 1.75; color: var(--starlight); font-weight: 300; margin-bottom: 1.5rem; }
+.notify-input { background: rgba(6,13,46,0.8); border: 1px solid var(--border); color: var(--stellar); padding: 0.85rem 1rem; font-family: 'Raleway', sans-serif; font-size: 0.85rem; width: 100%; outline: none; transition: border-color 0.2s, box-shadow 0.2s; margin-bottom: 1rem; }
+.notify-input:focus { border-color: var(--nebula-teal); box-shadow: 0 0 12px rgba(0,212,255,0.1); }
+.notify-submit { background: linear-gradient(135deg, var(--pulsar), var(--nebula-teal)); color: var(--void); border: none; padding: 0.9rem 2rem; font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; transition: box-shadow 0.2s; width: 100%; }
+.notify-submit:hover { box-shadow: 0 0 30px rgba(123,47,255,0.5); }
+.notify-close-btn { background: transparent; border: 1px solid var(--border); color: var(--muted); padding: 0.5rem 1.2rem; font-family: 'Orbitron', monospace; font-size: 0.5rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; margin-top: 0.8rem; transition: color 0.2s, border-color 0.2s; display: block; width: 100%; }
+.notify-close-btn:hover { color: var(--stellar); border-color: var(--starlight); }
+.notify-success { display: none; text-align: center; padding: 1.5rem 0; }
+.notify-success-mark { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 1.4rem; color: var(--nebula-teal); margin-bottom: 0.5rem; letter-spacing: 0.05em; }
+.notify-success-text { font-size: 0.78rem; color: var(--starlight); line-height: 1.7; }
+
+/* FOOTER */
+footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 2.5rem 4rem; display: flex; align-items: center; justify-content: space-between; background: rgba(0,1,10,0.95); flex-wrap: wrap; gap: 1rem; }
+.footer-logo { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 0.9rem; letter-spacing: 0.1em; }
+.footer-logo span { color: var(--nebula-teal); }
+.footer-reg { font-size: 0.6rem; color: var(--muted); margin-top: 0.3rem; }
+.footer-links { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+.footer-links a { font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: var(--nebula-teal); }
+.footer-copy { font-size: 0.6rem; color: var(--muted); }
+
+/* ANIMATIONS */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes blackhole-pulse { 0%,100% { box-shadow: 0 0 80px 30px rgba(123,47,255,0.2), 0 0 160px 60px rgba(0,212,255,0.08); } 50% { box-shadow: 0 0 120px 50px rgba(123,47,255,0.3), 0 0 220px 80px rgba(0,212,255,0.12); } }
+@keyframes ring-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+@media (max-width: 900px) {
+  nav { padding: 1.2rem 1.5rem; }
+  .portal-wrap { padding: 7rem 1.5rem 4rem; }
+  .level-head { grid-template-columns: auto 1fr; gap: 1rem; padding: 1.4rem 1.5rem; }
+  .level-head-right { display: none; }
+  .portal-module { grid-template-columns: 44px 1fr; gap: 1rem; padding: 1rem 1.2rem; }
+  .pm-actions { grid-column: 2; flex-direction: row; flex-wrap: wrap; align-items: center; gap: 0.4rem; }
+  .lc-modules { grid-template-columns: 1fr; }
+  .level-coming { flex-direction: column; align-items: flex-start; }
+  .lc-actions { align-items: flex-start; }
+  footer { flex-direction: column; text-align: center; padding: 2rem; }
+  .footer-links { justify-content: center; }
+  .portal-legend { gap: 1rem; }
+  .bundle-strip { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+<canvas id="universe"></canvas>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="/diarka-logo-header-180w.png" alt="Diarka Quantum Logo" class="brand-logo-img">
+    Diarka<span>Quantum</span>
+  </a>
+  <a href="index.html" class="nav-back">Back to Main Site</a>
+</nav>
+
+<!-- PORTAL CONTENT -->
+<div class="portal-wrap">
+
+  <!-- HEADER -->
+  <div class="portal-header">
+    <div class="portal-eyebrow">Diarka Quantum Academy</div>
+    <h1 class="portal-title">Your Quantum <span>Learning Path</span></h1>
+    <p class="portal-subtitle">All four levels. All modules. Purchase individually as they release — or notify us to be first when the next one lands.</p>
+  </div>
+
+  <!-- ACCESS NOTICE -->
+  <div class="access-notice">
+    <div class="notice-title">How Access Works</div>
+    <div class="notice-text">
+      Each module is purchased individually at <strong>£14 per module</strong>. After purchase, your access link is delivered automatically to your inbox by Lemon Squeezy — the secure payment platform we use. <strong>Keep that email.</strong> Your link is your access. It does not expire. If you cannot find it, check your spam folder or contact us at <strong>nageshj@diarkaquantum.co.uk</strong> and we will resend it within 24 hours. Bundle pricing for the full Level 1 (all 7 modules) will be available once all modules are released.
+    </div>
+  </div>
+
+  <!-- LEGEND -->
+  <div class="portal-legend">
+    <div class="legend-item"><span class="legend-dot dot-available"></span><span class="legend-label">Available Now</span></div>
+    <div class="legend-item"><span class="legend-dot dot-notify"></span><span class="legend-label">Releasing Next — Notify Me</span></div>
+    <div class="legend-item"><span class="legend-dot dot-soon"></span><span class="legend-label">Coming Soon</span></div>
+  </div>
+
+  <!-- LEVEL 1 -->
+  <div class="portal-level lv1">
+    <div class="level-head" onclick="toggleLevel(this)">
+      <div class="level-head-num">01</div>
+      <div class="level-head-info">
+        <div class="level-head-name">Quantum Essentials</div>
+        <div class="level-head-target">Business leaders · Consultants · Policy professionals · Strategy teams · No prior knowledge required</div>
+      </div>
+      <div class="level-head-right">
+        <div class="level-status-badge badge-active">Active — Releasing Now</div>
+        <div class="level-toggle">7 Modules · £14 each</div>
+      </div>
+    </div>
+    <div class="level-body" id="body-lv1" style="display:flex;">
+
+      <!-- M01 -->
+      <div class="portal-module pm-available">
+        <div class="pm-num">M01</div>
+        <div>
+          <div class="pm-title">Why Classical Computers Hit a Fundamental Wall</div>
+          <div class="pm-desc">Bits, transistors, Moore's Law, quantum tunnelling, the physics wall, three unsolvable problem classes. The essential foundation for everything that follows.</div>
+        </div>
+        <div class="pm-actions">
+          <div class="pm-status ps-free">Free Preview</div>
+          <div class="pm-price pm-price-free">Free</div>
+          <a href="module-1.html" class="pm-btn pm-btn-read">Read Now</a>
+        </div>
+      </div>
+
+      <!-- M02 -->
+      <div class="portal-module pm-available">
+        <div class="pm-num">M02</div>
+        <div>
+          <div class="pm-title">Qubits, Superposition &amp; Entanglement Explained</div>
+          <div class="pm-desc">Dirac notation, Bloch sphere, Born rule, measurement collapse, Bell states, CNOT gate, Bell state circuit, first Qiskit code. The three pillars of quantum computing.</div>
+        </div>
+        <div class="pm-actions">
+          <div class="pm-status ps-available">Available</div>
+          <div class="pm-price">£14</div>
+          <a href="https://diarkaquantum.lemonsqueezy.com/buy/module-2" class="pm-btn pm-btn-buy" target="_blank" rel="noopener">Buy Module</a>
+        </div>
+      </div>
+
+      <!-- M03 -->
+      <div class="portal-module pm-notify">
+        <div class="pm-num">M03</div>
+        <div>
+          <div class="pm-title">Quantum Hardware Landscape Today</div>
+          <div class="pm-desc">Coherence times compared, speed vs fidelity vs scalability, UK quantum companies in depth, global hardware race, how to choose a platform for your use case.</div>
+        </div>
+        <div class="pm-actions">
+          <div class="pm-status ps-notify">Releasing Next</div>
+          <div class="pm-price">£14</div>
+          <button class="pm-btn pm-btn-notify" onclick="openNotify('Module 3 — Quantum Hardware Landscape Today')">Notify Me</button>
+        </div>
+      </div>
+
+      <!-- M04 -->
+      <div class="portal-module pm-soon">
+        <div class="pm-num">M04</div>
+        <div>
+          <div class="pm-title">Quantum Algorithms &amp; Where Advantage Is Real</div>
+          <div class="pm-desc">Shor's full threat timeline, Grover's business applications, QAOA industry use cases, VQE for drug discovery, and where quantum does not help.</div>
+        </div>
+        <div class="pm-actions">
+          <div class="pm-status ps-soon">Coming Soon</div>
+          <div class="pm-price">£14</div>
+          <button class="pm-btn pm-btn-soon" disabled>Coming Soon</button>
+        </div>
+      </div>
+
+      <!-- M05 -->
+      <div class="portal-module pm-soon">
+        <div class="pm-num">M05</div>
+        <div>
+          <div class="pm-title">AI-Quantum Convergence &amp; Quantum Machine Learning</div>
+          <div class="pm-desc">What QML actually is, three convergence categories, hybrid classical-quantum models, honest 2025-2030 timeline, what to do about it today.</div>
+        </div>
+        <div class="pm-actions">
+          <div class="pm-status ps-soon">Coming Soon</div>
+          <div class="pm-price">£14</div>
+          <button class="pm-btn pm-btn-soon" disabled>Coming Soon</button>
+        </div>
+      </div>
+
+      <!-- M06 -->
+      <div class="portal-module pm-soon">
+        <div class="pm-num">M06</div>
+        <div>
+          <div class="pm-title">Post-Quantum Cryptography &amp; NIST Standards</div>
+          <div class="pm-desc">CRYSTALS-Kyber, Dilithium, SPHINCS+ implementation guidance, crypto-agility architecture, sector risk mapping, full migration roadmap.</div>
+        </div>
+        <div class="pm-actions">
+          <div class="pm-status ps-soon">Coming Soon</div>
+          <div class="pm-price">£14</div>
+          <button class="pm-btn pm-btn-soon" disabled>Coming Soon</button>
+        </div>
+      </div>
+
+      <!-- M07 -->
+      <div class="portal-module pm-soon">
+        <div class="pm-num">M07</div>
+        <div>
+          <div class="pm-title">Quantum Strategy for Organisations</div>
+          <div class="pm-desc">Quantum readiness framework, build vs buy vs partner, talent pipeline, UK government strategy, vendor evaluation criteria, 5-year roadmap template.</div>
+        </div>
+        <div class="pm-actions">
+          <div class="pm-status ps-soon">Coming Soon</div>
+          <div class="pm-price">£14</div>
+          <button class="pm-btn pm-btn-soon" disabled>Coming Soon</button>
+        </div>
+      </div>
+
+      <div class="bundle-strip">
+        <div class="bundle-strip-text">
+          <strong>Level 1 Bundle — £70</strong> — Save £28 on all 7 modules. Bundle pricing will appear here automatically once all modules are released. Notify list members will be first to know.
+        </div>
+        <button class="pm-btn pm-btn-notify" onclick="openNotify('Level 1 Bundle — Quantum Essentials')">Notify Me When Bundle Is Available</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEVEL 2 -->
+  <div class="portal-level lv2">
+    <div class="level-head" onclick="toggleLevel(this)">
+      <div class="level-head-num">02</div>
+      <div class="level-head-info">
+        <div class="level-head-name">Quantum Practitioner</div>
+        <div class="level-head-target">Software developers · Data scientists · Technical consultants · BI professionals · Prerequisite: Level 01</div>
+      </div>
+      <div class="level-head-right">
+        <div class="level-status-badge badge-dev">In Development</div>
+        <div class="level-toggle">10 Modules · £29 each</div>
+      </div>
+    </div>
+    <div class="level-body" id="body-lv2" style="display:none;">
+      <div class="level-coming">
+        <div class="lc-text">
+          <div class="lc-tag">In Development — Releasing After Level 01 Completes</div>
+          <div class="lc-title">Level 2 takes you from conceptual understanding into hands-on quantum programming. Linear algebra, gate matrices, Qiskit, PennyLane, Grover's implementation, VQE and QAOA in code.</div>
+          <div class="lc-modules">
+            <div class="lc-mod"><span class="lc-mod-num">M01</span>Linear Algebra for Quantum Computing</div>
+            <div class="lc-mod"><span class="lc-mod-num">M02</span>Quantum States as Vectors &amp; Density Matrices</div>
+            <div class="lc-mod"><span class="lc-mod-num">M03</span>Complete Quantum Gate Theory</div>
+            <div class="lc-mod"><span class="lc-mod-num">M04</span>Universal Gate Sets &amp; Circuit Complexity</div>
+            <div class="lc-mod"><span class="lc-mod-num">M05</span>Hands-On Qiskit I — Circuits &amp; Simulators</div>
+            <div class="lc-mod"><span class="lc-mod-num">M06</span>Hands-On Qiskit II — Noise, Real Hardware &amp; Error Mitigation</div>
+            <div class="lc-mod"><span class="lc-mod-num">M07</span>Hands-On PennyLane — Differentiable Quantum Circuits</div>
+            <div class="lc-mod"><span class="lc-mod-num">M08</span>Implementing Grover's Algorithm</div>
+            <div class="lc-mod"><span class="lc-mod-num">M09</span>Variational Quantum Algorithms — VQE &amp; QAOA</div>
+            <div class="lc-mod"><span class="lc-mod-num">M10</span>Quantum Information Theory</div>
+          </div>
+        </div>
+        <div class="lc-actions">
+          <button class="pm-btn pm-btn-notify" onclick="openNotify('Level 2 — Quantum Practitioner')">Notify Me When Level 2 Launches</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEVEL 3 -->
+  <div class="portal-level lv3">
+    <div class="level-head" onclick="toggleLevel(this)">
+      <div class="level-head-num">03</div>
+      <div class="level-head-info">
+        <div class="level-head-name">Quantum Engineer</div>
+        <div class="level-head-target">Quantum software engineers · Research scientists · PhD candidates · Prerequisite: Level 02</div>
+      </div>
+      <div class="level-head-right">
+        <div class="level-status-badge badge-dev">In Development</div>
+        <div class="level-toggle">10 Modules · £39 each</div>
+      </div>
+    </div>
+    <div class="level-body" id="body-lv3" style="display:none;">
+      <div class="level-coming">
+        <div class="lc-text">
+          <div class="lc-tag">In Development — Releasing After Level 02 Completes</div>
+          <div class="lc-title">Level 3 covers quantum error correction, surface codes, fault tolerance, QFT, HHL, complexity theory, pulse-level control, quantum networking, and advanced cryptography protocols.</div>
+          <div class="lc-modules">
+            <div class="lc-mod"><span class="lc-mod-num">M01</span>Open Quantum Systems &amp; Advanced Density Matrix Theory</div>
+            <div class="lc-mod"><span class="lc-mod-num">M02</span>Quantum Error Correction — Theory</div>
+            <div class="lc-mod"><span class="lc-mod-num">M03</span>Surface Codes &amp; Fault-Tolerant Quantum Computing</div>
+            <div class="lc-mod"><span class="lc-mod-num">M04</span>Quantum Fourier Transform &amp; Phase Estimation</div>
+            <div class="lc-mod"><span class="lc-mod-num">M05</span>Advanced Algorithms — HHL &amp; Quantum Walks</div>
+            <div class="lc-mod"><span class="lc-mod-num">M06</span>Quantum Complexity Theory</div>
+            <div class="lc-mod"><span class="lc-mod-num">M07</span>Pulse-Level Quantum Control</div>
+            <div class="lc-mod"><span class="lc-mod-num">M08</span>Quantum Networking &amp; Repeaters</div>
+            <div class="lc-mod"><span class="lc-mod-num">M09</span>Advanced Quantum Cryptography</div>
+            <div class="lc-mod"><span class="lc-mod-num">M10</span>Research Skills &amp; Scientific Literature</div>
+          </div>
+        </div>
+        <div class="lc-actions">
+          <button class="pm-btn pm-btn-notify" onclick="openNotify('Level 3 — Quantum Engineer')">Notify Me When Level 3 Launches</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEVEL 4 -->
+  <div class="portal-level lv4">
+    <div class="level-head" onclick="toggleLevel(this)">
+      <div class="level-head-num">04</div>
+      <div class="level-head-info">
+        <div class="level-head-name">Quantum Research</div>
+        <div class="level-head-target">Research scientists · Quantum hardware engineers · Academics · Prerequisite: Level 03</div>
+      </div>
+      <div class="level-head-right">
+        <div class="level-status-badge badge-dev">In Development</div>
+        <div class="level-toggle">10 Modules · £49 each</div>
+      </div>
+    </div>
+    <div class="level-body" id="body-lv4" style="display:none;">
+      <div class="level-coming">
+        <div class="lc-text">
+          <div class="lc-tag">In Development — Releasing After Level 03 Completes</div>
+          <div class="lc-title">Level 4 operates at research frontier: topological computing, magic state distillation, QML research, quantum field theory simulation, advanced hardware engineering, and a supervised capstone project.</div>
+          <div class="lc-modules">
+            <div class="lc-mod"><span class="lc-mod-num">M01</span>Topological Quantum Computing</div>
+            <div class="lc-mod"><span class="lc-mod-num">M02</span>Magic State Distillation &amp; Fault-Tolerant Gate Synthesis</div>
+            <div class="lc-mod"><span class="lc-mod-num">M03</span>Quantum Machine Learning — Research Frontier</div>
+            <div class="lc-mod"><span class="lc-mod-num">M04</span>Quantum Simulation &amp; Quantum Field Theory</div>
+            <div class="lc-mod"><span class="lc-mod-num">M05</span>Advanced Quantum Hardware Engineering</div>
+            <div class="lc-mod"><span class="lc-mod-num">M06</span>Open Problems in Quantum Computing</div>
+            <div class="lc-mod"><span class="lc-mod-num">M07</span>Distributed Quantum Computing &amp; Quantum Internet</div>
+            <div class="lc-mod"><span class="lc-mod-num">M08</span>Quantum Sensing &amp; Metrology</div>
+            <div class="lc-mod"><span class="lc-mod-num">M09</span>Geopolitical &amp; Socioeconomic Dimensions of Quantum</div>
+            <div class="lc-mod"><span class="lc-mod-num">M10</span>Capstone Research Project</div>
+          </div>
+        </div>
+        <div class="lc-actions">
+          <button class="pm-btn pm-btn-notify" onclick="openNotify('Level 4 — Quantum Research')">Notify Me When Level 4 Launches</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- NOTIFY MODAL -->
+<div id="notify-overlay" class="notify-overlay" style="display:none;">
+  <div class="notify-box">
+    <div class="notify-tag">Stay Informed</div>
+    <div class="notify-title" id="notify-title">Get Notified</div>
+    <div class="notify-desc">Enter your email and we will contact you the moment this module or level is released. No spam. One email per release.</div>
+    <form id="notify-form" action="https://formspree.io/f/xdkojkpb" method="POST">
+      <input type="hidden" name="notify_for" id="notify-subject" value="">
+      <input type="hidden" name="type" value="academy_notification">
+      <input type="hidden" name="source" value="portal.html">
+      <input class="notify-input" type="email" name="email" placeholder="your@email.com" required>
+      <button type="submit" class="notify-submit">Register for Notification</button>
+    </form>
+    <div class="notify-success" id="notify-success">
+      <div class="notify-success-mark">CONFIRMED</div>
+      <div class="notify-success-text">You are on the list. We will contact you when this releases. No spam — one message per release.</div>
+    </div>
+    <button class="notify-close-btn" onclick="closeNotify()">Close</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">Diarka<span>Quantum</span></div>
+    <div class="footer-reg">Diarka Quantum Limited · Registered in England &amp; Wales</div>
+  </div>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="index.html#bridge">What We Do</a>
+    <a href="index.html#research">Research</a>
+    <a href="index.html#education">Academy</a>
+    <a href="index.html#about">About</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+  <div class="footer-copy">&copy; 2025 Diarka Quantum Limited. All rights reserved.</div>
+</footer>
+
+<script>
+// CUSTOM CURSOR
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.transform = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
+});
+function animRing() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
+  requestAnimationFrame(animRing);
+}
+animRing();
+document.querySelectorAll('a,button,.level-head').forEach(el => {
+  el.addEventListener('mouseenter', () => { ring.style.width = '48px'; ring.style.height = '48px'; ring.style.borderColor = 'rgba(123,47,255,0.7)'; });
+  el.addEventListener('mouseleave', () => { ring.style.width = '32px'; ring.style.height = '32px'; ring.style.borderColor = 'rgba(0,212,255,0.5)'; });
+});
+
+// STARFIELD
+const canvas = document.getElementById('universe');
+const ctx = canvas.getContext('2d');
+let W, H, stars = [], nebulae = [];
+function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+resize();
+window.addEventListener('resize', () => { resize(); initStars(); });
+function initStars() {
+  stars = Array.from({length: 200}, () => ({ x: Math.random()*W, y: Math.random()*H, r: Math.random()*1.3+0.2, o: Math.random()*0.6+0.15, speed: Math.random()*0.25+0.04, twinkle: Math.random()*Math.PI*2 }));
+  nebulae = Array.from({length: 4}, () => ({ x: Math.random()*W, y: Math.random()*H, r: Math.random()*200+100, hue: Math.random()<0.5 ? '123,47,255' : '0,212,255', o: Math.random()*0.035+0.01 }));
+}
+initStars();
+function drawUniverse() {
+  ctx.clearRect(0, 0, W, H);
+  nebulae.forEach(n => { const g = ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,n.r); g.addColorStop(0,`rgba(${n.hue},${n.o})`); g.addColorStop(1,'rgba(0,0,0,0)'); ctx.fillStyle=g; ctx.fillRect(0,0,W,H); });
+  stars.forEach(s => { s.twinkle += 0.018; const o = s.o*(0.6+0.4*Math.sin(s.twinkle)); ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2); ctx.fillStyle=`rgba(200,216,255,${o})`; ctx.fill(); s.y -= s.speed; if (s.y < -2) { s.y = H+2; s.x = Math.random()*W; } });
+  requestAnimationFrame(drawUniverse);
+}
+drawUniverse();
+
+// LEVEL TOGGLE
+function toggleLevel(header) {
+  const levelEl = header.closest('.portal-level');
+  const body = levelEl.querySelector('.level-body');
+  const isOpen = body.style.display !== 'none';
+  body.style.display = isOpen ? 'none' : 'flex';
+}
+
+// NOTIFY MODAL
+function openNotify(name) {
+  document.getElementById('notify-title').textContent = name;
+  document.getElementById('notify-subject').value = name;
+  document.getElementById('notify-overlay').style.display = 'flex';
+  document.getElementById('notify-success').style.display = 'none';
+  document.getElementById('notify-form').style.display = 'block';
+}
+function closeNotify() {
+  document.getElementById('notify-overlay').style.display = 'none';
+}
+document.getElementById('notify-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeNotify();
+});
+const notifyForm = document.getElementById('notify-form');
+notifyForm.addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn = notifyForm.querySelector('.notify-submit');
+  btn.textContent = 'Registering...';
+  btn.disabled = true;
+  try {
+    const res = await fetch(notifyForm.action, {
+      method: 'POST',
+      body: new FormData(notifyForm),
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      notifyForm.style.display = 'none';
+      document.getElementById('notify-success').style.display = 'block';
+    } else {
+      btn.textContent = 'Register for Notification';
+      btn.disabled = false;
+    }
+  } catch {
+    btn.textContent = 'Register for Notification';
+    btn.disabled = false;
+  }
+});
+</script>
+</body>
+</html>
